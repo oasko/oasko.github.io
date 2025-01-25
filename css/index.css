@@ -1324,7 +1324,7 @@ canvas:not(#ribbon-canvas),
   }
 }
 :root {
-  --global-font-size: 17px;
+  --global-font-size: 20px;
   --global-bg: #fff;
   --font-color: #4c4948;
   --hr-border: #a4d8fa;
@@ -2233,7 +2233,7 @@ figure.highlight pre .javascript .function {
   -ms-flex-align: center;
   -webkit-align-items: center;
   align-items: center;
-  height: 16.8em;
+  height: 19em;
 }
 @media screen and (max-width: 768px) {
   #recent-posts .recent-post-item {
