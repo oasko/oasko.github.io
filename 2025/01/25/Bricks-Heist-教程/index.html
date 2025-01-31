@@ -1,0 +1,309 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Bricks Heist 教程 | Asuna</title><meta name="author" content="Asuna"><meta name="copyright" content="Asuna"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="祝师傅们2025越来越好 技术越来越牛Bricks Heist教程我们看一下Bricks Heist 这个简单挑战 这个是题目  我们先把自己的机子ip和bricks.thm绑到&#x2F;etc&#x2F;hosts里面  连接上openvpn之后咱正式开搞 第一步先nmap开扫 可以看到他们开放了22，80和443端口   第二步我们在浏览器那搜索ip地址和域名 看一下有什么结果吗 直接输ip">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Bricks Heist 教程">
+<meta property="og:url" content="https://oasko.github.io/2025/01/25/Bricks-Heist-%E6%95%99%E7%A8%8B/index.html">
+<meta property="og:site_name" content="Asuna">
+<meta property="og:description" content="祝师傅们2025越来越好 技术越来越牛Bricks Heist教程我们看一下Bricks Heist 这个简单挑战 这个是题目  我们先把自己的机子ip和bricks.thm绑到&#x2F;etc&#x2F;hosts里面  连接上openvpn之后咱正式开搞 第一步先nmap开扫 可以看到他们开放了22，80和443端口   第二步我们在浏览器那搜索ip地址和域名 看一下有什么结果吗 直接输ip">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2025/01/19/47KGSaY3sudRFjV.jpg">
+<meta property="article:published_time" content="2025-01-25T14:12:02.000Z">
+<meta property="article:modified_time" content="2025-01-31T07:40:24.977Z">
+<meta property="article:author" content="Asuna">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2025/01/19/47KGSaY3sudRFjV.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Bricks Heist 教程",
+  "url": "https://oasko.github.io/2025/01/25/Bricks-Heist-%E6%95%99%E7%A8%8B/",
+  "image": "https://s2.loli.net/2025/01/19/47KGSaY3sudRFjV.jpg",
+  "datePublished": "2025-01-25T14:12:02.000Z",
+  "dateModified": "2025-01-31T07:40:24.977Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Asuna",
+      "url": "https://oasko.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://oasko.github.io/2025/01/25/Bricks-Heist-%E6%95%99%E7%A8%8B/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Bricks Heist 教程',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="css/touming.css"><meta name="generator" content="Hexo 7.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load', preloader.endLoading)
+
+  if (false) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="web_bg" style="background-image: url(https://s2.loli.net/2024/12/28/fdpLbCNQwExoPan.jpg);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="https://s2.loli.net/2025/01/19/47KGSaY3sudRFjV.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">11</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">6</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> tag</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></div><div class="menus_item"><a class="site-page" href="/books/"><i class="fa-fw fa fa-book"></i><span> 图书</span></a></div><div class="menus_item"><a class="site-page" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/chat/"><i class="fa-fw fa fa-lightbulb-o"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background: transparent;"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Asuna</span></a><a class="nav-page-title" href="/"><span class="site-name">Bricks Heist 教程</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> tag</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></div><div class="menus_item"><a class="site-page" href="/books/"><i class="fa-fw fa fa-book"></i><span> 图书</span></a></div><div class="menus_item"><a class="site-page" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/chat/"><i class="fa-fw fa fa-lightbulb-o"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Bricks Heist 教程</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-01-25T14:12:02.000Z" title="发表于 2025-01-25 22:12:02">2025-01-25</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-01-31T07:40:24.977Z" title="更新于 2025-01-31 15:40:24">2025-01-31</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">756</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>2分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h3 id="祝师傅们2025越来越好-技术越来越牛"><a href="#祝师傅们2025越来越好-技术越来越牛" class="headerlink" title="祝师傅们2025越来越好 技术越来越牛"></a>祝师傅们2025越来越好 技术越来越牛</h3><h1 id="Bricks-Heist教程"><a href="#Bricks-Heist教程" class="headerlink" title="Bricks Heist教程"></a>Bricks Heist教程</h1><p>我们看一下Bricks Heist 这个简单挑战<br><img src="/images/Bricks-Heist-%E6%95%99%E7%A8%8B/title.png" alt="title"></p>
+<p>这个是题目</p>
+<p><img src="/images/Bricks-Heist-%E6%95%99%E7%A8%8B/ask.png" alt="title"></p>
+<p>我们先把自己的机子ip和bricks.thm绑到&#x2F;etc&#x2F;hosts里面</p>
+<p><img src="/images/Bricks-Heist-%E6%95%99%E7%A8%8B/hosts.png" alt="hosts"></p>
+<p>连接上openvpn之后咱正式开搞</p>
+<h2 id="第一步"><a href="#第一步" class="headerlink" title="第一步"></a>第一步</h2><p>先nmap开扫 可以看到他们开放了22，80和443端口</p>
+<p><img src="/images/Bricks-Heist-%E6%95%99%E7%A8%8B/nmap.png" alt="nmap"></p>
+<p><img src="/images/Bricks-Heist-%E6%95%99%E7%A8%8B/duankou.png" alt="nmap"></p>
+<h2 id="第二步"><a href="#第二步" class="headerlink" title="第二步"></a>第二步</h2><p>我们在浏览器那搜索ip地址和域名 看一下有什么结果吗</p>
+<p>直接输ip的话是啥也没有</p>
+<p><img src="/images/Bricks-Heist-%E6%95%99%E7%A8%8B/ip.png" alt="ip"></p>
+<p>我们换成域名试一试 发现成功了</p>
+<p><img src="/images/Bricks-Heist-%E6%95%99%E7%A8%8B/brick.png" alt="brick"></p>
+<h2 id="第三步"><a href="#第三步" class="headerlink" title="第三步"></a>第三步</h2><p>我们把这个拉到wpscan里面扫描一下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wpscan --url https://bricks.thm/ --disable-ssl-checks</span><br></pre></td></tr></table></figure>
+
+<p>为什么要加–disable-ssl-checks这个参数捏 不加的话他会报错 说目标网站的 SSL&#x2F;TLS 证书不正确或无法验证</p>
+<p><img src="/images/Bricks-Heist-%E6%95%99%E7%A8%8B/scan1.png" alt="scan"></p>
+<p><strong>–disable-ssl-checks</strong> 参数可以让你在面对无效证书（如自签名证书、过期证书等）时继续进行扫描，跳过 SSL&#x2F;TLS 证书验证检查。</p>
+<p>扫描结果我们可以发现在robots.txt中有两个可疑的路径</p>
+<p><img src="/images/Bricks-Heist-%E6%95%99%E7%A8%8B/wpscan.png" alt="scan"></p>
+<p>第二个呢 就是wordpess的主题 bricks和主题版本1.9.5</p>
+<p><img src="/images/Bricks-Heist-%E6%95%99%E7%A8%8B/wpscan3.png" alt="scan"></p>
+<p>结合这两个信息 咱可以在浏览器搜搜有什么漏洞吗 成功发现一个 把他的python下载到机子里面</p>
+<p><img src="/images/Bricks-Heist-%E6%95%99%E7%A8%8B/ludong.png" alt="loudong"></p>
+<h2 id="第四步"><a href="#第四步" class="headerlink" title="第四步"></a>第四步</h2><p>我们跑一下这个文件 就可以获得这个网站的shell 然后查看题目需要的文件是否存在</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python3 CVE-2024-25600.py -u https://bricks.thm</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><strong>-u</strong> &#x2F; –url：指定目标 URL。用于设置你要扫描的 Web 地址。</p>
+<p><img src="/images/Bricks-Heist-%E6%95%99%E7%A8%8B/flag.png" alt="loudong"></p>
+<p>刚进去就发现一个可疑文件 直接cat查看一下 发现第一问解出来了 flag到手</p>
+<p>第二题看可疑进程和进程的服务名</p>
+<p>我们先<strong>ps aux</strong>查看一下 但发现太多了 我们进一步筛选 查找一下正在运行中的服务</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl | grep running</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Bricks-Heist-%E6%95%99%E7%A8%8B/jingcheng.png" alt="run"></p>
+<p>我们在里面发现了一个可疑进程 然后systemctl查一下具体信息</p>
+<p><img src="/images/Bricks-Heist-%E6%95%99%E7%A8%8B/jingcheng1.png" alt="run"></p>
+<p><img src="/images/Bricks-Heist-%E6%95%99%E7%A8%8B/jiingcheng3.png" alt="run"></p>
+<p>就发现了可疑进程是nm-inet-dialog 服务名叫做ubuntu.service</p>
+<h2 id="第五步"><a href="#第五步" class="headerlink" title="第五步"></a>第五步</h2><p>要看日志文件叫什么名字 在刚才的查询中发现这个服务在&#x2F;lib&#x2F;networkmanager的inet.conf</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">head /lib/networkmanager/inet.conf</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Bricks-Heist-%E6%95%99%E7%A8%8B/inet.png" alt="head"></p>
+<p>发现id是个复杂的加密 把这串id复制到cyberchef中 这个id进行了十六进制转换 再来两次base64的转换</p>
+<p><img src="/images/Bricks-Heist-%E6%95%99%E7%A8%8B/bitcoiin.png" alt="cyber"></p>
+<p>得出来的结果分成一般就是我们需要的钱包地址</p>
+<h2 id="最后一步"><a href="#最后一步" class="headerlink" title="最后一步"></a>最后一步</h2><p>我们知道比特币地址之后 在<a target="_blank" rel="noopener" href="http://www.blockchain.com中搜索一下地址/">www.blockchain.com中搜索一下地址</a> 查询一下他的交易流程 发现一个地址频繁出现 我们把这个地址复制 搜索一下 </p>
+<p><img src="/images/Bricks-Heist-%E6%95%99%E7%A8%8B/bit.png" alt="bit"></p>
+<p>搜完之后 随便点了一个链接 得知是lockbit组织</p>
+<p><img src="/images/Bricks-Heist-%E6%95%99%E7%A8%8B/lockbit.png" alt="bit"></p>
+<p>这个练习挺好玩的 用到了wpscan nmap和反向提权 其实在python的那一步 反向提权一下会更方便一点 可能我不太熟练吧 就直接这么查找需要的东西了</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://oasko.github.io">Asuna</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://oasko.github.io/2025/01/25/Bricks-Heist-%E6%95%99%E7%A8%8B/">https://oasko.github.io/2025/01/25/Bricks-Heist-%E6%95%99%E7%A8%8B/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://oasko.github.io" target="_blank">Asuna</a>！</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="https://s2.loli.net/2025/01/19/47KGSaY3sudRFjV.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="https://s2.loli.net/2025/01/19/47KGSaY3sudRFjV.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Asuna</div><div class="author-info-description">Do not go gentle into that good night</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">11</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">6</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">祝你青葱加鱼块 烧油又紫菜</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A5%9D%E5%B8%88%E5%82%85%E4%BB%AC2025%E8%B6%8A%E6%9D%A5%E8%B6%8A%E5%A5%BD-%E6%8A%80%E6%9C%AF%E8%B6%8A%E6%9D%A5%E8%B6%8A%E7%89%9B"><span class="toc-number">1.</span> <span class="toc-text">祝师傅们2025越来越好 技术越来越牛</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Bricks-Heist%E6%95%99%E7%A8%8B"><span class="toc-number"></span> <span class="toc-text">Bricks Heist教程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5"><span class="toc-number"></span> <span class="toc-text">第一步</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5"><span class="toc-number"></span> <span class="toc-text">第二步</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5"><span class="toc-number"></span> <span class="toc-text">第三步</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E6%AD%A5"><span class="toc-number"></span> <span class="toc-text">第四步</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E6%AD%A5"><span class="toc-number"></span> <span class="toc-text">第五步</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%90%8E%E4%B8%80%E6%AD%A5"><span class="toc-number"></span> <span class="toc-text">最后一步</span></a></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/01/25/Bricks-Heist-%E6%95%99%E7%A8%8B/" title="Bricks Heist 教程">Bricks Heist 教程</a><time datetime="2025-01-25T14:12:02.000Z" title="发表于 2025-01-25 22:12:02">2025-01-25</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/01/25/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/" title="信息收集">信息收集</a><time datetime="2025-01-25T01:09:17.000Z" title="发表于 2025-01-25 09:09:17">2025-01-25</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/01/23/tryhackme%E7%9A%84%E6%90%9C%E7%B4%A2%E6%8A%80%E5%B7%A7/" title="信息搜集之搜索">信息搜集之搜索</a><time datetime="2025-01-23T00:54:54.000Z" title="发表于 2025-01-23 08:54:54">2025-01-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/01/21/%E4%BC%A0%E8%AF%B4%E4%B8%AD%E7%9A%84%E5%91%BD%E4%BB%A4%E8%A1%8C/" title="传说中的命令行"><img src="https://s2.loli.net/2025/01/21/BznaD7wdM4rACkW.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="传说中的命令行"/></a><div class="content"><a class="title" href="/2025/01/21/%E4%BC%A0%E8%AF%B4%E4%B8%AD%E7%9A%84%E5%91%BD%E4%BB%A4%E8%A1%8C/" title="传说中的命令行">传说中的命令行</a><time datetime="2025-01-21T02:09:25.000Z" title="发表于 2025-01-21 10:09:25">2025-01-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/01/20/Active-Directory-Basics%E6%95%99%E7%A8%8B/" title="Active Directory Basics教程"><img src="https://s2.loli.net/2025/01/20/Gb4AzgHWJMQimCo.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Active Directory Basics教程"/></a><div class="content"><a class="title" href="/2025/01/20/Active-Directory-Basics%E6%95%99%E7%A8%8B/" title="Active Directory Basics教程">Active Directory Basics教程</a><time datetime="2025-01-20T01:40:15.000Z" title="发表于 2025-01-20 09:40:15">2025-01-20</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent;"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By Asuna</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const getGiscusTheme = theme => theme === 'dark' ? 'dark' : 'light'
+
+  const createScriptElement = config => {
+    const ele = document.createElement('script')
+    Object.entries(config).forEach(([key, value]) => {
+      ele.setAttribute(key, value)
+    })
+    return ele
+  }
+
+  const loadGiscus = (el = document, key) => {
+    const mappingConfig = isShuoshuo
+      ? { 'data-mapping': 'specific', 'data-term': key }
+      : { 'data-mapping': (option && option['data-mapping']) || 'pathname' }
+
+    const giscusConfig = {
+      src: 'https://giscus.app/client.js',
+      'data-repo': 'oasko/Giscus-demo',
+      'data-repo-id': 'R_kgDONt6VLw',
+      'data-category-id': 'DIC_kwDONt6VL84CmPGu',
+      'data-theme': getGiscusTheme(document.documentElement.getAttribute('data-theme')),
+      'data-reactions-enabled': '1',
+      crossorigin: 'anonymous',
+      async: true,
+      ...option,
+      ...mappingConfig
+    }
+
+    const scriptElement = createScriptElement(giscusConfig)
+
+    el.querySelector('#giscus-wrap').appendChild(scriptElement)
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyGiscus = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const changeGiscusTheme = theme => {
+    const iframe = document.querySelector('#giscus-wrap iframe')
+    if (iframe) {
+      const message = {
+        giscus: {
+          setConfig: {
+            theme: getGiscusTheme(theme)
+          }
+        }
+      }
+      iframe.contentWindow.postMessage(message, 'https://giscus.app')
+    }
+  }
+
+  btf.addGlobalFn('themeChange', changeGiscusTheme, 'giscus')
+
+  if (isShuoshuo) {
+    'Giscus' === 'Giscus'
+      ? window.shuoshuoComment = { loadComment: loadGiscus }
+      : window.loadOtherComment = loadGiscus
+    return
+  }
+
+  if ('Giscus' === 'Giscus' || !false) {
+    if (false) btf.loadComment(document.getElementById('giscus-wrap'), loadGiscus)
+    else loadGiscus()
+  } else {
+    window.loadOtherComment = loadGiscus
+  }
+})()</script></div><div class="aplayer no-destroy" data-id="7495004841" data-server="netease" data-type="playlist" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="false" muted></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
