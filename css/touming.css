@@ -22,7 +22,7 @@
 }
 
 /* 页脚透明 */
-#centent-inner.layout {
+#centent-inner {
   background: rgba(255, 255, 255, 0.7); /* 白色背景，透明度为 0.7 */
 }
 
