@@ -4,9 +4,9 @@
   
     
     <entry>
-      <title>tryhackme wireshark小tips</title>
-      <link href="/2025/02/04/tryhackme-wireshark%E5%B0%8Ftips/"/>
-      <url>/2025/02/04/tryhackme-wireshark%E5%B0%8Ftips/</url>
+      <title>tryhackme wireshark入门三部曲</title>
+      <link href="/2025/02/04/tryhackme%20wireshark%E5%85%A5%E9%97%A8%E4%B8%89%E9%83%A8%E6%9B%B2/"/>
+      <url>/2025/02/04/tryhackme%20wireshark%E5%85%A5%E9%97%A8%E4%B8%89%E9%83%A8%E6%9B%B2/</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>wireshark 一个流量分析的工具 一个抓取流量包的工具<br>一个暗藏<del>只因</del>(玄机)的工具 只要擅长使用这个工具能带来很大的帮助 </p><p>简单看看tryhackme的wireshark教程 总共是分为三个部分</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/title.png" alt="title"></p><h1 id="the-basic"><a href="#the-basic" class="headerlink" title="the basic"></a>the basic</h1><p>基础部分当然是介绍解释wireshark的操作界面和基础功能</p><p>先来看看初始界面</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/zhuomian.png" alt="chushi"></p><p>从上往下分别是工具栏，显示过滤栏(用来过滤我们需要的东西)，最近文件，捕获过滤器和接口，状态栏</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/inzhuo.png" alt="in"></p><p>这个界面就是一般我们平时使用的上面红色的部分就是数据包列表，中间的分别是数据包细节和数据包的字节，最下面是告诉我们有几个数据包 以及展示的数据包数目。</p><p>我们来看一下task2 讲了啥东西</p><h2 id="task-2"><a href="#task-2" class="headerlink" title="task 2"></a>task 2</h2><p>Wireshark 是目前最强大的流量分析工具之一。它有多种用途：</p><ul><li>检测并排除网络问题，例如网络负载故障点和拥塞。</li><li>检测安全异常，例如恶意主机、异常端口使用和可疑流量。</li><li>调查和了解协议细节，例如响应代码和有效负载数据。</li></ul><p>科普完毕 来看一下他要求</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/task2.png" alt="task"></p><p>需要我们去查看文件信息 点击这个就可以查看文件信息 我们往下滑就能看到 全部题目的答案</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/st.png" alt="st"></p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/hash.png" alt="st"></p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/flag.png" alt="st"></p><p>第一题的flag就在底下 </p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ans:TryHackMe_Wireshark_Demo</span><br></pre></td></tr></table></figure><p>数据包的总数为58620个 </p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ans:57620</span><br></pre></td></tr></table></figure><p>hash值也显而易见</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f446de335565fb0b0ee5e5a3266703c778b2f3dfad7efeaeccb2da5641a6d6eb</span><br></pre></td></tr></table></figure><h2 id="task3"><a href="#task3" class="headerlink" title="task3"></a>task3</h2><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/task3.png" alt="task"></p><p>查找数据包的编号先</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/finds.png" alt="task"></p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/38.png" alt="task"></p><p>可以发现使用了xml语言</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ans:eXtensible Markup Language</span><br></pre></td></tr></table></figure><p>看时间的话 就得点进去慢慢找了 其实点进去就能发现到达时间</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/time.png" alt="time"></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ans:13/05/2004</span><br></pre></td></tr></table></figure><p>ttl就是time to live 存活周期 是在osi的第三层 网络层那里 我们就到ip的那个部分找找</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/ttl.png" alt="time"></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ans:47</span><br></pre></td></tr></table></figure><p>tcp的有效负载大小 就得在数据包细节找到tcp的部分 负载应该能理解成一端的大小</p><p>tcp是在第四层 传输层</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/tcp.png" alt="tcp"></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ans:424</span><br></pre></td></tr></table></figure><p>etag也在这附近 在底下找找就有了</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/etag.png" alt="tcp"></p><h2 id="task4"><a href="#task4" class="headerlink" title="task4"></a>task4</h2><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/task4.png" alt="task4"></p><p>查r4w这个字串 的第一个艺术家叫啥名字</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/r4w.png" alt="task4"></p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/r4w1.png" alt="task4"></p><p>能看到第一个艺术家的名字 </p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ans:r4w8173</span><br></pre></td></tr></table></figure><p>去编号是12的数据包那看评论是啥 这个就有意思了 </p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/packet1.png" alt="task4"></p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/packet2.png" alt="task4"></p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/12.png" alt="task4"></p><p>又让我去39765这个包里面找照片 一开始我是没想到这东西还能直接导出来 后面有一个note.txt也是一样 要我们导出来 cat一下就行 照片就不太一样 他说了要md5 我们用md5sum来把他提取出来</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/img.png" alt="task4"></p><p>导出之后直接md5sum 加你保存的文件名</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/md5.png" alt="task4"></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ans:911cd574a42865a956ccde2d04495ebf</span><br></pre></td></tr></table></figure><p>需要找一个txt文件 先用过滤器去过滤一下 找到txt文件在哪</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/note0.png" alt="task4"></p><p>然后我们导出http 把note.txt导出来</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/note.png" alt="task4"></p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/note2.png" alt="task4"></p><p>保存之后 我们直接查看就能看到外星人名字</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/name.png" alt="task4"></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ans:packermaster</span><br></pre></td></tr></table></figure><h2 id="task5"><a href="#task5" class="headerlink" title="task5"></a>task5</h2><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/task5.png" alt="task5"></p><p>第一题就是http</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ans：http</span><br></pre></td></tr></table></figure><p>第二题我们过滤了http之后 在底下会有显示展示了多少个数据包</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/http.png" alt="shujubao"></p><p>下面显示1089个</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ans:1089</span><br></pre></td></tr></table></figure><p>第三题 去到33790的包中查看一下细节</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/secend.png" alt="shujubao"></p><p>进http流里面搜索artists 就能看到艺术家名字 会发现艺术家共有三个 第二个叫做Blad3</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/band.png" alt="shujubao"></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ans:3</span><br><span class="line"></span><br><span class="line">ans:Blad3</span><br></pre></td></tr></table></figure><p>第一个部分 基础部分结束了 我们来看下一个部分</p><h1 id="Packet-Operations"><a href="#Packet-Operations" class="headerlink" title="Packet Operations"></a>Packet Operations</h1><p>数据包操作 我们来看点小难的来练练 主要也是深入了解一点wireshark</p><p>这个地方是统计 可以看协议的数据包 主要是对数据包进行统计 可以在里面找到你想要的数据包</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/packet/ipvx.png" alt="qwe"></p><h2 id="task2"><a href="#task2" class="headerlink" title="task2"></a>task2</h2><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/packet/task2.png" alt="task2"></p><p>第一题我们得在resolved addresses里面去找 因为是在找hostname是bbc的ip</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/packet/bbc.png" alt="task2"></p><p>ip为199.232.24.81</p><p>第二题是在找ipv4的对话 那我们要在对话里面去找ipv4</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/packet/ipv4.png" alt="task2"></p><p>共有435个对话</p><p>第三题 这次我们现在resolved addresses找一下micro-st的地址 然后去endpoint查询这个地址的字节</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/packet/micro.png" alt="task2"></p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/packet/mac.png" alt="task2"></p><p>这两招下来就能找到字节大小 7474bytes</p><p>第三题依然是在endpoints里面找 找到city 筛选一下。能找到四个Kansas City有关的地址</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/packet/city.png" alt="city"></p><p>第四题在endpoints 里面找组织 也是筛选一下 就能知道ip是188.246.82.7</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/packet/blicnet.png" alt="city"></p><h2 id="task3-1"><a href="#task3-1" class="headerlink" title="task3"></a>task3</h2><p>直接看题目要求</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/packet/task3.png" alt="task3"></p><p>第一问 问最多用的ipv4的目的地址</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/packet/destination.png" alt="task3"></p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/packet/destination1.png" alt="task3"></p><p>ip为10.100.1.33 我搞不懂为啥前面还多一个 看格式就是第二个 第一个不知道咋蹦出来的</p><p>第二问 我们还是在熟悉的地方 就是statistics 统计这 点开dns</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/packet/ipvx.png" alt="task3"></p><p>在这找到services里的request-response time 能看到时间 0.467897</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/packet/dns1.png" alt="task3"></p><p>第三rad.msn.com的http Requests </p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/packet/http.png" alt="task3"></p><p>你会发现有两个rad.msn.com 直接相加就完事了</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/packet/http1.png" alt="task3"></p><h2 id="task4-1"><a href="#task4-1" class="headerlink" title="task4"></a>task4</h2><p>这个是科普环节 将怎么使用wireshark的过滤器</p><h3 id="捕获过滤器"><a href="#捕获过滤器" class="headerlink" title="捕获过滤器"></a>捕获过滤器</h3><table><thead><tr><th>过滤规则</th><th>说明</th></tr></thead><tbody><tr><td><code>host 192.168.1.1</code></td><td>仅捕获来自或发送到 192.168.1.1 的数据包</td></tr><tr><td><code>net 192.168.1.0/24</code></td><td>仅捕获 192.168.1.0&#x2F;24 子网的数据包</td></tr><tr><td><code>port 80</code></td><td>仅捕获端口 80（HTTP）的流量</td></tr><tr><td><code>tcp</code></td><td>仅捕获 TCP 数据包</td></tr><tr><td><code>udp</code></td><td>仅捕获 UDP 数据包</td></tr><tr><td><code>tcp port 443</code></td><td>仅捕获 TCP 端口 443（HTTPS）的流量</td></tr><tr><td><code>src host 10.0.0.1</code></td><td>仅捕获源 IP 为 10.0.0.1 的流量</td></tr><tr><td><code>dst port 53</code></td><td>仅捕获目标端口为 53（DNS）的数据包</td></tr></tbody></table><h3 id="显示过滤器"><a href="#显示过滤器" class="headerlink" title="显示过滤器"></a>显示过滤器</h3><table><thead><tr><th>过滤规则</th><th>说明</th></tr></thead><tbody><tr><td><code>ip.addr == 192.168.1.1</code></td><td>过滤与 192.168.1.1 相关的所有流量</td></tr><tr><td><code>ip.src == 10.0.0.1</code></td><td>仅显示源 IP 为 10.0.0.1 的数据包</td></tr><tr><td><code>ip.dst == 8.8.8.8</code></td><td>仅显示目标 IP 为 8.8.8.8 的数据包</td></tr><tr><td><code>tcp.port == 80</code></td><td>仅显示 TCP 端口 80 的流量</td></tr><tr><td><code>udp.port == 53</code></td><td>仅显示 UDP 端口 53（DNS）的流量</td></tr><tr><td><code>http</code></td><td>仅显示 HTTP 流量</td></tr><tr><td><code>dns</code></td><td>仅显示 DNS 流量</td></tr><tr><td><code>tcp.flags.syn == 1 &amp;&amp; tcp.flags.ack == 0</code></td><td>仅显示 TCP SYN 包（新建连接）</td></tr><tr><td><code>frame contains &quot;password&quot;</code></td><td>仅显示数据包内容包含 “password” 的数据包</td></tr><tr><td><code>eth.addr == aa:bb:cc:dd:ee:ff</code></td><td>仅显示特定 MAC 地址的流量</td></tr></tbody></table><h2 id="task5-1"><a href="#task5-1" class="headerlink" title="task5"></a>task5</h2><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/packet/task5.png" alt="task3"></p><p>第一问 我们直接在过滤器里面输入ip就能知道 共81420个数据包</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/packet/ip.png" alt="ip"></p><p>第二问 问我们ttl值小于10的数据包有几个 能查到有66个</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/packet/ttl.png" alt="ttl"></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip.ttl&lt;10</span><br></pre></td></tr></table></figure><p>第三问 端口是4444的tcp数据包有几个</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/packet/tcp4444.png" alt="4444"></p><p>有632个数据包</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcp.port ==4444</span><br></pre></td></tr></table></figure><p>第四问 80端口的http get数据包有几个</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/packet/tcp%2080.png" alt="tcp 80"></p><p>共527个</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http.request.method=&quot;GET&quot; &amp;&amp; tcp.port==80</span><br></pre></td></tr></table></figure><p>第五问 dns a级查询</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/packet/dnsa.png" alt="tcp 80"></p><p>用这个查询会发现 这个数字并不是题目要求</p><p>我们看一下显示过滤器</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/packet/dns2.png" alt="tcp 80"></p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/packet/dnsaa.png" alt="tcp 80"></p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/packet/dnsa.png" alt="tcp 80"></p><h2 id="task6"><a href="#task6" class="headerlink" title="task6"></a>task6</h2><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/packet/task6.png" alt="task6"></p><p>ok 第一问找不是80端口的iis服务器的数据包 这里是两个条件 一个是iis服务器 一个是不能是80端口</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/packet/port80%20.png" alt="ask"></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http.server contains &quot;iis&quot; &amp;&amp; tcp.scrcport= 80 </span><br></pre></td></tr></table></figure><p>就能筛选出来 共有21个</p><p>第二问 找到所有版本是7.5的iis服务器</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/packet/7.5.png" alt="iis"></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http.server contains &quot;iis&quot; &amp;&amp; http.server contains &quot;7.5&quot; </span><br></pre></td></tr></table></figure><p>用这个命令就能筛选出来 共71个</p><p>第三问 3333，,4444，,9999端口共有几个数据包</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/packet/3333.png" alt="sidan"></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcp.port in &#123;3333 4444 9999&#125;</span><br></pre></td></tr></table></figure><p>共计2235个数据包</p><p>第四问<br>ttl为偶数的数据包个数</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/packet/ttl1.png" alt="ttl"></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">strings(ip.ttl) matches &quot;[02468]$&quot;</span><br></pre></td></tr></table></figure><p>过滤出来能发现有77289个数据包</p><p>第五问<br>这个要去改config文件 改完使用专家视图去查看</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/packet/config.png" alt="config"></p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/packet/config1.png" alt="config"></p><p>改完之后就可以去专家视图那边去查看Bad TCP Checksum的个数</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/packet/config3.png" alt="config"></p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/packet/config4.png" alt="config"></p><p>最后一问<br>总算是轻松一点了<br>用已经存在的过滤器来筛选数据包  轻轻松松 能发现261个  </p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/packet/5.png" alt="shujubao"></p><p>这两个wireshark就写到这里 收益还是很多的 在筛选器那里和导出文件 对wireshark的功能也熟悉了很多 至少不会像之前一样两眼懵逼的盯着屏幕<br>现在剩下最后一个问题了 流量分析！！！</p><h2 id="traffic-Analysis"><a href="#traffic-Analysis" class="headerlink" title="traffic Analysis"></a>traffic Analysis</h2><p>前面的看完 我们看看流量分析</p><p>这个是真有点小难度</p><h2 id="task2-1"><a href="#task2-1" class="headerlink" title="task2"></a>task2</h2><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/task2.png" alt="task2"></p><h3 id="第一问"><a href="#第一问" class="headerlink" title="第一问"></a>第一问</h3><p>其实在这个文章中就有介绍怎么去过滤tcp connect的数据包</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcp.flags.syn==1 and tcp.flags.ack==0 and tcp.window_size &lt;= 1024</span><br></pre></td></tr></table></figure><ul><li>syn &#x3D;&#x3D; 1就是用来确立连接的请求报文  </li><li>ack&#x3D;&#x3D;0就是三次握手的第一步 </li><li>tcp窗口的大小字段小于等于1024</li></ul><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/tcp%20connect.png" alt="ask1"></p><p>由图就能看出总数为1000个</p><h3 id="第二问"><a href="#第二问" class="headerlink" title="第二问"></a>第二问</h3><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/tcpconnect.png" alt="ask2"></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcp.port == 80</span><br></pre></td></tr></table></figure><p>第一个包会发现是tcp connect的数据包</p><h3 id="第三问"><a href="#第三问" class="headerlink" title="第三问"></a>第三问</h3><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/udpguabi.png" alt="ask3"></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">icmp.type == 3 &amp;&amp; icmp.code == 3</span><br></pre></td></tr></table></figure><p>icmp.type &#x3D;&#x3D; 3意思就是目的地不可达</p><p>icmp.code &#x3D;&#x3D; 3意思就是端口不可达</p><p>这样就能查出有1083个关闭的端口</p><h2 id="第四问"><a href="#第四问" class="headerlink" title="第四问"></a>第四问</h2><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/udp1.png" alt="ask4"></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">udp.port in &#123;55..70&#125;</span><br></pre></td></tr></table></figure><p>我们过滤出来之后分析一下这个数据包走向 前面67和69端口的数据包后面都显示没到达目的地 而68端口则显示成功 数据包一直在传输。说明68端口开放</p><h2 id="task3-2"><a href="#task3-2" class="headerlink" title="task3"></a>task3</h2><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/task3.png" alt="task3"></p><h3 id="第一问-1"><a href="#第一问-1" class="headerlink" title="第一问"></a>第一问</h3><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/284.png" alt="ask1"></p><p>我们仔细观察就能发现攻击者的物理地址 就图片蓝色标的</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(arp.opcode== 1) &amp;&amp; (eth.src == 00:0c:29:e2:18:b4)</span><br></pre></td></tr></table></figure><p>arp.opcode &#x3D;&#x3D; 1 就是过滤arp请求包</p><p>其实单点一下你要的选项 把他拖到搜索栏那里就能自动输入 没有这么麻烦 就这个问题举例子 点到源地址这个选项 单击拖到搜索栏 选择and selected 就能自动输入</p><h3 id="第二问-1"><a href="#第二问-1" class="headerlink" title="第二问"></a>第二问</h3><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/httppacket.png" alt="ask2"></p><p>这题是说攻击者收到的http包的数目 意思就是目的地应该是攻击者的地址才对 </p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(http) &amp;&amp; (eth.dst == 00:0c:29:e2:18:b4)</span><br></pre></td></tr></table></figure><h3 id="第三问-1"><a href="#第三问-1" class="headerlink" title="第三问"></a>第三问</h3><p>问用户名和密码的话 八层应该是与登录有关 我们搜一下关键词login 随便点进去看到有个可疑的值 uname和pass</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/number6.png" alt="ask3"></p><p>把uname值拖到搜索栏搜一下 就能找到六个账户密码的条数</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/6.png" alt="ask3"></p><h3 id="第四问-1"><a href="#第四问-1" class="headerlink" title="第四问"></a>第四问</h3><p>问一个账户的密码 我们就在上一题的地方找到Client986这个账户 在里面就能翻到密码clientnothere!</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/client986.png" alt="ask4"></p><h3 id="第五问"><a href="#第五问" class="headerlink" title="第五问"></a>第五问</h3><p>我们在上一题找到Client986 我们把这个值拖到搜索栏 把Client986改成Client354 就能搜到与Client354有关的数据包 进去后在周围翻翻就能找到密码</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/nice354.png" alt="ask5"></p><p>在周围翻翻就能找到密码</p><h2 id="task4-2"><a href="#task4-2" class="headerlink" title="task4"></a>task4</h2><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/task4.png" alt="task4"></p><h3 id="第一问-2"><a href="#第一问-2" class="headerlink" title="第一问"></a>第一问</h3><p>问主机盖乐世a30的mac地址 那我们搜搜看有没有数据包有a30这个字段的</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/a30.png" alt="ask1"></p><p>找到之后往上面找找地址 destination地址是cisco思科的企业协议 源地址估计就是我们想要的</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/a301.png" alt="ask1"></p><h3 id="第二问-2"><a href="#第二问-2" class="headerlink" title="第二问"></a>第二问</h3><p>问工作站的netbios注册请求</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/lival.png" alt="ask2"></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nbns.name contains &quot;LIVALJM&quot; &amp;&amp; nbns.flags opcode == 5 </span><br></pre></td></tr></table></figure><p>nbns.flags opcode &#x3D;&#x3D; 5 表示nbns的注册请求</p><h3 id="第三问-2"><a href="#第三问-2" class="headerlink" title="第三问"></a>第三问</h3><p>问哪个主机请求的ip是172.16.13.85</p><p>我们先搜一下dhcp 看一下数据包先 在最底下发现一行requested ip address 把这个值拖到搜索栏和dhcp一起搜索<br>记得加上我们题目说的ip</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/a12.png" alt="ask3"></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(dhcp) &amp;&amp; (dhcp.option.requested_ip_address == 172.16.13.85)</span><br></pre></td></tr></table></figure><p>一搜一个准 找到主机名 盖乐世的a12</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/a121.png" alt="ask3"></p><h3 id="第四问-2"><a href="#第四问-2" class="headerlink" title="第四问"></a>第四问</h3><p>找u5这个用户的ip </p><p>CNameString在kerberos中就算是用户名 把这个参数拉到搜索栏 搜u5就行了</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/u5.png" alt="ask4"></p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/u51.png" alt="ask4"></p><p>我这算很繁琐的步骤 用下面这个命令就一步到位了 知道ip是10.1.12.2 诶 要记住不能只填ip 他说是defanged ip</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kerberos.CNameString contains &quot;u5&quot;</span><br></pre></td></tr></table></figure><p>科普一下<br>Defanged IP address”（去毒化的 IP 地址）是一种安全处理技术，于修改 IP 地址的显示格式，使其在文档、日志或安全报告中不被自动识别为可点击的链接，从而防止意外访问或自动化攻击。</p><p>把.换成[.]就行了</p><h3 id="第五问-1"><a href="#第五问-1" class="headerlink" title="第五问"></a>第五问</h3><p>要查主机名 在kerberos中主机名和用户名有点小区别</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/user.png" alt="ask5"></p><p>就得在后面加个$ 所以我们就查CNameString带$的就行</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kerberos.CNameString contains &quot;$&quot; </span><br></pre></td></tr></table></figure><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/xp1.png" alt="ask5"></p><p>查到了一个叫xp1$的用户名</p><h2 id="task5-2"><a href="#task5-2" class="headerlink" title="task5"></a>task5</h2><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/task5.png" alt="task5"></p><h3 id="第一问-3"><a href="#第一问-3" class="headerlink" title="第一问"></a>第一问</h3><p>问什么协议<br>这题其实我来说没多大灵感 就搜icmp然后往下翻翻 看看有哪个包的大小异常吗 结果发现还真有 点开看看 发现开头就发现了dh协议 ssh敲定了<br><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/ssh.png" alt="ask1"></p><h3 id="第二问-3"><a href="#第二问-3" class="headerlink" title="第二问"></a>第二问</h3><p>开始就是搜索dns看看有什么大小异常的包吗 还是出乎意料 真有一个</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/data.png" alt="ask2"></p><p>底下发下一个网站 把网址中的.转化成[.] 输进去发现成了</p><p>这两个纯纯狗屎运</p><h2 id="task6-1"><a href="#task6-1" class="headerlink" title="task6"></a>task6</h2><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/task6.png" alt="task2"></p><h3 id="第一问-4"><a href="#第一问-4" class="headerlink" title="第一问"></a>第一问</h3><p>问有几次登录失败</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ftp.response.code == 530</span><br></pre></td></tr></table></figure><p>530：未登录，密码无效 刚好适合错误的登录尝试</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/error737.png" alt="ask1"></p><h3 id="第二问-4"><a href="#第二问-4" class="headerlink" title="第二问"></a>第二问</h3><p>问的是文件大小 应该是和文件状态有关</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ftp.response.code == 213</span><br></pre></td></tr></table></figure><p>213：文件状态</p><p>输完命令之后我们点开追踪流检查一下</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/213.png" alt="ask2"></p><p>发现有个39424大小的文件</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/2131.png" alt="ask2"></p><h3 id="第三问-第四问"><a href="#第三问-第四问" class="headerlink" title="第三问 &amp; 第四问"></a>第三问 &amp; 第四问</h3><p>问文件名和升级文件权限的命令。<br>同样在这个追踪流里面可以看到。<br><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/chmod.png" alt="ask2"></p><p>文件和命令都看见了。</p><h2 id="task7"><a href="#task7" class="headerlink" title="task7"></a>task7</h2><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/task7.png" alt="task2"></p><h3 id="第一问-第二问"><a href="#第一问-第二问" class="headerlink" title="第一问&amp;第二问"></a>第一问&amp;第二问</h3><p>这一问纯玄学 问异常的类型<br><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/jizhong.png" alt="ask1"></p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/jizhong2.png" alt="ask1"></p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/jizhong4.png" alt="ask1"></p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/jizhong5.png" alt="ask1"></p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/jizhong6.png" alt="ask1"></p><p>最后一个是mozilla和mozllla差了个字</p><p>第二题刚好问了这个有差别的包的编号是什么 第52个</p><h3 id="第三问-第四问-1"><a href="#第三问-第四问-1" class="headerlink" title="第三问&amp;第四问"></a>第三问&amp;第四问</h3><p>第几个包发动log4j攻击的</p><p>问了问度娘<br>Log4j 是一个广泛使用的 Java 日志记录库，jndi（Java 命名和目录接口）是 Java 的一部分，允许 Java 应用程序查找和访问命名服务。</p><p>输入命令搜一下 出现的第一个是编号444的包 </p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip contains &quot;jndi&quot;</span><br></pre></td></tr></table></figure><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/jndi.png" alt="aks3"></p><p>点进去发现一个惊喜 应该是base64编码 拉到cyberchief里面解码<br><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/jndi1.png" alt="aks3"></p><p>会发现在用wegt下载 设置权限 运行脚本 把ip转成defang的ip 就是第四题的答案<br><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/jizhong3.png" alt="ask1"></p><h2 id="task8"><a href="#task8" class="headerlink" title="task8"></a>task8</h2><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/task8.png" alt="task2"></p><h3 id="第一问-5"><a href="#第一问-5" class="headerlink" title="第一问"></a>第一问</h3><p>问发送到“accounts.google.com”的“Client Hello”消息的框架编号是多少？</p><p>Client Hello：tls.handshake.type &#x3D;&#x3D; 1<br>server Hello： tls.handshake.type &#x3D;&#x3D; 2  </p><p>我们先收集一下所有的Client Hello 随便点一个点开他的server name 拉到搜索栏 server name改成‘accounts.google.com’<br><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/client.png" alt="ask1"></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(tls.handshake.type == 1)  &amp;&amp; (tls.handshake.extensions_server_name == &quot;accounts.google.com&quot;)</span><br></pre></td></tr></table></figure><p>一下就搜出来了</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/16.png" alt="ask1"></p><h3 id="第二问-5"><a href="#第二问-5" class="headerlink" title="第二问"></a>第二问</h3><p>导入秘钥 直接搜http2就出来了 共115个</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/http2.png" alt="ask2"></p><h3 id="第三问-3"><a href="#第三问-3" class="headerlink" title="第三问"></a>第三问</h3><p>去322编号的数据包</p><p>直接点开跟踪流 把网站的.弄成[.]</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/322.png" alt="ask3"></p><h3 id="第四问-3"><a href="#第四问-3" class="headerlink" title="第四问"></a>第四问</h3><p>找这种数据包里的文件有个很diao的方法 我们导出文件</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/flag0.png" alt="ask4"></p><p>点进去就能找到疑似flag的包</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/flag.png" alt="ask4"></p><p>保存到桌面 查看一下就行了</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/flag1.png" alt="ask4"></p><h2 id="task9"><a href="#task9" class="headerlink" title="task9"></a>task9</h2><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/task9.png" alt="task2"></p><h3 id="第一问-第二问-1"><a href="#第一问-第二问-1" class="headerlink" title="第一问&amp;第二问"></a>第一问&amp;第二问</h3><p>明文凭证 这一问都是在这里面完成</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/cred.png" alt="ask"></p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/cred1.png" alt="ask"><br>第一问的数据包编号就是237</p><p>第二个就得看看数据包先 </p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/ftp1.png" alt="ask"></p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/ftp2.png" alt="ask"></p><p>数据包基本就分这两类 user和pass 还有别的无关紧要的 要求是说空密码 就把 request command：pass那行拉去搜索</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/ftp.png" alt="ask"></p><p>发现第170个包的pass空空的 没错了</p><h2 id="task10"><a href="#task10" class="headerlink" title="task10"></a>task10</h2><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/task10.png" alt="task2"></p><p>照着题目点击对应的数据包 点开防火墙规则设置</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/fire0.png" alt="ask"></p><p>把这两个规则复制粘贴就行 第二问要把deny改成allow 因为题目问的是允许</p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/fire.png" alt="ask"></p><p><img src="/images/tryhackme-wireshark%E5%B0%8Ftips/traffic/fire2.png" alt="ask"></p><p>wireshark三个部分总算肝完 其实也不算肝 就是内容小多 内容也干得要死 全是干货 过段时间更一下wireshark的实战 试试水</p>]]></content>
       
@@ -236,31 +236,9 @@
     
     
     <entry>
-      <title>categories</title>
-      <link href="/categories/index.html"/>
-      <url>/categories/index.html</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>categories</title>
-      <link href="/categories/index-1.html"/>
-      <url>/categories/index-1.html</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>about</title>
-      <link href="/about/index-1.html"/>
-      <url>/about/index-1.html</url>
+      <title>Gallery</title>
+      <link href="/Gallery/index.html"/>
+      <url>/Gallery/index.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
@@ -280,20 +258,9 @@
     
     
     <entry>
-      <title></title>
-      <link href="/css/music.css"/>
-      <url>/css/music.css</url>
-      
-        <content type="html"><![CDATA[.aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {    left: -66px !important;    /* 默认情况下缩进左侧66px，只留一点箭头部分 */  }    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {    left: 0 !important;    /* 鼠标悬停是左侧缩进归零，完全显示按钮 */  }]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>books</title>
-      <link href="/books/index.html"/>
-      <url>/books/index.html</url>
+      <title>about</title>
+      <link href="/about/index-1.html"/>
+      <url>/about/index-1.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
@@ -302,9 +269,9 @@
     
     
     <entry>
-      <title>Gallery</title>
-      <link href="/Gallery/index.html"/>
-      <url>/Gallery/index.html</url>
+      <title>categories</title>
+      <link href="/categories/index-1.html"/>
+      <url>/categories/index-1.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
@@ -313,20 +280,9 @@
     
     
     <entry>
-      <title>movies</title>
-      <link href="/movies/index.html"/>
-      <url>/movies/index.html</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>music</title>
-      <link href="/music/index.html"/>
-      <url>/music/index.html</url>
+      <title>categories</title>
+      <link href="/categories/index.html"/>
+      <url>/categories/index.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
@@ -346,9 +302,20 @@
     
     
     <entry>
-      <title>tags</title>
-      <link href="/tags/index-2.html"/>
-      <url>/tags/index-2.html</url>
+      <title></title>
+      <link href="/css/music.css"/>
+      <url>/css/music.css</url>
+      
+        <content type="html"><![CDATA[.aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {    left: -66px !important;    /* 默认情况下缩进左侧66px，只留一点箭头部分 */  }    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {    left: 0 !important;    /* 鼠标悬停是左侧缩进归零，完全显示按钮 */  }]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>music</title>
+      <link href="/music/index.html"/>
+      <url>/music/index.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
@@ -357,9 +324,20 @@
     
     
     <entry>
-      <title>search</title>
-      <link href="/search/index.html"/>
-      <url>/search/index.html</url>
+      <title>books</title>
+      <link href="/books/index.html"/>
+      <url>/books/index.html</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>movies</title>
+      <link href="/movies/index.html"/>
+      <url>/movies/index.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
@@ -380,8 +358,30 @@
     
     <entry>
       <title>tags</title>
+      <link href="/tags/index-2.html"/>
+      <url>/tags/index-2.html</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>tags</title>
       <link href="/tags/index.html"/>
       <url>/tags/index.html</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>search</title>
+      <link href="/search/index.html"/>
+      <url>/search/index.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
