@@ -1,0 +1,403 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>tryhackme OWASP Top 10 - 2021上集 | Asuna</title><meta name="author" content="Asuna"><meta name="copyright" content="Asuna"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="tryhackme的OWASP Top 10 的题目和记录 OWASP Top 10  访问控制失效加密失败注入不安全的设计安全配置错误易受攻击和过时的组件识别和认证失败软件和数据完整性故障安全日志和监控失败服务端请求伪造（SSRF） 1.访问控制失效攻击者可能通过绕过访问控制机制，获取未授权的资源或执行未授权的操作。 IDOR 或不安全的直接对象引用是指一种访问控制漏洞，利用该漏洞您可以访问通常">
+<meta property="og:type" content="article">
+<meta property="og:title" content="tryhackme OWASP Top 10 - 2021上集">
+<meta property="og:url" content="https://oasko.github.io/2025/02/07/tryhackme-OWASP-Top-10-2021%E4%B8%8A%E9%9B%86/index.html">
+<meta property="og:site_name" content="Asuna">
+<meta property="og:description" content="tryhackme的OWASP Top 10 的题目和记录 OWASP Top 10  访问控制失效加密失败注入不安全的设计安全配置错误易受攻击和过时的组件识别和认证失败软件和数据完整性故障安全日志和监控失败服务端请求伪造（SSRF） 1.访问控制失效攻击者可能通过绕过访问控制机制，获取未授权的资源或执行未授权的操作。 IDOR 或不安全的直接对象引用是指一种访问控制漏洞，利用该漏洞您可以访问通常">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2025/02/08/KSlheFtJzA7xCf2.jpg">
+<meta property="article:published_time" content="2025-02-07T03:02:13.000Z">
+<meta property="article:modified_time" content="2025-02-08T11:15:57.586Z">
+<meta property="article:author" content="Asuna">
+<meta property="article:tag" content="oaasp 漏洞 tryhackme">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2025/02/08/KSlheFtJzA7xCf2.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "tryhackme OWASP Top 10 - 2021上集",
+  "url": "https://oasko.github.io/2025/02/07/tryhackme-OWASP-Top-10-2021%E4%B8%8A%E9%9B%86/",
+  "image": "https://s2.loli.net/2025/02/08/KSlheFtJzA7xCf2.jpg",
+  "datePublished": "2025-02-07T03:02:13.000Z",
+  "dateModified": "2025-02-08T11:15:57.586Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Asuna",
+      "url": "https://oasko.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://oasko.github.io/2025/02/07/tryhackme-OWASP-Top-10-2021%E4%B8%8A%E9%9B%86/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'tryhackme OWASP Top 10 - 2021上集',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/touming.css"><meta name="generator" content="Hexo 7.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load', preloader.endLoading)
+
+  if (false) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="web_bg" style="background-image: url(https://s2.loli.net/2024/12/28/fdpLbCNQwExoPan.jpg);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="https://s2.loli.net/2025/01/19/47KGSaY3sudRFjV.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">15</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> tag</span></a></li><li><a class="site-page child" href="/books/"><i class="fa-fw fa fa-book"></i><span> 图书</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></div><div class="menus_item"><a class="site-page" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 知识点</span></a></div><div class="menus_item"><a class="site-page" href="/chat/"><i class="fa-fw fa fa-lightbulb-o"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background: transparent;"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Asuna</span></a><a class="nav-page-title" href="/"><span class="site-name">tryhackme OWASP Top 10 - 2021上集</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> tag</span></a></li><li><a class="site-page child" href="/books/"><i class="fa-fw fa fa-book"></i><span> 图书</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></div><div class="menus_item"><a class="site-page" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 知识点</span></a></div><div class="menus_item"><a class="site-page" href="/chat/"><i class="fa-fw fa fa-lightbulb-o"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">tryhackme OWASP Top 10 - 2021上集</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-02-07T03:02:13.000Z" title="发表于 2025-02-07 11:02:13">2025-02-07</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-02-08T11:15:57.586Z" title="更新于 2025-02-08 19:15:57">2025-02-08</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">2.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>8分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>tryhackme的OWASP Top 10 的题目和记录</p>
+<p>OWASP Top 10 </p>
+<p>访问控制失效<br>加密失败<br>注入<br>不安全的设计<br>安全配置错误<br>易受攻击和过时的组件<br>识别和认证失败<br>软件和数据完整性故障<br>安全日志和监控失败<br>服务端请求伪造（SSRF）</p>
+<h2 id="1-访问控制失效"><a href="#1-访问控制失效" class="headerlink" title="1.访问控制失效"></a>1.访问控制失效</h2><p>攻击者可能通过绕过访问控制机制，获取未授权的资源或执行未授权的操作。</p>
+<p>IDOR 或不安全的直接对象引用是指一种访问控制漏洞，利用该漏洞您可以访问通常无法看到的资源。当程序员公开直接对象引用时就会发生这种情况，它只是指向服务器内特定对象的标识符。我们所说的对象可能是指文件、用户、银行应用程序中的银行账户或任何其他对象。</p>
+<p><img src="/images/tryhackme-OWASP-Top-10-2021/task1.png" alt="task1"></p>
+<p>我们进入题目要求的网站 用给的账户登录一下 、</p>
+<p>登进去后会就是显示普通的文本 但观察网址会发现后面有个note_id&#x3D;1这个字样 从零开始输 看看有没有可能出flag<br>第一个就出flag了</p>
+<p><img src="/images/tryhackme-OWASP-Top-10-2021/flag.png" alt="task1"></p>
+<h2 id="2-加密失败"><a href="#2-加密失败" class="headerlink" title="2 加密失败"></a>2 加密失败</h2><p>加密故障是指因误用（或未使用）用于保护敏感信息的加密算法而产生的任何漏洞。Web 应用程序需要加密技术来为其用户提供多层次的机密性。</p>
+<p>加密失败的第二部分 我们简单学习了一下下载数据库和查找数据库的有用信息 还有一个等下用得着的网站<a target="_blank" rel="noopener" href="https://crackstation.net/">crackstation</a></p>
+<p><img src="/images/tryhackme-OWASP-Top-10-2021/task2.png" alt="task2"></p>
+<p>进入网站查看有什么问题吗</p>
+<p><img src="/images/tryhackme-OWASP-Top-10-2021/web.png" alt="task2"></p>
+<p>看看网站源码<br><img src="/images/tryhackme-OWASP-Top-10-2021/webdb0.png" alt="task2"></p>
+<p>发现有很多都是来自assets 在网址后面加个&#x2F;assets试试看</p>
+<p><img src="/images/tryhackme-OWASP-Top-10-2021/webdb.png" alt="task2"></p>
+<p>看到最后一个数据库文件 把他下过来。然后查看一下数据库里有什么重要文件</p>
+<p><img src="/images/tryhackme-OWASP-Top-10-2021/webdb0.5.png" alt="task2"></p>
+<p><img src="/images/tryhackme-OWASP-Top-10-2021/webdb1.png" alt="task2"></p>
+<p>能找到admin的密码的hash值 拉到上面说的网站里面解密能知道明文密码</p>
+<p><img src="/images/tryhackme-OWASP-Top-10-2021/webdb3.png" alt="task2"></p>
+<p>在网站中登录admin账户就能发现flag</p>
+<p><img src="/images/tryhackme-OWASP-Top-10-2021/login.png" alt="task2"></p>
+<h2 id="3-注入"><a href="#3-注入" class="headerlink" title="3 注入"></a>3 注入</h2><p>包括sql注入 命令注入</p>
+<p><img src="/images/tryhackme-OWASP-Top-10-2021/task3.png" alt="task3"></p>
+<p>这个thm讲的是命令注入</p>
+<p>先输入$(ls)试试水</p>
+<p><img src="/images/tryhackme-OWASP-Top-10-2021/drpepper.png" alt="task3"></p>
+<p>试试看$(cat &#x2F;etc&#x2F;passwd | grep “usr”)查一下第二题说的用户</p>
+<p><img src="/images/tryhackme-OWASP-Top-10-2021/shell.png" alt="task3"></p>
+<p>但发现都是在&#x2F;sbin中 都属于root用户 所以说是零个用户 用户shell就是&#x2F;sbin&#x2F;shell</p>
+<p>查应用程序以什么用户身份运行？直接whoami</p>
+<p><img src="/images/tryhackme-OWASP-Top-10-2021/whoami.png" alt="task3"></p>
+<p>发现是apache用户</p>
+<p>查版本就 cat &#x2F;etc&#x2F;os-release</p>
+<p><img src="/images/tryhackme-OWASP-Top-10-2021/os-rease.png" alt="task3"></p>
+<p>是3.16.0版本</p>
+<h2 id="4-不安全的设计"><a href="#4-不安全的设计" class="headerlink" title="4 不安全的设计"></a>4 不安全的设计</h2><p>不安全的设计是指应用程序架构固有的漏洞。这些漏洞不是由于糟糕的实现或配置而导致的，而是整个应用程序（或其中的一部分）背后的理念从一开始就存在缺陷。</p>
+<p><img src="/images/tryhackme-OWASP-Top-10-2021/task4.png" alt="task4"></p>
+<p>进入网站 直接开始重置账户 选中间那个最喜欢的颜色<br>红黄蓝绿一直输 发现是绿色 重置成功。登录进去就能发现flag</p>
+<p><img src="/images/tryhackme-OWASP-Top-10-2021/green.png" alt="task4"></p>
+<p><img src="/images/tryhackme-OWASP-Top-10-2021/greenflag.png" alt="task4"></p>
+<p><img src="/images/tryhackme-OWASP-Top-10-2021/greenflag1.png" alt="task4"></p>
+<h2 id="5-安全配置错误"><a href="#5-安全配置错误" class="headerlink" title="5 安全配置错误"></a>5 安全配置错误</h2><p>安全配置错误与其他十大漏洞不同，因为它们发生在安全配置本来可以正确配置但实际上却没有配置的情况下。即使您下载了最新的软件，错误的配置也可能使您的安装变得脆弱。</p>
+<p>先进入网站尝尝<del>咸蛋</del>咸淡<br><img src="/images/tryhackme-OWASP-Top-10-2021/console.png" alt="task5"></p>
+<p>我们直接复制thm给出来的代码 在这里面跑跑</p>
+<p><img src="/images/tryhackme-OWASP-Top-10-2021/tododb.png" alt="task5"></p>
+<p>能发现数据库名字是todo.db</p>
+<p>根据thm的提示 我们稍微改改他给出来的命令 就能查出flag</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import os; print(os.popen(&quot;cat app.py | grep &#x27;flag&#x27;&quot;).read())</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/tryhackme-OWASP-Top-10-2021/py.png" alt="task5"></p>
+<h2 id="6-易受攻击和过时的组件"><a href="#6-易受攻击和过时的组件" class="headerlink" title="6 易受攻击和过时的组件"></a>6 易受攻击和过时的组件</h2><p>版本不及时更新的话容易遇到一下漏洞攻击</p>
+<p>进入网站看看 诶呦是个线上书店 直接把cse bookstore去谷歌搜索一下看有什么漏洞吗</p>
+<p>挺好 找到一个</p>
+<p><img src="/images/tryhackme-OWASP-Top-10-2021/looudong.png" alt="task"></p>
+<p>那他下载过来 直接跑一遍 漏洞利用成功，cat一下&#x2F;opt&#x2F;flag.txt 就能就能获得flag</p>
+<p><img src="/images/tryhackme-OWASP-Top-10-2021/books.png" alt="task"></p>
+<h2 id="7-身份识别和认证失败"><a href="#7-身份识别和认证失败" class="headerlink" title="7 身份识别和认证失败"></a>7 身份识别和认证失败</h2><p>身份验证和会话管理是现代 Web 应用程序的核心组件。身份验证允许用户通过验证其身份来访问 Web 应用程序。最常见的身份验证形式是使用用户名和密码机制。用户输入这些凭据，然后服务器验证它们。如果它们正确，服务器将向用户的浏览器提供会话 cookie 。需要会话 cookie 是因为 Web 服务器使用HTTP (S) 进行通信，而 HTTP (S) 是无状态的。附加会话 cookie 意味着服务器将知道谁在发送什么数据。然后服务器可以跟踪用户的操作。</p>
+<p>身份验证机制中的一些常见缺陷包括：</p>
+<ul>
+<li>暴力攻击</li>
+<li>使用弱凭证</li>
+<li>弱会话 Cookie。</li>
+</ul>
+<p>看看题目</p>
+<p><img src="/images/tryhackme-OWASP-Top-10-2021/task7.png" alt="task7"></p>
+<p>进入网站看看 说是要先注册一个darren的账户 </p>
+<p>你会发现注册darren的话 会说明账户已存在 </p>
+<p>在注册账户的时候 在darren的d的前面加一个空格再来照常注册 发现注册成功 </p>
+<p>用刚才的账户密码就能登录darren账户找到flag</p>
+<p><img src="/images/tryhackme-OWASP-Top-10-2021/login1.png" alt="task7"></p>
+<p>arthur也是一样的操作</p>
+<p><img src="/images/tryhackme-OWASP-Top-10-2021/arthur.png" alt="task7"></p>
+<p><img src="/images/tryhackme-OWASP-Top-10-2021/arthur1.png" alt="task7"></p>
+<h2 id="软件和数据完整性故障"><a href="#软件和数据完整性故障" class="headerlink" title="软件和数据完整性故障"></a>软件和数据完整性故障</h2><p>此漏洞源自使用未使用任何完整性检查的软件或数据的代码或基础架构。由于未进行完整性验证，攻击者可能会修改传递给应用程序的软件或数据，从而导致意外后果。此类别中主要有两种类型的漏洞：</p>
+<ul>
+<li>软件完整性故障</li>
+<li>数据完整性故障</li>
+</ul>
+<h3 id="软件完整性故障"><a href="#软件完整性故障" class="headerlink" title="软件完整性故障"></a>软件完整性故障</h3><p>来看看thm的题目 这里讲的是 jQuery<br>如果你愿意，你可以直接从他们的服务器将 jQuery 包含在你的网站中，而无需实际下载它，只需在你网站的 HTML 代码中包含以下行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=&quot;https://code.jquery.com/jquery-3.6.1.min.js&quot;&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>当用户导航到您的网站时，其浏览器将读取其 HTML 代码并从指定的外部源下载 jQuery。</p>
+<p>如果攻击者以某种方式入侵 jQuery 官方存储库，他们可以更改内容<code>https://code.jquery.com/jquery-3.6.1.min.js</code> 以注入恶意代码。</p>
+<p>题目</p>
+<p><img src="/images/tryhackme-OWASP-Top-10-2021/task8.0.png" alt="task8"></p>
+<p>将<a target="_blank" rel="noopener" href="https://code.jquery.com/jquery-1.12.4.min.js%E8%BD%AC%E6%88%90SHA-256%E7%9A%84%E5%BD%A2%E5%BC%8F">https://code.jquery.com/jquery-1.12.4.min.js转成SHA-256的形式</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.srihash.org/">来这里</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://code.jquery.com/jquery-1.12.4.min.js</span><br></pre></td></tr></table></figure>
+
+<p>进入网站就能转化成SHA-256 这个就答案</p>
+<h3 id="数据完整性故障"><a href="#数据完整性故障" class="headerlink" title="数据完整性故障"></a>数据完整性故障</h3><p>通常，当用户登录应用程序时，他们会被分配某种会话令牌，该令牌需要在会话持续期间保存在浏览器中。此令牌将在每个后续请求中重复，以便 Web 应用程序知道我们是谁。这些会话令牌可以有多种形式，但通常通过 Cookie 分配。Cookie是Web 应用程序将存储在用户浏览器中的键值对，并且将在每次向发出它们的网站发出请求时自动重复。</p>
+<p>如果您正在创建一个 Web 邮件应用程序，您可以在登录后为每个用户分配一个包含其用户名的 Cookie。在后续请求中，您的浏览器将始终在 Cookie 中发送您的用户名，以便您的 Web 应用程序知道哪个用户正在连接。</p>
+<p>因此如果用户篡改 Cookie 并更改用户名，他们可能会冒充其他人并阅读他们的电子邮件！此应用程序将遭受数据完整性故障，因为它信任攻击者可以篡改的数据。</p>
+<p>解决此问题的一个方法是使用某种完整性机制来保证 cookie 未被用户更改。为了避免重复工作，我们可以使用一些允许您执行此操作的令牌实现，并处理所有加密以提供完整性证明，而无需您为此操心。JSON Web 令牌 (JWT)就是这样一种实现。</p>
+<p>看题目</p>
+<p><img src="/images/tryhackme-OWASP-Top-10-2021/task8.png" alt="task8"></p>
+<p><img src="/images/tryhackme-OWASP-Top-10-2021/task8.1.png" alt="task8"></p>
+<p>进入网站 guest随便输入一次 报错就知道密码了</p>
+<p><img src="/images/tryhackme-OWASP-Top-10-2021/cookie.png" alt="task8"></p>
+<p>进去之后f12找出jwt</p>
+<p><img src="/images/tryhackme-OWASP-Top-10-2021/cookieflag.png" alt="task8"></p>
+<p>把hs256改成none 用户名改成admin</p>
+<p><img src="/images/tryhackme-OWASP-Top-10-2021/jwt.png" alt="task8"></p>
+<p><img src="/images/tryhackme-OWASP-Top-10-2021/jwt1.png" alt="task8"></p>
+<p>改好的这两个参数重新转化为base64</p>
+<p><img src="/images/tryhackme-OWASP-Top-10-2021/jwt2.png" alt="task8"></p>
+<p><img src="/images/tryhackme-OWASP-Top-10-2021/jwt3.png" alt="task8"></p>
+<p>把这个粘贴在一起 用.间隔。最后面也要用.结尾</p>
+<p>把jwt代替之前的jwt 刷新一下就有flag了</p>
+<p><img src="/images/tryhackme-OWASP-Top-10-2021/cookieflag1.png" alt="flag"></p>
+<h2 id="9-安全日志和监控失败"><a href="#9-安全日志和监控失败" class="headerlink" title="9 安全日志和监控失败"></a>9 安全日志和监控失败</h2><p>设置 Web 应用程序时，应记录用户执行的每个操作。记录很重要，因为一旦发生事件，攻击者的活动就会被追踪。一旦追踪到他们的行为，就可以确定他们的风险和影响。如果没有记录，就无法知道攻击者在获得特定 Web 应用程序的访问权限后执行了哪些操作。</p>
+<p>日志中存储的信息应包括以下内容：</p>
+<ul>
+<li>HTTP状态代码</li>
+<li>时间戳</li>
+<li>用户名</li>
+<li>API端点&#x2F;页面位置</li>
+<li>IP 地址</li>
+</ul>
+<p>下载日志看看</p>
+<p><img src="/images/tryhackme-OWASP-Top-10-2021/task9.png" alt="task9"></p>
+<p><img src="/images/tryhackme-OWASP-Top-10-2021/log.png" alt="task9"></p>
+<p>看到连续几个相同的ip盲猜就是攻击者ip</p>
+<p>这样看的话就是暴力破解</p>
+<h2 id="10-服务器端请求伪造（SSRF）"><a href="#10-服务器端请求伪造（SSRF）" class="headerlink" title="10 服务器端请求伪造（SSRF）"></a>10 服务器端请求伪造（SSRF）</h2><p>这种类型的漏洞发生在攻击者可以强迫 Web 应用程序代表他们向任意目的地发送请求，同时控制请求本身的内容时。SSRF漏洞通常出现在我们的 Web 应用程序需要使用第三方服务的实现中。</p>
+<p><img src="/images/tryhackme-OWASP-Top-10-2021/task10.png" alt="task10"></p>
+<p>依旧进入网站 发现是个类似博客的东西 周围找找看有什么可以做的吗</p>
+<p><img src="/images/tryhackme-OWASP-Top-10-2021/admin.png" alt="task10"></p>
+<p>点进去发现 要localhost才能进去</p>
+<p><img src="/images/tryhackme-OWASP-Top-10-2021/localhost.png" alt="task"></p>
+<p>第二问 问点击下载按钮。服务器参数指向哪里？</p>
+<p>直接f12 找到下载按钮 发现了下载路径</p>
+<p><img src="/images/tryhackme-OWASP-Top-10-2021/down.png" alt="task"></p>
+<p>这个路径也有大作用 正常来说我们下载那个pdf使用这个路径</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://10.10.234.129:8087/download?server=secure-file-storage.com:8087&amp;id=75482342</span><br></pre></td></tr></table></figure>
+
+<p>我们要把后面的server&#x3D;的值改成attackbox或者是你虚拟机连openvpn的ip 其他都不动</p>
+<p>然后打开终端 设置监听 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -lvnp 8087</span><br></pre></td></tr></table></figure>
+
+<p>启动完就把改好的网址在浏览器那搜索一下 终端就能找到flag</p>
+<p><img src="/images/tryhackme-OWASP-Top-10-2021/api1.png" alt="ask"></p>
+<p>于是乎 把thm的owasp top-10简单介绍一下了 过段时间继续学习更新owasp top-1o！！！</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://oasko.github.io">Asuna</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://oasko.github.io/2025/02/07/tryhackme-OWASP-Top-10-2021%E4%B8%8A%E9%9B%86/">https://oasko.github.io/2025/02/07/tryhackme-OWASP-Top-10-2021%E4%B8%8A%E9%9B%86/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://oasko.github.io" target="_blank">Asuna</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/oaasp-%E6%BC%8F%E6%B4%9E-tryhackme/">oaasp 漏洞 tryhackme</a></div><div class="post-share"><div class="social-share" data-image="https://s2.loli.net/2025/02/08/KSlheFtJzA7xCf2.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="https://s2.loli.net/2025/01/19/47KGSaY3sudRFjV.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Asuna</div><div class="author-info-description">Do not go gentle into that good night</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">15</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">祝你青葱加鱼块 烧油又紫菜</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6%E5%A4%B1%E6%95%88"><span class="toc-number">1.</span> <span class="toc-text">1.访问控制失效</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%8A%A0%E5%AF%86%E5%A4%B1%E8%B4%A5"><span class="toc-number">2.</span> <span class="toc-text">2 加密失败</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E6%B3%A8%E5%85%A5"><span class="toc-number">3.</span> <span class="toc-text">3 注入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E4%B8%8D%E5%AE%89%E5%85%A8%E7%9A%84%E8%AE%BE%E8%AE%A1"><span class="toc-number">4.</span> <span class="toc-text">4 不安全的设计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E5%AE%89%E5%85%A8%E9%85%8D%E7%BD%AE%E9%94%99%E8%AF%AF"><span class="toc-number">5.</span> <span class="toc-text">5 安全配置错误</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E6%98%93%E5%8F%97%E6%94%BB%E5%87%BB%E5%92%8C%E8%BF%87%E6%97%B6%E7%9A%84%E7%BB%84%E4%BB%B6"><span class="toc-number">6.</span> <span class="toc-text">6 易受攻击和过时的组件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E8%BA%AB%E4%BB%BD%E8%AF%86%E5%88%AB%E5%92%8C%E8%AE%A4%E8%AF%81%E5%A4%B1%E8%B4%A5"><span class="toc-number">7.</span> <span class="toc-text">7 身份识别和认证失败</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BD%AF%E4%BB%B6%E5%92%8C%E6%95%B0%E6%8D%AE%E5%AE%8C%E6%95%B4%E6%80%A7%E6%95%85%E9%9A%9C"><span class="toc-number">8.</span> <span class="toc-text">软件和数据完整性故障</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AF%E4%BB%B6%E5%AE%8C%E6%95%B4%E6%80%A7%E6%95%85%E9%9A%9C"><span class="toc-number">8.1.</span> <span class="toc-text">软件完整性故障</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%AE%8C%E6%95%B4%E6%80%A7%E6%95%85%E9%9A%9C"><span class="toc-number">8.2.</span> <span class="toc-text">数据完整性故障</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%E5%AE%89%E5%85%A8%E6%97%A5%E5%BF%97%E5%92%8C%E7%9B%91%E6%8E%A7%E5%A4%B1%E8%B4%A5"><span class="toc-number">9.</span> <span class="toc-text">9 安全日志和监控失败</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0%EF%BC%88SSRF%EF%BC%89"><span class="toc-number">10.</span> <span class="toc-text">10 服务器端请求伪造（SSRF）</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2025/02/07/tryhackme-OWASP-Top-10-2021%E4%B8%8A%E9%9B%86/" title="tryhackme OWASP Top 10 - 2021上集"><img src="https://s2.loli.net/2025/02/08/KSlheFtJzA7xCf2.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="tryhackme OWASP Top 10 - 2021上集"/></a><div class="content"><a class="title" href="/2025/02/07/tryhackme-OWASP-Top-10-2021%E4%B8%8A%E9%9B%86/" title="tryhackme OWASP Top 10 - 2021上集">tryhackme OWASP Top 10 - 2021上集</a><time datetime="2025-02-07T03:02:13.000Z" title="发表于 2025-02-07 11:02:13">2025-02-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/02/04/tryhackme%20wireshark%E5%85%A5%E9%97%A8%E4%B8%89%E9%83%A8%E6%9B%B2/" title="tryhackme wireshark入门三部曲"><img src="https://s2.loli.net/2025/02/04/xtlwMk9HLNGWiyE.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="tryhackme wireshark入门三部曲"/></a><div class="content"><a class="title" href="/2025/02/04/tryhackme%20wireshark%E5%85%A5%E9%97%A8%E4%B8%89%E9%83%A8%E6%9B%B2/" title="tryhackme wireshark入门三部曲">tryhackme wireshark入门三部曲</a><time datetime="2025-02-04T00:37:18.000Z" title="发表于 2025-02-04 08:37:18">2025-02-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/01/31/lookup-%E6%95%99%E7%A8%8B/" title="lookup 教程"><img src="https://s2.loli.net/2025/02/01/21dnkp68VGWhuQD.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="lookup 教程"/></a><div class="content"><a class="title" href="/2025/01/31/lookup-%E6%95%99%E7%A8%8B/" title="lookup 教程">lookup 教程</a><time datetime="2025-01-31T11:07:31.000Z" title="发表于 2025-01-31 19:07:31">2025-01-31</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/01/31/network-%E7%BD%91%E7%BB%9C%E6%A6%82%E5%BF%B5/" title="network 网络概念">network 网络概念</a><time datetime="2025-01-31T10:20:52.000Z" title="发表于 2025-01-31 18:20:52">2025-01-31</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/01/25/Bricks-Heist-%E6%95%99%E7%A8%8B/" title="Bricks Heist 教程"><img src="https://s2.loli.net/2025/02/01/9PhqARN1ybnjfkJ.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Bricks Heist 教程"/></a><div class="content"><a class="title" href="/2025/01/25/Bricks-Heist-%E6%95%99%E7%A8%8B/" title="Bricks Heist 教程">Bricks Heist 教程</a><time datetime="2025-01-25T14:12:02.000Z" title="发表于 2025-01-25 22:12:02">2025-01-25</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent;"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By Asuna</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const getGiscusTheme = theme => theme === 'dark' ? 'dark' : 'light'
+
+  const createScriptElement = config => {
+    const ele = document.createElement('script')
+    Object.entries(config).forEach(([key, value]) => {
+      ele.setAttribute(key, value)
+    })
+    return ele
+  }
+
+  const loadGiscus = (el = document, key) => {
+    const mappingConfig = isShuoshuo
+      ? { 'data-mapping': 'specific', 'data-term': key }
+      : { 'data-mapping': (option && option['data-mapping']) || 'pathname' }
+
+    const giscusConfig = {
+      src: 'https://giscus.app/client.js',
+      'data-repo': 'oasko/Giscus-demo',
+      'data-repo-id': 'R_kgDONt6VLw',
+      'data-category-id': 'DIC_kwDONt6VL84CmPGu',
+      'data-theme': getGiscusTheme(document.documentElement.getAttribute('data-theme')),
+      'data-reactions-enabled': '1',
+      crossorigin: 'anonymous',
+      async: true,
+      ...option,
+      ...mappingConfig
+    }
+
+    const scriptElement = createScriptElement(giscusConfig)
+
+    el.querySelector('#giscus-wrap').appendChild(scriptElement)
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyGiscus = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const changeGiscusTheme = theme => {
+    const iframe = document.querySelector('#giscus-wrap iframe')
+    if (iframe) {
+      const message = {
+        giscus: {
+          setConfig: {
+            theme: getGiscusTheme(theme)
+          }
+        }
+      }
+      iframe.contentWindow.postMessage(message, 'https://giscus.app')
+    }
+  }
+
+  btf.addGlobalFn('themeChange', changeGiscusTheme, 'giscus')
+
+  if (isShuoshuo) {
+    'Giscus' === 'Giscus'
+      ? window.shuoshuoComment = { loadComment: loadGiscus }
+      : window.loadOtherComment = loadGiscus
+    return
+  }
+
+  if ('Giscus' === 'Giscus' || !false) {
+    if (false) btf.loadComment(document.getElementById('giscus-wrap'), loadGiscus)
+    else loadGiscus()
+  } else {
+    window.loadOtherComment = loadGiscus
+  }
+})()</script></div><div class="aplayer no-destroy" data-id="7495004841" data-server="netease" data-type="playlist" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="false" muted></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
