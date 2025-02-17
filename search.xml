@@ -369,9 +369,9 @@
     
     
     <entry>
-      <title>Gallery</title>
-      <link href="/Gallery/index.html"/>
-      <url>/Gallery/index.html</url>
+      <title>about</title>
+      <link href="/about/index-1.html"/>
+      <url>/about/index-1.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
@@ -380,20 +380,9 @@
     
     
     <entry>
-      <title>books</title>
-      <link href="/books/index.html"/>
-      <url>/books/index.html</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>categories</title>
-      <link href="/categories/index-1.html"/>
-      <url>/categories/index-1.html</url>
+      <title>about</title>
+      <link href="/about/index.html"/>
+      <url>/about/index.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
@@ -407,6 +396,28 @@
       <url>/categories/index.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Gallery</title>
+      <link href="/Gallery/index.html"/>
+      <url>/Gallery/index.html</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>network 网络概念</title>
+      <link href="/about/network-%E7%BD%91%E7%BB%9C%E6%A6%82%E5%BF%B5.html"/>
+      <url>/about/network-%E7%BD%91%E7%BB%9C%E6%A6%82%E5%BF%B5.html</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="网络知识的介绍"><a href="#网络知识的介绍" class="headerlink" title="网络知识的介绍"></a>网络知识的介绍</h1><h2 id="osi七层模型"><a href="#osi七层模型" class="headerlink" title="osi七层模型"></a>osi七层模型</h2><p>OSI 模型是一个描述网络功能的概念框架。简单来说，OSI 模型标对计算机系统彼此之间发送信息的方式进行了标准化。</p><p>分为：</p><ul><li>物理层</li><li>数据链路层</li><li>网络层</li><li>传输层</li><li>会话层</li><li>表示层</li><li>应用层</li></ul><h3 id="物理层"><a href="#物理层" class="headerlink" title="物理层"></a>物理层</h3><p><strong>物理层</strong>（Physical Layer）是计算机网络OSI模型中<strong>最低</strong>的一层，也是<strong>最基本</strong>的一层。简单的说，网络的物理层面确保<strong>原始的数据</strong>可在各种<strong>物理媒体</strong>上<strong>传输</strong>。</p><p>物理层规定：为传输数据，需要<strong>物理链路</strong>与<strong>设备</strong>的建立、维持、拆除，并具有<strong>机械的</strong>、<strong>电子的</strong>、<strong>功能的</strong>、<strong>规范</strong>的特性。</p><p>第一层的数据单元是<strong>比特</strong>（bit）。</p><h4 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h4><ol><li><p>为数据段设备提供传输数据的通路</p></li><li><p>传输数据</p></li></ol><h4 id="常见物理层设备"><a href="#常见物理层设备" class="headerlink" title="常见物理层设备"></a>常见物理层设备</h4><ul><li>光纤</li><li>CAT-5线</li><li>CAT-6线</li><li>CAT-7线</li><li>RJ-45接头</li><li>集线器</li><li>串口</li><li>并口</li></ul><h4 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h4><ul><li>曼彻斯特编码 </li><li>差分曼彻斯特编码</li></ul><h3 id="数据链路层"><a href="#数据链路层" class="headerlink" title="数据链路层"></a>数据链路层</h3><p>数据链路层（Data Link Layer）是OSI参考模型<strong>第二层</strong>，位于物理层与网络层之间。可以细分成<strong>介质访问控制（MAC）子层</strong>和<strong>逻辑链路控制（LLC）子层</strong>。</p><h4 id="主要功能"><a href="#主要功能" class="headerlink" title="主要功能"></a>主要功能</h4><p>数据链路层用于跨物理层在<strong>网段节点</strong>之间传输数据，通常指以太网、无线局域网等通信手段。数据链路层提供了在网络的两个实体之间传输数据的功能，并且提供了<strong>差错检测</strong>用于<strong>纠正</strong>物理层中发生的错误。</p><p>只提供导线的一端到另一端（本质是点到点）的<strong>数据传输</strong>。</p><p>数据链路层的以太网协议规定了一组二进制电信号为<strong>数据帧</strong>，数据帧的报头 head 就包含<strong>目标 MAC 地址</strong>和<strong>源 MAC 地址</strong></p><p>第二层的数据单元是 <strong>帧</strong>（frame）。</p><p>帧都包括一个帧头 主题和一个帧尾</p><ul><li>帧头：源节点和目的节点的mac地址</li><li>主体：要传输的比特</li><li>帧尾：包括错误检测信息</li></ul><h4 id="常见数据链路层的设备"><a href="#常见数据链路层的设备" class="headerlink" title="常见数据链路层的设备"></a>常见数据链路层的设备</h4><ul><li>网卡（物理层和数据链路层的MAC子层）</li><li>交换机 是数据链路层设备。</li><li>桥接器（又称网桥）</li></ul><h4 id="协议"><a href="#协议" class="headerlink" title="协议"></a>协议</h4><p>异步传输模式</p><ul><li><p>VLAN（IEEE 802.1Q）</p></li><li><p>以太网（IEEE 802.3）</p></li><li><p>Wi-Fi（IEEE 802.11）</p></li><li><p>PPP协议<br>点对点协议 一种数据链路层封装协议 有PAP和CHAP两种方式</p></li><li><p>PPPoE协议<br>，以太网上的点对点协议，是将点对点协议（PPP）封装在以太网（Ethernet）框架中的一种网络隧道协议。</p></li></ul><h3 id="网络层"><a href="#网络层" class="headerlink" title="网络层"></a>网络层</h3><p>网络层是<strong>互联网通信过程</strong>的一部分，这是连接发生的地方，在不同网络之间来回<strong>发送数据包</strong>来进行通信，处理不同网络之间的数据路由和发送。</p><p>用于将接收到的数据段从一台计算机传输到位于不同网络中的另一台计算机。</p><p>第三层的数据单元为<strong>数据包</strong></p><h4 id="功能-1"><a href="#功能-1" class="headerlink" title="功能"></a>功能</h4><ol><li>寻址<br>对网络层而言使用IP地址来<strong>唯一标识</strong>互联网上的各个寻址，网络层依靠IP地址进行<strong>相互通信</strong>（类似于MAC地址），详细的编址方案参见IPv4和IPv6。<br></li><li>路由<br>在同一个网络中的内部通信并不需要网络层设备，仅仅靠数据链路层就可以完成相互通信，对于不同的网络之间相互通信则必须借助路由器等三层设备。</li></ol><h4 id="网络层协议"><a href="#网络层协议" class="headerlink" title="网络层协议"></a>网络层协议</h4><ul><li>IP （V4、V6）</li><li>ICMP（V4、V6）</li><li>IPsec</li><li>RIP</li><li>OSPF</li></ul><h4 id="具有网络层功能的设备"><a href="#具有网络层功能的设备" class="headerlink" title="具有网络层功能的设备"></a>具有网络层功能的设备</h4><ul><li>路由</li><li>三层交换机</li></ul><h3 id="传输层"><a href="#传输层" class="headerlink" title="传输层"></a>传输层</h3><p>传输层通过分段、流量控制和差错控制来控制通信的可靠性。支持不同主机上运行的应用程序之间的端到端通信。</p><p>第四次的数据单元可以说<strong>报文段</strong>或<strong>数据段</strong>(<strong>tcp</strong>)和<strong>数据报</strong>(<strong>udp</strong>)</p><h4 id="协议-1"><a href="#协议-1" class="headerlink" title="协议"></a>协议</h4><ul><li>tcp</li><li>udp</li></ul><h3 id="会话层"><a href="#会话层" class="headerlink" title="会话层"></a>会话层</h3><p>主要利用传输层提供的端到端数据传输服务，为两个会话层实体进行<strong>会话</strong>（Session），而进行的对话连接的管理服务。</p><h4 id="会话层服务"><a href="#会话层服务" class="headerlink" title="会话层服务"></a>会话层服务</h4><ul><li>认证</li><li>权限</li><li>会话恢复</li></ul><h4 id="会话层协议"><a href="#会话层协议" class="headerlink" title="会话层协议"></a>会话层协议</h4><ul><li>PAP, 密码认证协议</li><li>PPTP, 点对点隧道协议</li><li>L2TP, 第二层隧道协议</li><li>RPC, 远程过程调用</li><li>SDP, 套接字直接协议</li></ul><h3 id="表示层"><a href="#表示层" class="headerlink" title="表示层"></a>表示层</h3><p>表示层向上对应用层服务，向下接受来自会话层的服务。表示层为在应用过程之间传送的信息提供表示方法的服务，它只关心信息发出的语法和语义</p><p>表示层从应用层接收数据。这些数据是以字符和数字的形式出现的，表示层将这些字符和数字转换成机器可理解的二进制格式。</p><p>为不同终端的上层用户提供数据和信息正确的语法表示变换方法。表示层确保数据以应用层可以理解的形式传递。处理数据编码、压缩和加密。</p><h4 id="表示层的主要功能"><a href="#表示层的主要功能" class="headerlink" title="表示层的主要功能"></a>表示层的主要功能</h4><ul><li>数据语法转换</li><li>语法表示</li><li>连接管理</li><li>数据处理</li><li>数据加密和解密</li><li>数据压缩和解压</li><li>数据编码和解码</li></ul><h4 id="表示层协议"><a href="#表示层协议" class="headerlink" title="表示层协议"></a>表示层协议</h4><ul><li>HTTP&#x2F;HTTPS</li><li>FTP&#x2F;FTPS</li><li>SSH</li><li>Telnet</li><li>ASN.1</li></ul><h3 id="应用层"><a href="#应用层" class="headerlink" title="应用层"></a>应用层</h3><p>用层直接和应用程序接口结合，并提供常见的网络应用服务。应用层也向第六层表示层发出请求。</p><p>应用层直接向最终用户应用程序提供网络服务。</p><h4 id="协议-2"><a href="#协议-2" class="headerlink" title="协议"></a>协议</h4><ul><li>DHCP</li><li>DNS</li><li>FTP</li><li>POP3</li></ul><p>简单来说 假如你在给你的异地女朋友发微信信息 微信这个app就是属于<strong>应用层</strong> 将你发的这个信息转化为机器<strong>能够懂的适合传输</strong>的形式 这个就是<strong>表示层</strong>的作用 这个信息要发给你的女朋友 你和女朋友的微信会创建一个<strong>会话连接</strong> 会话层会在信息发过去的时候<strong>保证传输</strong>顺利进行 传输层会把数据<strong>分成</strong>适合传输的<strong>数据包</strong>进行传输 网络层会规划一条<strong>合适的路径</strong>传输信息 数据链路层会通过物理网络将<strong>数据包传给</strong>物理层 物理层就能把数据包发送到接收方手机 就能接收到发送方的信息</p><h2 id="tcp-ip模型"><a href="#tcp-ip模型" class="headerlink" title="tcp&#x2F;ip模型"></a>tcp&#x2F;ip模型</h2><ul><li>应用层</li><li>传输层</li><li>网络接口层</li><li>链路层</li></ul><h2 id="ip地址"><a href="#ip地址" class="headerlink" title="ip地址"></a>ip地址</h2><p>由网络号和主机号组成</p><p>A类地址以0开头，第一个字节作为网络号，地址范围为：0.0.0.0~127.255.255.255</p><p>B类地址以10开头，前两个字节作为网络号，地址范围是：128.0.0.0~191.255.255.255</p><p>C类地址以110开头，前三个字节作为网络号，地址范围是：192.0.0.0~223.255.255.255</p><p>D类地址以1110开头，地址范围是224.0.0.0~239.255.255.255，D类地址作为组播地址（一对多的通信）</p><p>E类地址以1111开头，地址范围是240.0.0.0~255.255.255.255，E类地址为保留地址，供以后使用。</p><p>0.0.0.0用来寻找自己的ip</p><h3 id="私有地址"><a href="#私有地址" class="headerlink" title="私有地址"></a>私有地址</h3><ul><li>A类 10.0.0.0 - 10.255.255.255 (10&#x2F;8)</li><li>B类 172.16.0.0 - 172.31.255.255 (172.16&#x2F;12)</li><li>C类 192.168.0.0 - 192.168.255.255 (192.168&#x2F;16)</li></ul><h2 id="dhcp协议"><a href="#dhcp协议" class="headerlink" title="dhcp协议"></a>dhcp协议</h2><p>动态主机配置协议 用于集中对用户IP地址进行动态管理和配置。</p><h3 id="DHCP遵循四个步骤：发现、提供、请求和确认-DORA-："><a href="#DHCP遵循四个步骤：发现、提供、请求和确认-DORA-：" class="headerlink" title="DHCP遵循四个步骤：发现、提供、请求和确认 (DORA)："></a>DHCP遵循四个步骤：发现、提供、请求和确认 (DORA)：</h3><ul><li>DHCP发现：客户端将广播 DHCPDISCOVER 消息，寻找本地DHCP服务器（如果存在）。</li><li>DHCP提供：服务器以 DHCPOFFER 消息进行响应，其中包含可供客户端接受的 IP 地址。</li><li>DHCP请求：客户端以 DHCPREQUEST 消息进行响应，表明它已接受提供的 IP。</li><li>DHCP确认：服务器以 DHCPACK 消息进行响应，以确认提供的 IP 地址现已分配给该客户端。</li></ul><h2 id="arp协议"><a href="#arp协议" class="headerlink" title="arp协议"></a>arp协议</h2><p>arp协议(地址解析协议) IP地址对mac地址的映射 询问IP地址对应的mac地址</p><p>目标 MAC 地址<br>源 MAC 地址</p>]]></content>
       
     </entry>
     
@@ -435,9 +446,20 @@
     
     
     <entry>
-      <title>about</title>
-      <link href="/about/index.html"/>
-      <url>/about/index.html</url>
+      <title>categories</title>
+      <link href="/categories/index-1.html"/>
+      <url>/categories/index-1.html</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>music</title>
+      <link href="/music/index.html"/>
+      <url>/music/index.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
@@ -457,9 +479,9 @@
     
     
     <entry>
-      <title>about</title>
-      <link href="/about/index-1.html"/>
-      <url>/about/index-1.html</url>
+      <title>movies</title>
+      <link href="/movies/index.html"/>
+      <url>/movies/index.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
@@ -468,31 +490,9 @@
     
     
     <entry>
-      <title>network 网络概念</title>
-      <link href="/about/network-%E7%BD%91%E7%BB%9C%E6%A6%82%E5%BF%B5.html"/>
-      <url>/about/network-%E7%BD%91%E7%BB%9C%E6%A6%82%E5%BF%B5.html</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="网络知识的介绍"><a href="#网络知识的介绍" class="headerlink" title="网络知识的介绍"></a>网络知识的介绍</h1><h2 id="osi七层模型"><a href="#osi七层模型" class="headerlink" title="osi七层模型"></a>osi七层模型</h2><p>OSI 模型是一个描述网络功能的概念框架。简单来说，OSI 模型标对计算机系统彼此之间发送信息的方式进行了标准化。</p><p>分为：</p><ul><li>物理层</li><li>数据链路层</li><li>网络层</li><li>传输层</li><li>会话层</li><li>表示层</li><li>应用层</li></ul><h3 id="物理层"><a href="#物理层" class="headerlink" title="物理层"></a>物理层</h3><p><strong>物理层</strong>（Physical Layer）是计算机网络OSI模型中<strong>最低</strong>的一层，也是<strong>最基本</strong>的一层。简单的说，网络的物理层面确保<strong>原始的数据</strong>可在各种<strong>物理媒体</strong>上<strong>传输</strong>。</p><p>物理层规定：为传输数据，需要<strong>物理链路</strong>与<strong>设备</strong>的建立、维持、拆除，并具有<strong>机械的</strong>、<strong>电子的</strong>、<strong>功能的</strong>、<strong>规范</strong>的特性。</p><p>第一层的数据单元是<strong>比特</strong>（bit）。</p><h4 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h4><ol><li><p>为数据段设备提供传输数据的通路</p></li><li><p>传输数据</p></li></ol><h4 id="常见物理层设备"><a href="#常见物理层设备" class="headerlink" title="常见物理层设备"></a>常见物理层设备</h4><ul><li>光纤</li><li>CAT-5线</li><li>CAT-6线</li><li>CAT-7线</li><li>RJ-45接头</li><li>集线器</li><li>串口</li><li>并口</li></ul><h4 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h4><ul><li>曼彻斯特编码 </li><li>差分曼彻斯特编码</li></ul><h3 id="数据链路层"><a href="#数据链路层" class="headerlink" title="数据链路层"></a>数据链路层</h3><p>数据链路层（Data Link Layer）是OSI参考模型<strong>第二层</strong>，位于物理层与网络层之间。可以细分成<strong>介质访问控制（MAC）子层</strong>和<strong>逻辑链路控制（LLC）子层</strong>。</p><h4 id="主要功能"><a href="#主要功能" class="headerlink" title="主要功能"></a>主要功能</h4><p>数据链路层用于跨物理层在<strong>网段节点</strong>之间传输数据，通常指以太网、无线局域网等通信手段。数据链路层提供了在网络的两个实体之间传输数据的功能，并且提供了<strong>差错检测</strong>用于<strong>纠正</strong>物理层中发生的错误。</p><p>只提供导线的一端到另一端（本质是点到点）的<strong>数据传输</strong>。</p><p>数据链路层的以太网协议规定了一组二进制电信号为<strong>数据帧</strong>，数据帧的报头 head 就包含<strong>目标 MAC 地址</strong>和<strong>源 MAC 地址</strong></p><p>第二层的数据单元是 <strong>帧</strong>（frame）。</p><p>帧都包括一个帧头 主题和一个帧尾</p><ul><li>帧头：源节点和目的节点的mac地址</li><li>主体：要传输的比特</li><li>帧尾：包括错误检测信息</li></ul><h4 id="常见数据链路层的设备"><a href="#常见数据链路层的设备" class="headerlink" title="常见数据链路层的设备"></a>常见数据链路层的设备</h4><ul><li>网卡（物理层和数据链路层的MAC子层）</li><li>交换机 是数据链路层设备。</li><li>桥接器（又称网桥）</li></ul><h4 id="协议"><a href="#协议" class="headerlink" title="协议"></a>协议</h4><p>异步传输模式</p><ul><li><p>VLAN（IEEE 802.1Q）</p></li><li><p>以太网（IEEE 802.3）</p></li><li><p>Wi-Fi（IEEE 802.11）</p></li><li><p>PPP协议<br>点对点协议 一种数据链路层封装协议 有PAP和CHAP两种方式</p></li><li><p>PPPoE协议<br>，以太网上的点对点协议，是将点对点协议（PPP）封装在以太网（Ethernet）框架中的一种网络隧道协议。</p></li></ul><h3 id="网络层"><a href="#网络层" class="headerlink" title="网络层"></a>网络层</h3><p>网络层是<strong>互联网通信过程</strong>的一部分，这是连接发生的地方，在不同网络之间来回<strong>发送数据包</strong>来进行通信，处理不同网络之间的数据路由和发送。</p><p>用于将接收到的数据段从一台计算机传输到位于不同网络中的另一台计算机。</p><p>第三层的数据单元为<strong>数据包</strong></p><h4 id="功能-1"><a href="#功能-1" class="headerlink" title="功能"></a>功能</h4><ol><li>寻址<br>对网络层而言使用IP地址来<strong>唯一标识</strong>互联网上的各个寻址，网络层依靠IP地址进行<strong>相互通信</strong>（类似于MAC地址），详细的编址方案参见IPv4和IPv6。<br></li><li>路由<br>在同一个网络中的内部通信并不需要网络层设备，仅仅靠数据链路层就可以完成相互通信，对于不同的网络之间相互通信则必须借助路由器等三层设备。</li></ol><h4 id="网络层协议"><a href="#网络层协议" class="headerlink" title="网络层协议"></a>网络层协议</h4><ul><li>IP （V4、V6）</li><li>ICMP（V4、V6）</li><li>IPsec</li><li>RIP</li><li>OSPF</li></ul><h4 id="具有网络层功能的设备"><a href="#具有网络层功能的设备" class="headerlink" title="具有网络层功能的设备"></a>具有网络层功能的设备</h4><ul><li>路由</li><li>三层交换机</li></ul><h3 id="传输层"><a href="#传输层" class="headerlink" title="传输层"></a>传输层</h3><p>传输层通过分段、流量控制和差错控制来控制通信的可靠性。支持不同主机上运行的应用程序之间的端到端通信。</p><p>第四次的数据单元可以说<strong>报文段</strong>或<strong>数据段</strong>(<strong>tcp</strong>)和<strong>数据报</strong>(<strong>udp</strong>)</p><h4 id="协议-1"><a href="#协议-1" class="headerlink" title="协议"></a>协议</h4><ul><li>tcp</li><li>udp</li></ul><h3 id="会话层"><a href="#会话层" class="headerlink" title="会话层"></a>会话层</h3><p>主要利用传输层提供的端到端数据传输服务，为两个会话层实体进行<strong>会话</strong>（Session），而进行的对话连接的管理服务。</p><h4 id="会话层服务"><a href="#会话层服务" class="headerlink" title="会话层服务"></a>会话层服务</h4><ul><li>认证</li><li>权限</li><li>会话恢复</li></ul><h4 id="会话层协议"><a href="#会话层协议" class="headerlink" title="会话层协议"></a>会话层协议</h4><ul><li>PAP, 密码认证协议</li><li>PPTP, 点对点隧道协议</li><li>L2TP, 第二层隧道协议</li><li>RPC, 远程过程调用</li><li>SDP, 套接字直接协议</li></ul><h3 id="表示层"><a href="#表示层" class="headerlink" title="表示层"></a>表示层</h3><p>表示层向上对应用层服务，向下接受来自会话层的服务。表示层为在应用过程之间传送的信息提供表示方法的服务，它只关心信息发出的语法和语义</p><p>表示层从应用层接收数据。这些数据是以字符和数字的形式出现的，表示层将这些字符和数字转换成机器可理解的二进制格式。</p><p>为不同终端的上层用户提供数据和信息正确的语法表示变换方法。表示层确保数据以应用层可以理解的形式传递。处理数据编码、压缩和加密。</p><h4 id="表示层的主要功能"><a href="#表示层的主要功能" class="headerlink" title="表示层的主要功能"></a>表示层的主要功能</h4><ul><li>数据语法转换</li><li>语法表示</li><li>连接管理</li><li>数据处理</li><li>数据加密和解密</li><li>数据压缩和解压</li><li>数据编码和解码</li></ul><h4 id="表示层协议"><a href="#表示层协议" class="headerlink" title="表示层协议"></a>表示层协议</h4><ul><li>HTTP&#x2F;HTTPS</li><li>FTP&#x2F;FTPS</li><li>SSH</li><li>Telnet</li><li>ASN.1</li></ul><h3 id="应用层"><a href="#应用层" class="headerlink" title="应用层"></a>应用层</h3><p>用层直接和应用程序接口结合，并提供常见的网络应用服务。应用层也向第六层表示层发出请求。</p><p>应用层直接向最终用户应用程序提供网络服务。</p><h4 id="协议-2"><a href="#协议-2" class="headerlink" title="协议"></a>协议</h4><ul><li>DHCP</li><li>DNS</li><li>FTP</li><li>POP3</li></ul><p>简单来说 假如你在给你的异地女朋友发微信信息 微信这个app就是属于<strong>应用层</strong> 将你发的这个信息转化为机器<strong>能够懂的适合传输</strong>的形式 这个就是<strong>表示层</strong>的作用 这个信息要发给你的女朋友 你和女朋友的微信会创建一个<strong>会话连接</strong> 会话层会在信息发过去的时候<strong>保证传输</strong>顺利进行 传输层会把数据<strong>分成</strong>适合传输的<strong>数据包</strong>进行传输 网络层会规划一条<strong>合适的路径</strong>传输信息 数据链路层会通过物理网络将<strong>数据包传给</strong>物理层 物理层就能把数据包发送到接收方手机 就能接收到发送方的信息</p><h2 id="tcp-ip模型"><a href="#tcp-ip模型" class="headerlink" title="tcp&#x2F;ip模型"></a>tcp&#x2F;ip模型</h2><ul><li>应用层</li><li>传输层</li><li>网络接口层</li><li>链路层</li></ul><h2 id="ip地址"><a href="#ip地址" class="headerlink" title="ip地址"></a>ip地址</h2><p>由网络号和主机号组成</p><p>A类地址以0开头，第一个字节作为网络号，地址范围为：0.0.0.0~127.255.255.255</p><p>B类地址以10开头，前两个字节作为网络号，地址范围是：128.0.0.0~191.255.255.255</p><p>C类地址以110开头，前三个字节作为网络号，地址范围是：192.0.0.0~223.255.255.255</p><p>D类地址以1110开头，地址范围是224.0.0.0~239.255.255.255，D类地址作为组播地址（一对多的通信）</p><p>E类地址以1111开头，地址范围是240.0.0.0~255.255.255.255，E类地址为保留地址，供以后使用。</p><p>0.0.0.0用来寻找自己的ip</p><h3 id="私有地址"><a href="#私有地址" class="headerlink" title="私有地址"></a>私有地址</h3><ul><li>A类 10.0.0.0 - 10.255.255.255 (10&#x2F;8)</li><li>B类 172.16.0.0 - 172.31.255.255 (172.16&#x2F;12)</li><li>C类 192.168.0.0 - 192.168.255.255 (192.168&#x2F;16)</li></ul><h2 id="dhcp协议"><a href="#dhcp协议" class="headerlink" title="dhcp协议"></a>dhcp协议</h2><p>动态主机配置协议 用于集中对用户IP地址进行动态管理和配置。</p><h3 id="DHCP遵循四个步骤：发现、提供、请求和确认-DORA-："><a href="#DHCP遵循四个步骤：发现、提供、请求和确认-DORA-：" class="headerlink" title="DHCP遵循四个步骤：发现、提供、请求和确认 (DORA)："></a>DHCP遵循四个步骤：发现、提供、请求和确认 (DORA)：</h3><ul><li>DHCP发现：客户端将广播 DHCPDISCOVER 消息，寻找本地DHCP服务器（如果存在）。</li><li>DHCP提供：服务器以 DHCPOFFER 消息进行响应，其中包含可供客户端接受的 IP 地址。</li><li>DHCP请求：客户端以 DHCPREQUEST 消息进行响应，表明它已接受提供的 IP。</li><li>DHCP确认：服务器以 DHCPACK 消息进行响应，以确认提供的 IP 地址现已分配给该客户端。</li></ul><h2 id="arp协议"><a href="#arp协议" class="headerlink" title="arp协议"></a>arp协议</h2><p>arp协议(地址解析协议) IP地址对mac地址的映射 询问IP地址对应的mac地址</p><p>目标 MAC 地址<br>源 MAC 地址</p>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>music</title>
-      <link href="/music/index.html"/>
-      <url>/music/index.html</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>tags</title>
-      <link href="/tags/index-1.html"/>
-      <url>/tags/index-1.html</url>
+      <title>books</title>
+      <link href="/books/index.html"/>
+      <url>/books/index.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
@@ -523,9 +523,9 @@
     
     
     <entry>
-      <title>movies</title>
-      <link href="/movies/index.html"/>
-      <url>/movies/index.html</url>
+      <title>tags</title>
+      <link href="/tags/index-1.html"/>
+      <url>/tags/index-1.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
