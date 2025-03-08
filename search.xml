@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title>tryhackme-blue</title>
+      <link href="/2025/03/08/tryhackme-blue/"/>
+      <url>/2025/03/08/tryhackme-blue/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>tryhackme-Metasploit 科普</title>
       <link href="/2025/03/07/tryhackme-Metasploit-%E7%A7%91%E6%99%AE/"/>
       <url>/2025/03/07/tryhackme-Metasploit-%E7%A7%91%E6%99%AE/</url>
@@ -11,6 +24,12 @@
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>好久没更新了 最近在搞obsidian的手机端电脑端的同步 就一直没更新。总算是忙完了。</p><p>来看看thm的Metasploit基础知识</p><h1 id="Metasploit：简介"><a href="#Metasploit：简介" class="headerlink" title="Metasploit：简介"></a>Metasploit：简介</h1><p>Metasploit是最广泛使用的漏洞利用框架。Metasploit是一款功能强大的工具，可以支持渗透测试的所有阶段，从信息收集到后期漏洞利用。</p><p>Metasploit Framework的主要组件可以概括如下；</p><p>msfconsole：主命令行界面。</p><p>模块：支持模块，例如漏洞利用、扫描器、有效载荷等。</p><p>工具：独立工具，可帮助进行漏洞研究、漏洞评估或渗透测试。其中一些工具是 msfvenom、pattern_create 和 pattern_offset。将在本模块中介绍 </p><h2 id="Metasploit的主要部件"><a href="#Metasploit的主要部件" class="headerlink" title="Metasploit的主要部件"></a>Metasploit的主要部件</h2><h3 id="task2"><a href="#task2" class="headerlink" title="task2"></a>task2</h3><p>要介绍几个东西：</p><ol><li><p>漏洞（Exploit）:利用目标系统上存在的漏洞的一段代码。</p></li><li><p>脆弱性（Vulnerability）: 影响目标系统的设计、编码或逻辑缺陷。漏洞的利用可能导致机密信息泄露或允许攻击者在目标系统上执行代码。</p></li><li><p>有效载荷（Payload）: 漏洞利用会利用漏洞。但是，如果我们希望漏洞利用达到我们想要的结果（获得目标系统的访问权限、读取机密信息等），我们需要使用有效载荷。有效载荷是将在目标系统上运行的代码。</p></li></ol><p>在msfconsole中有几个交互性的模块：</p><ol><li><strong>Auxiliary</strong> 辅助模块</li></ol><ul><li>任何支持模块，例如扫描仪、爬虫和模糊器，都可以在这里找到。</li></ul><ol start="2"><li><strong>encoders</strong></li></ol><ul><li>编码器将允许您对漏洞和有效负载进行编码</li></ul><ol start="3"><li><strong>Evasion</strong></li></ol><ul><li>evasion模块，生成木马程序</li></ul><ol start="4"><li><strong>Exploits</strong></li></ol><ul><li>漏洞利用</li></ul><ol start="5"><li><strong>nop</strong></li></ol><ul><li>空指令不会对程序运行状态造成任何实质影响的空操作或者无关操作指令</li></ul><ol start="6"><li><strong>payload</strong></li></ol><ul><li>有效负载是在目标系统上运行的代码。<br>分类：</li><li>payload下看到四个不同的目录：</li><li><strong>adapters</strong> (适配器)</li><li><strong>singles</strong>（单一有效负载）</li><li><strong>stagers</strong>（阶段式Payload）</li><li><strong>stages</strong>（阶段二有效负载）</li></ul><ol start="7"><li><strong>Post</strong></li></ol><ul><li>后期模块将在上述渗透测试过程的最后阶段，即后期开发中发挥作用。</li></ul><p>简单看看问题说了啥<br><img src="/images/tryhackme-Metasploit-%E7%A7%91%E6%99%AE/Screenshot%202025-03-07%20151900.png" alt="task2"></p><p>利用系统缺陷的代码是<strong>exploit</strong></p><p>攻击者在目的系统上运行的代码是<strong>payload</strong></p><p>自包含有效载荷的是<strong>singles</strong></p><p>这个是属于单一有效载荷</p><h2 id="msfconsole"><a href="#msfconsole" class="headerlink" title="msfconsole"></a>msfconsole</h2><p>msfconsole有很多适用的命令 <strong>set</strong>命令 <strong>history</strong>命令 <strong>use</strong>命令 </p><p><strong>show options</strong> 可以看需要设置和设置好的工作环境</p><p>我们在show options中常见的参数：</p><ul><li><p><strong>RHOSTS</strong>： “远程主机”，目标系统的 IP 地址。可以设置单个 IP 地址或网络范围。这将支持 CIDR（无类域间路由）表示法（&#x2F;24、&#x2F;16 等）或网络范围（10.10.10.x – 10.10.10.y）。您还可以使用列出目标的文件，每行一个目标，使用 file:&#x2F;path&#x2F;of&#x2F;the&#x2F;target_file.txt</p></li><li><p><strong>RPORT</strong>： “远程端口”，存在漏洞的应用程序在目标系统上运行的端口。</p></li><li><p><strong>PAYLOAD</strong>：您将与漏洞利用一起使用的有效载荷。</p></li><li><p><strong>LHOST</strong>： “Localhost”，攻击机器 也就是你的 IP 地址。</p></li><li><p><strong>LPORT</strong>： “本地端口”，反向 shell 将使用该端口进行连接。这是攻击机器上的端口，您可以将其设置为任何其他应用程序未使用的端口。</p></li><li><p><strong>session</strong>：使用Metasploit与目标系统建立的每个连接都将有一个会话 ID。您将使用会话 ID 与后开发模块一起使用，这些模块将使用现有连接连接到目标系统。</p></li></ul><p><strong>info</strong>命令可以查看详细消息</p><p><strong>search</strong>命令用来搜索我们需要的东西 假如我们要搜索特定的类型就可以设置type</p><p>eg：如果我们希望搜索结果仅包含辅助模块，我们可以将类型设置为辅助。</p><p>search type：auxiliary</p><p><strong>back</strong>是退出到上一级</p><p><strong>setg</strong> 命令设置一个全局值，该值将一直使用，直到您退出Metasploit或使用该 unsetg 命令清除它。</p><p>使用该<strong>unset</strong>命令清除任何参数值</p><p>命令启动模块<strong>exploit</strong></p><h3 id="task3-task4"><a href="#task3-task4" class="headerlink" title="task3&amp;task4"></a>task3&amp;task4</h3><p><img src="/images/tryhackme-Metasploit-%E7%A7%91%E6%99%AE/task3.png" alt="task3"></p><p>第二问就是info 后面加要查的东西</p><p><img src="/images/tryhackme-Metasploit-%E7%A7%91%E6%99%AE/todb.png" alt="task3"></p><p>这个是task4</p><p><img src="/images/tryhackme-Metasploit-%E7%A7%91%E6%99%AE/task4.png" alt="task4"></p><p>第一问</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set lport 666</span><br></pre></td></tr></table></figure><p>第二问设置全局值</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">setg rhosts 10.10.19.23</span><br></pre></td></tr></table></figure><p>第三问</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unset payload</span><br></pre></td></tr></table></figure><p>第四问</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exploit</span><br></pre></td></tr></table></figure><h1 id="Metasploit：利用"><a href="#Metasploit：利用" class="headerlink" title="Metasploit：利用"></a>Metasploit：利用</h1><p>将介绍数据库功能如何使管理范围更广的渗透测试工作变得更加容易。最后，将研究如何使用msfvenom生成有效载荷以及如何在大多数目标平台上启动Meterpreter会话。</p><p>我们将涵盖的主题包括：</p><ul><li>如何使用Metasploit扫描目标系统。</li><li>如何使用Metasploit数据库功能。</li><li>如何使用Metasploit进行漏洞扫描。</li><li>如何使用Metasploit利用目标系统上的易受攻击的服务。</li><li>如何msfvenom 使用来创建有效载荷并在目标系统上获取 Meterpreter 会话。</li></ul><h2 id="port-scanning"><a href="#port-scanning" class="headerlink" title="port scanning"></a>port scanning</h2><p><strong>search portscan</strong>命令列出可用的端口扫描模块。</p><p>use 一个适合的模块之后 要show options 设置一下关键的参数</p><p>有一些参数我们要了解一下</p><ul><li>CONCURRENCY: 并发 同时扫描的目标数量。</li><li>PORTS: 要扫描的端口范围</li><li>RHOSTS: 要扫描的目标或目标网络</li><li>THREADS: 同时使用的线程数。线程越多，扫描速度越快。</li></ul><p>还有很多端口扫描可以给我们选择</p><p>UDP服务识别<br>scanner&#x2F;discovery&#x2F;udp_sweep 模块将允许您快速识别通过UDP（用户数据报协议）运行的服务。</p><p>Metasploit提供了几个有用的辅助模块，使我们能够扫描特定服务。例如smb模块的smb_enumshares 和，smb_version</p><h2 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h2><p>实际用会涉及很多个目标 就需要数据库来简化项目管理</p><p>启动 PostgreSQL 数据库，将使用以下命令： </p><p>systemctl start postgresql</p><p>然需要使用命令初始化 msfdb init数据库。</p><p>数据库功能将允许您创建工作区来隔离不同的项目。首次启动时，处于默认工作区中。可以使用workspace 命令列出可用的工作区。 </p><p>添加工作区-a或使用参数删除工作区-d</p><p>workspace -h命令列出该workspace 命令的可用选项</p><p>运行这样的方式运行Nmap </p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db_nmap</span><br></pre></td></tr></table></figure><p>所有结果都将保存到数据库中。 </p><p>现在，您可以分别使用hosts和services命令获取与目标系统上运行的主机和服务相关的信息 </p><h2 id="Exploitation"><a href="#Exploitation" class="headerlink" title="Exploitation"></a>Exploitation</h2><p>show payloads命令列出可以与该特定漏洞一起使用的其他命令 在使用漏洞的时候可以用这个命令查看别的有效负载 </p><p>决定某个有效呼负载之后可以用set payload</p><p>sessions 命令将列出所有活动会话。支持许多选项，可帮助更好地管理会话。</p><p>看看task5</p><p><img src="/images/tryhackme-Metasploit-%E7%A7%91%E6%99%AE/task5.png" alt="task5"></p><p>看提示的话 就是要使用&#x2F;windows&#x2F;smb&#x2F;ms17_010_enteralblue这个漏洞</p><p>在里面设置一个payload &#x2F;generic&#x2F;shell_reverse_tcp</p><p><img src="/images/tryhackme-Metasploit-%E7%A7%91%E6%99%AE/payload.png" alt="task5"></p><p><img src="/images/tryhackme-Metasploit-%E7%A7%91%E6%99%AE/payload1.png" alt="task5"></p><p><img src="/images/tryhackme-Metasploit-%E7%A7%91%E6%99%AE/payload3.png" alt="task5"></p><p>成功进入 用dir命令来搜一下我们需要的文件 再type一下就能查看文件</p><p><img src="/images/tryhackme-Metasploit-%E7%A7%91%E6%99%AE/flag.png" alt="task5"></p><p><img src="/images/tryhackme-Metasploit-%E7%A7%91%E6%99%AE/flag1.png" alt="task5"></p><p>第三问其实一开始就有点唐了 一直在Meterpreter那里 得先shell升级一下 用hashdump就能找到hash值</p><h2 id="Msfvenom"><a href="#Msfvenom" class="headerlink" title="Msfvenom"></a>Msfvenom</h2><p>Msfvenom 取代了 Msfpayload 和 Msfencode，它允许您生成有效载荷</p><h1 id="Metasploit：Meterpreter"><a href="#Metasploit：Meterpreter" class="headerlink" title="Metasploit：Meterpreter"></a>Metasploit：Meterpreter</h1><p>Meterpreter是一个Metasploit有效负载，它使用许多有价值的组件支持渗透测试过程。</p><p>getpid返回运行Meterpretergetpid 的进程 ID </p><p>msfvenom –list payloads 命令并 grep 了“meterpreter”有效载荷（添加| grep meterpreter到命令行）</p><p>决定使用哪个版本的Meterpreter主要基于三个因素；</p><ul><li>目标操作系统（目标操作系统是Linux还是 Windows？是 Mac 设备吗？是 Android 手机吗？等等）</li><li>目标系统上可用的组件（是否安装了 Python？这是一个PHP网站吗？等等）</li><li>目标系统可以拥有的网络连接类型（它们是否允许原始TCP连接？您只能拥有 HTTPS 反向连接吗？IPv6 地址是否不像 IPv4 地址那样受到严格监控？等等）</li></ul><p>Meterpreter将为您提供三类主要工具；</p><ul><li>内置命令</li><li>Meterpreter工具</li><li>Meterpreter脚本</li></ul><p>最后一个没啥好介绍的 上实战</p><p><img src="/images/tryhackme-Metasploit-%E7%A7%91%E6%99%AE/task6.png" alt="task6"></p><p>介绍中说了<br>可以使用（使用 exploit&#x2F;windows&#x2F; smb &#x2F;psexec）</p><p>用户名：ballen</p><p>密码：Password1</p><p>设置好smbpass smbuser和rhost就能开打了</p><p><img src="/images/tryhackme-Metasploit-%E7%A7%91%E6%99%AE/task51.png" alt="task6"></p><p>进去之后输入sysinfo查看信息</p><p>可以看到计算机名字和目标域的名字</p><p>计算机名字是ACME-TEST</p><p>目标域是FLASH</p><p><img src="/images/tryhackme-Metasploit-%E7%A7%91%E6%99%AE/task52.png" alt="task6"></p><p>第三问可能创建的共享域名字</p><p>这个需要用到别的模块 先把我们的meterpreter弄到session里面保存先</p><p><img src="/images/tryhackme-Metasploit-%E7%A7%91%E6%99%AE/task591.png" alt="task6"></p><p><img src="/images/tryhackme-Metasploit-%E7%A7%91%E6%99%AE/task59.png" alt="task6"></p><p>看了一下提示 是说要用post&#x2F;windows&#x2F;gather&#x2F;enum_shares这个模块的内容 设置session为我们保存过的那个 运行一次就能知道结果</p><p><img src="/images/tryhackme-Metasploit-%E7%A7%91%E6%99%AE/task592.png" alt="task6"></p><p>我们看结果有一个是shares的文件 可能就是ta 把名字输进去还真是speedster</p><p>第四问是问用户的ntlm哈希值</p><p>这里是用hashdump抓取密码</p><p><img src="/images/tryhackme-Metasploit-%E7%A7%91%E6%99%AE/task53.png" alt="task6"></p><p>将找到的值用在线破解工具试试</p><p><img src="/images/tryhackme-Metasploit-%E7%A7%91%E6%99%AE/task54.png" alt="task6"></p><p>密码为Trustno1</p><p>第六问和第八问问的都是文件在哪里</p><p>在这里可以用search命令去搜索 或者是 dir &#x2F;s &#x2F;b命令就能找到他们的路径</p><p>知道路径之后可以用type 加文件绝对路径来查看文件内容 </p><p><img src="/images/tryhackme-Metasploit-%E7%A7%91%E6%99%AE/task55.png" alt="task6"></p><p><img src="/images/tryhackme-Metasploit-%E7%A7%91%E6%99%AE/task56.png" alt="task6"></p><p><img src="/images/tryhackme-Metasploit-%E7%A7%91%E6%99%AE/task57.png" alt="task6"></p><p><img src="/images/tryhackme-Metasploit-%E7%A7%91%E6%99%AE/task58.png" alt="task6"></p><p>有一说一 msf这个工具是确实好用 很多地方我还不是很熟悉 得漫漫了解</p>]]></content>
       
       
+      
+        <tags>
+            
+            <tag> linux Metasploit </tag>
+            
+        </tags>
       
     </entry>
     
@@ -25,6 +44,12 @@
       
       
       
+        <tags>
+            
+            <tag> linux </tag>
+            
+        </tags>
+      
     </entry>
     
     
@@ -37,6 +62,12 @@
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>从最简单的kioptrix 1开始吧</p><p>其实我是只用了一种方法破解出来 这个靶场有很多方法来搞出这些东西。</p><h2 id="nmap扫描端口"><a href="#nmap扫描端口" class="headerlink" title="nmap扫描端口"></a>nmap扫描端口</h2><p>第一步始终是nmap扫端口 会发现有很多个端口</p><p><img src="/images/kioptrix-1-vulnhub-%E8%A7%A3%E6%B3%95/nmap.png" alt="nmap"></p><p><img src="/images/kioptrix-1-vulnhub-%E8%A7%A3%E6%B3%95/nmapa.png" alt="nmapa"><br>我们从各个端口开始查找</p><p>发现有ssh，http，samba和mod_ssl这几个比较可以的</p><h2 id="找到目标-逐个击破"><a href="#找到目标-逐个击破" class="headerlink" title="找到目标 逐个击破"></a>找到目标 逐个击破</h2><p>httpd和mod_ssl这两个总是出问题，只能被迫跳过 就剩下samba</p><h2 id="攻击samba"><a href="#攻击samba" class="headerlink" title="攻击samba"></a>攻击samba</h2><p>我们在msf中找到auxiliary 辅助模块的扫描模块 用来扫描samba的版本是多少</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">use auxiliary/scanner/smb/smb_version</span><br></pre></td></tr></table></figure><p><img src="/images/kioptrix-1-vulnhub-%E8%A7%A3%E6%B3%95/saomiao.png" alt="lou"></p><p>得知samba的版本之后就可以找漏洞</p><p>知道版本之后，在msf里面找一下有利用的漏洞吗</p><p><img src="/images/kioptrix-1-vulnhub-%E8%A7%A3%E6%B3%95/sambalou.png" alt="loudong"></p><p>我用第二个 看的比较顺眼 攻击的时候配置一下options里面的内容</p><p><img src="/images/kioptrix-1-vulnhub-%E8%A7%A3%E6%B3%95/config.png" alt="loudong"></p><p>如果就这么设置的话 速度会变得很慢。</p><p>于是我们设置一下payload</p><p><img src="/images/kioptrix-1-vulnhub-%E8%A7%A3%E6%B3%95/payload.png" alt="payload"></p><p>在下面会有我们需要的payload</p><p><img src="/images/kioptrix-1-vulnhub-%E8%A7%A3%E6%B3%95/payload1.png" alt="payload"></p><p>use一下这个payload 就能开搞了</p><p><img src="/images/kioptrix-1-vulnhub-%E8%A7%A3%E6%B3%95/root.png" alt="root"></p>]]></content>
       
       
+      
+        <tags>
+            
+            <tag> 渗透 linux </tag>
+            
+        </tags>
       
     </entry>
     
@@ -491,55 +522,11 @@
     
     
     <entry>
-      <title>categories</title>
-      <link href="/categories/index.html"/>
-      <url>/categories/index.html</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>books</title>
       <link href="/books/index.html"/>
       <url>/books/index.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>categories</title>
-      <link href="/categories/index-1.html"/>
-      <url>/categories/index-1.html</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>movies</title>
-      <link href="/movies/index.html"/>
-      <url>/movies/index.html</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title></title>
-      <link href="/css/music.css"/>
-      <url>/css/music.css</url>
-      
-        <content type="html"><![CDATA[.aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {    left: -66px !important;    /* 默认情况下缩进左侧66px，只留一点箭头部分 */  }    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {    left: 0 !important;    /* 鼠标悬停是左侧缩进归零，完全显示按钮 */  }]]></content>
       
     </entry>
     
@@ -568,6 +555,17 @@
     
     
     <entry>
+      <title></title>
+      <link href="/css/music.css"/>
+      <url>/css/music.css</url>
+      
+        <content type="html"><![CDATA[.aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {    left: -66px !important;    /* 默认情况下缩进左侧66px，只留一点箭头部分 */  }    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {    left: 0 !important;    /* 鼠标悬停是左侧缩进归零，完全显示按钮 */  }]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>about</title>
       <link href="/about/index.html"/>
       <url>/about/index.html</url>
@@ -579,11 +577,33 @@
     
     
     <entry>
-      <title>network 网络概念</title>
-      <link href="/about/network-%E7%BD%91%E7%BB%9C%E6%A6%82%E5%BF%B5.html"/>
-      <url>/about/network-%E7%BD%91%E7%BB%9C%E6%A6%82%E5%BF%B5.html</url>
+      <title>categories</title>
+      <link href="/categories/index-1.html"/>
+      <url>/categories/index-1.html</url>
       
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="网络知识的介绍"><a href="#网络知识的介绍" class="headerlink" title="网络知识的介绍"></a>网络知识的介绍</h1><h2 id="osi七层模型"><a href="#osi七层模型" class="headerlink" title="osi七层模型"></a>osi七层模型</h2><p>OSI 模型是一个描述网络功能的概念框架。简单来说，OSI 模型标对计算机系统彼此之间发送信息的方式进行了标准化。</p><p>分为：</p><ul><li>物理层</li><li>数据链路层</li><li>网络层</li><li>传输层</li><li>会话层</li><li>表示层</li><li>应用层</li></ul><h3 id="物理层"><a href="#物理层" class="headerlink" title="物理层"></a>物理层</h3><p><strong>物理层</strong>（Physical Layer）是计算机网络OSI模型中<strong>最低</strong>的一层，也是<strong>最基本</strong>的一层。简单的说，网络的物理层面确保<strong>原始的数据</strong>可在各种<strong>物理媒体</strong>上<strong>传输</strong>。</p><p>物理层规定：为传输数据，需要<strong>物理链路</strong>与<strong>设备</strong>的建立、维持、拆除，并具有<strong>机械的</strong>、<strong>电子的</strong>、<strong>功能的</strong>、<strong>规范</strong>的特性。</p><p>第一层的数据单元是<strong>比特</strong>（bit）。</p><h4 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h4><ol><li><p>为数据段设备提供传输数据的通路</p></li><li><p>传输数据</p></li></ol><h4 id="常见物理层设备"><a href="#常见物理层设备" class="headerlink" title="常见物理层设备"></a>常见物理层设备</h4><ul><li>光纤</li><li>CAT-5线</li><li>CAT-6线</li><li>CAT-7线</li><li>RJ-45接头</li><li>集线器</li><li>串口</li><li>并口</li></ul><h4 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h4><ul><li>曼彻斯特编码 </li><li>差分曼彻斯特编码</li></ul><h3 id="数据链路层"><a href="#数据链路层" class="headerlink" title="数据链路层"></a>数据链路层</h3><p>数据链路层（Data Link Layer）是OSI参考模型<strong>第二层</strong>，位于物理层与网络层之间。可以细分成<strong>介质访问控制（MAC）子层</strong>和<strong>逻辑链路控制（LLC）子层</strong>。</p><h4 id="主要功能"><a href="#主要功能" class="headerlink" title="主要功能"></a>主要功能</h4><p>数据链路层用于跨物理层在<strong>网段节点</strong>之间传输数据，通常指以太网、无线局域网等通信手段。数据链路层提供了在网络的两个实体之间传输数据的功能，并且提供了<strong>差错检测</strong>用于<strong>纠正</strong>物理层中发生的错误。</p><p>只提供导线的一端到另一端（本质是点到点）的<strong>数据传输</strong>。</p><p>数据链路层的以太网协议规定了一组二进制电信号为<strong>数据帧</strong>，数据帧的报头 head 就包含<strong>目标 MAC 地址</strong>和<strong>源 MAC 地址</strong></p><p>第二层的数据单元是 <strong>帧</strong>（frame）。</p><p>帧都包括一个帧头 主题和一个帧尾</p><ul><li>帧头：源节点和目的节点的mac地址</li><li>主体：要传输的比特</li><li>帧尾：包括错误检测信息</li></ul><h4 id="常见数据链路层的设备"><a href="#常见数据链路层的设备" class="headerlink" title="常见数据链路层的设备"></a>常见数据链路层的设备</h4><ul><li>网卡（物理层和数据链路层的MAC子层）</li><li>交换机 是数据链路层设备。</li><li>桥接器（又称网桥）</li></ul><h4 id="协议"><a href="#协议" class="headerlink" title="协议"></a>协议</h4><p>异步传输模式</p><ul><li><p>VLAN（IEEE 802.1Q）</p></li><li><p>以太网（IEEE 802.3）</p></li><li><p>Wi-Fi（IEEE 802.11）</p></li><li><p>PPP协议<br>点对点协议 一种数据链路层封装协议 有PAP和CHAP两种方式</p></li><li><p>PPPoE协议<br>，以太网上的点对点协议，是将点对点协议（PPP）封装在以太网（Ethernet）框架中的一种网络隧道协议。</p></li></ul><h3 id="网络层"><a href="#网络层" class="headerlink" title="网络层"></a>网络层</h3><p>网络层是<strong>互联网通信过程</strong>的一部分，这是连接发生的地方，在不同网络之间来回<strong>发送数据包</strong>来进行通信，处理不同网络之间的数据路由和发送。</p><p>用于将接收到的数据段从一台计算机传输到位于不同网络中的另一台计算机。</p><p>第三层的数据单元为<strong>数据包</strong></p><h4 id="功能-1"><a href="#功能-1" class="headerlink" title="功能"></a>功能</h4><ol><li>寻址<br>对网络层而言使用IP地址来<strong>唯一标识</strong>互联网上的各个寻址，网络层依靠IP地址进行<strong>相互通信</strong>（类似于MAC地址），详细的编址方案参见IPv4和IPv6。<br></li><li>路由<br>在同一个网络中的内部通信并不需要网络层设备，仅仅靠数据链路层就可以完成相互通信，对于不同的网络之间相互通信则必须借助路由器等三层设备。</li></ol><h4 id="网络层协议"><a href="#网络层协议" class="headerlink" title="网络层协议"></a>网络层协议</h4><ul><li>IP （V4、V6）</li><li>ICMP（V4、V6）</li><li>IPsec</li><li>RIP</li><li>OSPF</li></ul><h4 id="具有网络层功能的设备"><a href="#具有网络层功能的设备" class="headerlink" title="具有网络层功能的设备"></a>具有网络层功能的设备</h4><ul><li>路由</li><li>三层交换机</li></ul><h3 id="传输层"><a href="#传输层" class="headerlink" title="传输层"></a>传输层</h3><p>传输层通过分段、流量控制和差错控制来控制通信的可靠性。支持不同主机上运行的应用程序之间的端到端通信。</p><p>第四次的数据单元可以说<strong>报文段</strong>或<strong>数据段</strong>(<strong>tcp</strong>)和<strong>数据报</strong>(<strong>udp</strong>)</p><h4 id="协议-1"><a href="#协议-1" class="headerlink" title="协议"></a>协议</h4><ul><li>tcp</li><li>udp</li></ul><h3 id="会话层"><a href="#会话层" class="headerlink" title="会话层"></a>会话层</h3><p>主要利用传输层提供的端到端数据传输服务，为两个会话层实体进行<strong>会话</strong>（Session），而进行的对话连接的管理服务。</p><h4 id="会话层服务"><a href="#会话层服务" class="headerlink" title="会话层服务"></a>会话层服务</h4><ul><li>认证</li><li>权限</li><li>会话恢复</li></ul><h4 id="会话层协议"><a href="#会话层协议" class="headerlink" title="会话层协议"></a>会话层协议</h4><ul><li>PAP, 密码认证协议</li><li>PPTP, 点对点隧道协议</li><li>L2TP, 第二层隧道协议</li><li>RPC, 远程过程调用</li><li>SDP, 套接字直接协议</li></ul><h3 id="表示层"><a href="#表示层" class="headerlink" title="表示层"></a>表示层</h3><p>表示层向上对应用层服务，向下接受来自会话层的服务。表示层为在应用过程之间传送的信息提供表示方法的服务，它只关心信息发出的语法和语义</p><p>表示层从应用层接收数据。这些数据是以字符和数字的形式出现的，表示层将这些字符和数字转换成机器可理解的二进制格式。</p><p>为不同终端的上层用户提供数据和信息正确的语法表示变换方法。表示层确保数据以应用层可以理解的形式传递。处理数据编码、压缩和加密。</p><h4 id="表示层的主要功能"><a href="#表示层的主要功能" class="headerlink" title="表示层的主要功能"></a>表示层的主要功能</h4><ul><li>数据语法转换</li><li>语法表示</li><li>连接管理</li><li>数据处理</li><li>数据加密和解密</li><li>数据压缩和解压</li><li>数据编码和解码</li></ul><h4 id="表示层协议"><a href="#表示层协议" class="headerlink" title="表示层协议"></a>表示层协议</h4><ul><li>HTTP&#x2F;HTTPS</li><li>FTP&#x2F;FTPS</li><li>SSH</li><li>Telnet</li><li>ASN.1</li></ul><h3 id="应用层"><a href="#应用层" class="headerlink" title="应用层"></a>应用层</h3><p>用层直接和应用程序接口结合，并提供常见的网络应用服务。应用层也向第六层表示层发出请求。</p><p>应用层直接向最终用户应用程序提供网络服务。</p><h4 id="协议-2"><a href="#协议-2" class="headerlink" title="协议"></a>协议</h4><ul><li>DHCP</li><li>DNS</li><li>FTP</li><li>POP3</li></ul><p>简单来说 假如你在给你的异地女朋友发微信信息 微信这个app就是属于<strong>应用层</strong> 将你发的这个信息转化为机器<strong>能够懂的适合传输</strong>的形式 这个就是<strong>表示层</strong>的作用 这个信息要发给你的女朋友 你和女朋友的微信会创建一个<strong>会话连接</strong> 会话层会在信息发过去的时候<strong>保证传输</strong>顺利进行 传输层会把数据<strong>分成</strong>适合传输的<strong>数据包</strong>进行传输 网络层会规划一条<strong>合适的路径</strong>传输信息 数据链路层会通过物理网络将<strong>数据包传给</strong>物理层 物理层就能把数据包发送到接收方手机 就能接收到发送方的信息</p><h2 id="tcp-ip模型"><a href="#tcp-ip模型" class="headerlink" title="tcp&#x2F;ip模型"></a>tcp&#x2F;ip模型</h2><ul><li>应用层</li><li>传输层</li><li>网络接口层</li><li>链路层</li></ul><h2 id="ip地址"><a href="#ip地址" class="headerlink" title="ip地址"></a>ip地址</h2><p>由网络号和主机号组成</p><p>A类地址以0开头，第一个字节作为网络号，地址范围为：0.0.0.0~127.255.255.255</p><p>B类地址以10开头，前两个字节作为网络号，地址范围是：128.0.0.0~191.255.255.255</p><p>C类地址以110开头，前三个字节作为网络号，地址范围是：192.0.0.0~223.255.255.255</p><p>D类地址以1110开头，地址范围是224.0.0.0~239.255.255.255，D类地址作为组播地址（一对多的通信）</p><p>E类地址以1111开头，地址范围是240.0.0.0~255.255.255.255，E类地址为保留地址，供以后使用。</p><p>0.0.0.0用来寻找自己的ip</p><h3 id="私有地址"><a href="#私有地址" class="headerlink" title="私有地址"></a>私有地址</h3><ul><li>A类 10.0.0.0 - 10.255.255.255 (10&#x2F;8)</li><li>B类 172.16.0.0 - 172.31.255.255 (172.16&#x2F;12)</li><li>C类 192.168.0.0 - 192.168.255.255 (192.168&#x2F;16)</li></ul><h2 id="dhcp协议"><a href="#dhcp协议" class="headerlink" title="dhcp协议"></a>dhcp协议</h2><p>动态主机配置协议 用于集中对用户IP地址进行动态管理和配置。</p><h3 id="DHCP遵循四个步骤：发现、提供、请求和确认-DORA-："><a href="#DHCP遵循四个步骤：发现、提供、请求和确认-DORA-：" class="headerlink" title="DHCP遵循四个步骤：发现、提供、请求和确认 (DORA)："></a>DHCP遵循四个步骤：发现、提供、请求和确认 (DORA)：</h3><ul><li>DHCP发现：客户端将广播 DHCPDISCOVER 消息，寻找本地DHCP服务器（如果存在）。</li><li>DHCP提供：服务器以 DHCPOFFER 消息进行响应，其中包含可供客户端接受的 IP 地址。</li><li>DHCP请求：客户端以 DHCPREQUEST 消息进行响应，表明它已接受提供的 IP。</li><li>DHCP确认：服务器以 DHCPACK 消息进行响应，以确认提供的 IP 地址现已分配给该客户端。</li></ul><h2 id="arp协议"><a href="#arp协议" class="headerlink" title="arp协议"></a>arp协议</h2><p>arp协议(地址解析协议) IP地址对mac地址的映射 询问IP地址对应的mac地址</p><p>目标 MAC 地址<br>源 MAC 地址</p>]]></content>
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>categories</title>
+      <link href="/categories/index.html"/>
+      <url>/categories/index.html</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>movies</title>
+      <link href="/movies/index.html"/>
+      <url>/movies/index.html</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
     </entry>
     
@@ -623,6 +643,17 @@
     
     
     <entry>
+      <title>search</title>
+      <link href="/search/index.html"/>
+      <url>/search/index.html</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>tags</title>
       <link href="/tags/index-2.html"/>
       <url>/tags/index-2.html</url>
@@ -634,20 +665,20 @@
     
     
     <entry>
-      <title>tags</title>
-      <link href="/tags/index.html"/>
-      <url>/tags/index.html</url>
+      <title>network 网络概念</title>
+      <link href="/about/network-%E7%BD%91%E7%BB%9C%E6%A6%82%E5%BF%B5.html"/>
+      <url>/about/network-%E7%BD%91%E7%BB%9C%E6%A6%82%E5%BF%B5.html</url>
       
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="网络知识的介绍"><a href="#网络知识的介绍" class="headerlink" title="网络知识的介绍"></a>网络知识的介绍</h1><h2 id="osi七层模型"><a href="#osi七层模型" class="headerlink" title="osi七层模型"></a>osi七层模型</h2><p>OSI 模型是一个描述网络功能的概念框架。简单来说，OSI 模型标对计算机系统彼此之间发送信息的方式进行了标准化。</p><p>分为：</p><ul><li>物理层</li><li>数据链路层</li><li>网络层</li><li>传输层</li><li>会话层</li><li>表示层</li><li>应用层</li></ul><h3 id="物理层"><a href="#物理层" class="headerlink" title="物理层"></a>物理层</h3><p><strong>物理层</strong>（Physical Layer）是计算机网络OSI模型中<strong>最低</strong>的一层，也是<strong>最基本</strong>的一层。简单的说，网络的物理层面确保<strong>原始的数据</strong>可在各种<strong>物理媒体</strong>上<strong>传输</strong>。</p><p>物理层规定：为传输数据，需要<strong>物理链路</strong>与<strong>设备</strong>的建立、维持、拆除，并具有<strong>机械的</strong>、<strong>电子的</strong>、<strong>功能的</strong>、<strong>规范</strong>的特性。</p><p>第一层的数据单元是<strong>比特</strong>（bit）。</p><h4 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h4><ol><li><p>为数据段设备提供传输数据的通路</p></li><li><p>传输数据</p></li></ol><h4 id="常见物理层设备"><a href="#常见物理层设备" class="headerlink" title="常见物理层设备"></a>常见物理层设备</h4><ul><li>光纤</li><li>CAT-5线</li><li>CAT-6线</li><li>CAT-7线</li><li>RJ-45接头</li><li>集线器</li><li>串口</li><li>并口</li></ul><h4 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h4><ul><li>曼彻斯特编码 </li><li>差分曼彻斯特编码</li></ul><h3 id="数据链路层"><a href="#数据链路层" class="headerlink" title="数据链路层"></a>数据链路层</h3><p>数据链路层（Data Link Layer）是OSI参考模型<strong>第二层</strong>，位于物理层与网络层之间。可以细分成<strong>介质访问控制（MAC）子层</strong>和<strong>逻辑链路控制（LLC）子层</strong>。</p><h4 id="主要功能"><a href="#主要功能" class="headerlink" title="主要功能"></a>主要功能</h4><p>数据链路层用于跨物理层在<strong>网段节点</strong>之间传输数据，通常指以太网、无线局域网等通信手段。数据链路层提供了在网络的两个实体之间传输数据的功能，并且提供了<strong>差错检测</strong>用于<strong>纠正</strong>物理层中发生的错误。</p><p>只提供导线的一端到另一端（本质是点到点）的<strong>数据传输</strong>。</p><p>数据链路层的以太网协议规定了一组二进制电信号为<strong>数据帧</strong>，数据帧的报头 head 就包含<strong>目标 MAC 地址</strong>和<strong>源 MAC 地址</strong></p><p>第二层的数据单元是 <strong>帧</strong>（frame）。</p><p>帧都包括一个帧头 主题和一个帧尾</p><ul><li>帧头：源节点和目的节点的mac地址</li><li>主体：要传输的比特</li><li>帧尾：包括错误检测信息</li></ul><h4 id="常见数据链路层的设备"><a href="#常见数据链路层的设备" class="headerlink" title="常见数据链路层的设备"></a>常见数据链路层的设备</h4><ul><li>网卡（物理层和数据链路层的MAC子层）</li><li>交换机 是数据链路层设备。</li><li>桥接器（又称网桥）</li></ul><h4 id="协议"><a href="#协议" class="headerlink" title="协议"></a>协议</h4><p>异步传输模式</p><ul><li><p>VLAN（IEEE 802.1Q）</p></li><li><p>以太网（IEEE 802.3）</p></li><li><p>Wi-Fi（IEEE 802.11）</p></li><li><p>PPP协议<br>点对点协议 一种数据链路层封装协议 有PAP和CHAP两种方式</p></li><li><p>PPPoE协议<br>，以太网上的点对点协议，是将点对点协议（PPP）封装在以太网（Ethernet）框架中的一种网络隧道协议。</p></li></ul><h3 id="网络层"><a href="#网络层" class="headerlink" title="网络层"></a>网络层</h3><p>网络层是<strong>互联网通信过程</strong>的一部分，这是连接发生的地方，在不同网络之间来回<strong>发送数据包</strong>来进行通信，处理不同网络之间的数据路由和发送。</p><p>用于将接收到的数据段从一台计算机传输到位于不同网络中的另一台计算机。</p><p>第三层的数据单元为<strong>数据包</strong></p><h4 id="功能-1"><a href="#功能-1" class="headerlink" title="功能"></a>功能</h4><ol><li>寻址<br>对网络层而言使用IP地址来<strong>唯一标识</strong>互联网上的各个寻址，网络层依靠IP地址进行<strong>相互通信</strong>（类似于MAC地址），详细的编址方案参见IPv4和IPv6。<br></li><li>路由<br>在同一个网络中的内部通信并不需要网络层设备，仅仅靠数据链路层就可以完成相互通信，对于不同的网络之间相互通信则必须借助路由器等三层设备。</li></ol><h4 id="网络层协议"><a href="#网络层协议" class="headerlink" title="网络层协议"></a>网络层协议</h4><ul><li>IP （V4、V6）</li><li>ICMP（V4、V6）</li><li>IPsec</li><li>RIP</li><li>OSPF</li></ul><h4 id="具有网络层功能的设备"><a href="#具有网络层功能的设备" class="headerlink" title="具有网络层功能的设备"></a>具有网络层功能的设备</h4><ul><li>路由</li><li>三层交换机</li></ul><h3 id="传输层"><a href="#传输层" class="headerlink" title="传输层"></a>传输层</h3><p>传输层通过分段、流量控制和差错控制来控制通信的可靠性。支持不同主机上运行的应用程序之间的端到端通信。</p><p>第四次的数据单元可以说<strong>报文段</strong>或<strong>数据段</strong>(<strong>tcp</strong>)和<strong>数据报</strong>(<strong>udp</strong>)</p><h4 id="协议-1"><a href="#协议-1" class="headerlink" title="协议"></a>协议</h4><ul><li>tcp</li><li>udp</li></ul><h3 id="会话层"><a href="#会话层" class="headerlink" title="会话层"></a>会话层</h3><p>主要利用传输层提供的端到端数据传输服务，为两个会话层实体进行<strong>会话</strong>（Session），而进行的对话连接的管理服务。</p><h4 id="会话层服务"><a href="#会话层服务" class="headerlink" title="会话层服务"></a>会话层服务</h4><ul><li>认证</li><li>权限</li><li>会话恢复</li></ul><h4 id="会话层协议"><a href="#会话层协议" class="headerlink" title="会话层协议"></a>会话层协议</h4><ul><li>PAP, 密码认证协议</li><li>PPTP, 点对点隧道协议</li><li>L2TP, 第二层隧道协议</li><li>RPC, 远程过程调用</li><li>SDP, 套接字直接协议</li></ul><h3 id="表示层"><a href="#表示层" class="headerlink" title="表示层"></a>表示层</h3><p>表示层向上对应用层服务，向下接受来自会话层的服务。表示层为在应用过程之间传送的信息提供表示方法的服务，它只关心信息发出的语法和语义</p><p>表示层从应用层接收数据。这些数据是以字符和数字的形式出现的，表示层将这些字符和数字转换成机器可理解的二进制格式。</p><p>为不同终端的上层用户提供数据和信息正确的语法表示变换方法。表示层确保数据以应用层可以理解的形式传递。处理数据编码、压缩和加密。</p><h4 id="表示层的主要功能"><a href="#表示层的主要功能" class="headerlink" title="表示层的主要功能"></a>表示层的主要功能</h4><ul><li>数据语法转换</li><li>语法表示</li><li>连接管理</li><li>数据处理</li><li>数据加密和解密</li><li>数据压缩和解压</li><li>数据编码和解码</li></ul><h4 id="表示层协议"><a href="#表示层协议" class="headerlink" title="表示层协议"></a>表示层协议</h4><ul><li>HTTP&#x2F;HTTPS</li><li>FTP&#x2F;FTPS</li><li>SSH</li><li>Telnet</li><li>ASN.1</li></ul><h3 id="应用层"><a href="#应用层" class="headerlink" title="应用层"></a>应用层</h3><p>用层直接和应用程序接口结合，并提供常见的网络应用服务。应用层也向第六层表示层发出请求。</p><p>应用层直接向最终用户应用程序提供网络服务。</p><h4 id="协议-2"><a href="#协议-2" class="headerlink" title="协议"></a>协议</h4><ul><li>DHCP</li><li>DNS</li><li>FTP</li><li>POP3</li></ul><p>简单来说 假如你在给你的异地女朋友发微信信息 微信这个app就是属于<strong>应用层</strong> 将你发的这个信息转化为机器<strong>能够懂的适合传输</strong>的形式 这个就是<strong>表示层</strong>的作用 这个信息要发给你的女朋友 你和女朋友的微信会创建一个<strong>会话连接</strong> 会话层会在信息发过去的时候<strong>保证传输</strong>顺利进行 传输层会把数据<strong>分成</strong>适合传输的<strong>数据包</strong>进行传输 网络层会规划一条<strong>合适的路径</strong>传输信息 数据链路层会通过物理网络将<strong>数据包传给</strong>物理层 物理层就能把数据包发送到接收方手机 就能接收到发送方的信息</p><h2 id="tcp-ip模型"><a href="#tcp-ip模型" class="headerlink" title="tcp&#x2F;ip模型"></a>tcp&#x2F;ip模型</h2><ul><li>应用层</li><li>传输层</li><li>网络接口层</li><li>链路层</li></ul><h2 id="ip地址"><a href="#ip地址" class="headerlink" title="ip地址"></a>ip地址</h2><p>由网络号和主机号组成</p><p>A类地址以0开头，第一个字节作为网络号，地址范围为：0.0.0.0~127.255.255.255</p><p>B类地址以10开头，前两个字节作为网络号，地址范围是：128.0.0.0~191.255.255.255</p><p>C类地址以110开头，前三个字节作为网络号，地址范围是：192.0.0.0~223.255.255.255</p><p>D类地址以1110开头，地址范围是224.0.0.0~239.255.255.255，D类地址作为组播地址（一对多的通信）</p><p>E类地址以1111开头，地址范围是240.0.0.0~255.255.255.255，E类地址为保留地址，供以后使用。</p><p>0.0.0.0用来寻找自己的ip</p><h3 id="私有地址"><a href="#私有地址" class="headerlink" title="私有地址"></a>私有地址</h3><ul><li>A类 10.0.0.0 - 10.255.255.255 (10&#x2F;8)</li><li>B类 172.16.0.0 - 172.31.255.255 (172.16&#x2F;12)</li><li>C类 192.168.0.0 - 192.168.255.255 (192.168&#x2F;16)</li></ul><h2 id="dhcp协议"><a href="#dhcp协议" class="headerlink" title="dhcp协议"></a>dhcp协议</h2><p>动态主机配置协议 用于集中对用户IP地址进行动态管理和配置。</p><h3 id="DHCP遵循四个步骤：发现、提供、请求和确认-DORA-："><a href="#DHCP遵循四个步骤：发现、提供、请求和确认-DORA-：" class="headerlink" title="DHCP遵循四个步骤：发现、提供、请求和确认 (DORA)："></a>DHCP遵循四个步骤：发现、提供、请求和确认 (DORA)：</h3><ul><li>DHCP发现：客户端将广播 DHCPDISCOVER 消息，寻找本地DHCP服务器（如果存在）。</li><li>DHCP提供：服务器以 DHCPOFFER 消息进行响应，其中包含可供客户端接受的 IP 地址。</li><li>DHCP请求：客户端以 DHCPREQUEST 消息进行响应，表明它已接受提供的 IP。</li><li>DHCP确认：服务器以 DHCPACK 消息进行响应，以确认提供的 IP 地址现已分配给该客户端。</li></ul><h2 id="arp协议"><a href="#arp协议" class="headerlink" title="arp协议"></a>arp协议</h2><p>arp协议(地址解析协议) IP地址对mac地址的映射 询问IP地址对应的mac地址</p><p>目标 MAC 地址<br>源 MAC 地址</p>]]></content>
       
     </entry>
     
     
     
     <entry>
-      <title>search</title>
-      <link href="/search/index.html"/>
-      <url>/search/index.html</url>
+      <title>tags</title>
+      <link href="/tags/index.html"/>
+      <url>/tags/index.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
