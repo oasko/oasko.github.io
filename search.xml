@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title>tryhackme-Metasploit 科普</title>
+      <link href="/2025/03/07/tryhackme-Metasploit-%E7%A7%91%E6%99%AE/"/>
+      <url>/2025/03/07/tryhackme-Metasploit-%E7%A7%91%E6%99%AE/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>好久没更新了 最近在搞obsidian的手机端电脑端的同步 就一直没更新。总算是忙完了。</p><p>来看看thm的Metasploit基础知识</p><h1 id="Metasploit：简介"><a href="#Metasploit：简介" class="headerlink" title="Metasploit：简介"></a>Metasploit：简介</h1><p>Metasploit是最广泛使用的漏洞利用框架。Metasploit是一款功能强大的工具，可以支持渗透测试的所有阶段，从信息收集到后期漏洞利用。</p><p>Metasploit Framework的主要组件可以概括如下；</p><p>msfconsole：主命令行界面。</p><p>模块：支持模块，例如漏洞利用、扫描器、有效载荷等。</p><p>工具：独立工具，可帮助进行漏洞研究、漏洞评估或渗透测试。其中一些工具是 msfvenom、pattern_create 和 pattern_offset。将在本模块中介绍 </p><h2 id="Metasploit的主要部件"><a href="#Metasploit的主要部件" class="headerlink" title="Metasploit的主要部件"></a>Metasploit的主要部件</h2><h3 id="task2"><a href="#task2" class="headerlink" title="task2"></a>task2</h3><p>要介绍几个东西：</p><ol><li><p>漏洞（Exploit）:利用目标系统上存在的漏洞的一段代码。</p></li><li><p>脆弱性（Vulnerability）: 影响目标系统的设计、编码或逻辑缺陷。漏洞的利用可能导致机密信息泄露或允许攻击者在目标系统上执行代码。</p></li><li><p>有效载荷（Payload）: 漏洞利用会利用漏洞。但是，如果我们希望漏洞利用达到我们想要的结果（获得目标系统的访问权限、读取机密信息等），我们需要使用有效载荷。有效载荷是将在目标系统上运行的代码。</p></li></ol><p>在msfconsole中有几个交互性的模块：</p><ol><li><strong>Auxiliary</strong> 辅助模块</li></ol><ul><li>任何支持模块，例如扫描仪、爬虫和模糊器，都可以在这里找到。</li></ul><ol start="2"><li><strong>encoders</strong></li></ol><ul><li>编码器将允许您对漏洞和有效负载进行编码</li></ul><ol start="3"><li><strong>Evasion</strong></li></ol><ul><li>evasion模块，生成木马程序</li></ul><ol start="4"><li><strong>Exploits</strong></li></ol><ul><li>漏洞利用</li></ul><ol start="5"><li><strong>nop</strong></li></ol><ul><li>空指令不会对程序运行状态造成任何实质影响的空操作或者无关操作指令</li></ul><ol start="6"><li><strong>payload</strong></li></ol><ul><li>有效负载是在目标系统上运行的代码。<br>分类：</li><li>payload下看到四个不同的目录：</li><li><strong>adapters</strong> (适配器)</li><li><strong>singles</strong>（单一有效负载）</li><li><strong>stagers</strong>（阶段式Payload）</li><li><strong>stages</strong>（阶段二有效负载）</li></ul><ol start="7"><li><strong>Post</strong></li></ol><ul><li>后期模块将在上述渗透测试过程的最后阶段，即后期开发中发挥作用。</li></ul><p>简单看看问题说了啥<br><img src="/images/tryhackme-Metasploit-%E7%A7%91%E6%99%AE/Screenshot%202025-03-07%20151900.png" alt="task2"></p><p>利用系统缺陷的代码是<strong>exploit</strong></p><p>攻击者在目的系统上运行的代码是<strong>payload</strong></p><p>自包含有效载荷的是<strong>singles</strong></p><p>这个是属于单一有效载荷</p><h2 id="msfconsole"><a href="#msfconsole" class="headerlink" title="msfconsole"></a>msfconsole</h2><p>msfconsole有很多适用的命令 <strong>set</strong>命令 <strong>history</strong>命令 <strong>use</strong>命令 </p><p><strong>show options</strong> 可以看需要设置和设置好的工作环境</p><p>我们在show options中常见的参数：</p><ul><li><p><strong>RHOSTS</strong>： “远程主机”，目标系统的 IP 地址。可以设置单个 IP 地址或网络范围。这将支持 CIDR（无类域间路由）表示法（&#x2F;24、&#x2F;16 等）或网络范围（10.10.10.x – 10.10.10.y）。您还可以使用列出目标的文件，每行一个目标，使用 file:&#x2F;path&#x2F;of&#x2F;the&#x2F;target_file.txt</p></li><li><p><strong>RPORT</strong>： “远程端口”，存在漏洞的应用程序在目标系统上运行的端口。</p></li><li><p><strong>PAYLOAD</strong>：您将与漏洞利用一起使用的有效载荷。</p></li><li><p><strong>LHOST</strong>： “Localhost”，攻击机器 也就是你的 IP 地址。</p></li><li><p><strong>LPORT</strong>： “本地端口”，反向 shell 将使用该端口进行连接。这是攻击机器上的端口，您可以将其设置为任何其他应用程序未使用的端口。</p></li><li><p><strong>session</strong>：使用Metasploit与目标系统建立的每个连接都将有一个会话 ID。您将使用会话 ID 与后开发模块一起使用，这些模块将使用现有连接连接到目标系统。</p></li></ul><p><strong>info</strong>命令可以查看详细消息</p><p><strong>search</strong>命令用来搜索我们需要的东西 假如我们要搜索特定的类型就可以设置type</p><p>eg：如果我们希望搜索结果仅包含辅助模块，我们可以将类型设置为辅助。</p><p>search type：auxiliary</p><p><strong>back</strong>是退出到上一级</p><p><strong>setg</strong> 命令设置一个全局值，该值将一直使用，直到您退出Metasploit或使用该 unsetg 命令清除它。</p><p>使用该<strong>unset</strong>命令清除任何参数值</p><p>命令启动模块<strong>exploit</strong></p><h3 id="task3-task4"><a href="#task3-task4" class="headerlink" title="task3&amp;task4"></a>task3&amp;task4</h3><p><img src="/images/tryhackme-Metasploit-%E7%A7%91%E6%99%AE/task3.png" alt="task3"></p><p>第二问就是info 后面加要查的东西</p><p><img src="/images/tryhackme-Metasploit-%E7%A7%91%E6%99%AE/todb.png" alt="task3"></p><p>这个是task4</p><p><img src="/images/tryhackme-Metasploit-%E7%A7%91%E6%99%AE/task4.png" alt="task4"></p><p>第一问</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set lport 666</span><br></pre></td></tr></table></figure><p>第二问设置全局值</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">setg rhosts 10.10.19.23</span><br></pre></td></tr></table></figure><p>第三问</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unset payload</span><br></pre></td></tr></table></figure><p>第四问</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exploit</span><br></pre></td></tr></table></figure><h1 id="Metasploit：利用"><a href="#Metasploit：利用" class="headerlink" title="Metasploit：利用"></a>Metasploit：利用</h1><p>将介绍数据库功能如何使管理范围更广的渗透测试工作变得更加容易。最后，将研究如何使用msfvenom生成有效载荷以及如何在大多数目标平台上启动Meterpreter会话。</p><p>我们将涵盖的主题包括：</p><ul><li>如何使用Metasploit扫描目标系统。</li><li>如何使用Metasploit数据库功能。</li><li>如何使用Metasploit进行漏洞扫描。</li><li>如何使用Metasploit利用目标系统上的易受攻击的服务。</li><li>如何msfvenom 使用来创建有效载荷并在目标系统上获取 Meterpreter 会话。</li></ul><h2 id="port-scanning"><a href="#port-scanning" class="headerlink" title="port scanning"></a>port scanning</h2><p><strong>search portscan</strong>命令列出可用的端口扫描模块。</p><p>use 一个适合的模块之后 要show options 设置一下关键的参数</p><p>有一些参数我们要了解一下</p><ul><li>CONCURRENCY: 并发 同时扫描的目标数量。</li><li>PORTS: 要扫描的端口范围</li><li>RHOSTS: 要扫描的目标或目标网络</li><li>THREADS: 同时使用的线程数。线程越多，扫描速度越快。</li></ul><p>还有很多端口扫描可以给我们选择</p><p>UDP服务识别<br>scanner&#x2F;discovery&#x2F;udp_sweep 模块将允许您快速识别通过UDP（用户数据报协议）运行的服务。</p><p>Metasploit提供了几个有用的辅助模块，使我们能够扫描特定服务。例如smb模块的smb_enumshares 和，smb_version</p><h2 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h2><p>实际用会涉及很多个目标 就需要数据库来简化项目管理</p><p>启动 PostgreSQL 数据库，将使用以下命令： </p><p>systemctl start postgresql</p><p>然需要使用命令初始化 msfdb init数据库。</p><p>数据库功能将允许您创建工作区来隔离不同的项目。首次启动时，处于默认工作区中。可以使用workspace 命令列出可用的工作区。 </p><p>添加工作区-a或使用参数删除工作区-d</p><p>workspace -h命令列出该workspace 命令的可用选项</p><p>运行这样的方式运行Nmap </p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db_nmap</span><br></pre></td></tr></table></figure><p>所有结果都将保存到数据库中。 </p><p>现在，您可以分别使用hosts和services命令获取与目标系统上运行的主机和服务相关的信息 </p><h2 id="Exploitation"><a href="#Exploitation" class="headerlink" title="Exploitation"></a>Exploitation</h2><p>show payloads命令列出可以与该特定漏洞一起使用的其他命令 在使用漏洞的时候可以用这个命令查看别的有效负载 </p><p>决定某个有效呼负载之后可以用set payload</p><p>sessions 命令将列出所有活动会话。支持许多选项，可帮助更好地管理会话。</p><p>看看task5</p><p><img src="/images/tryhackme-Metasploit-%E7%A7%91%E6%99%AE/task5.png" alt="task5"></p><p>看提示的话 就是要使用&#x2F;windows&#x2F;smb&#x2F;ms17_010_enteralblue这个漏洞</p><p>在里面设置一个payload &#x2F;generic&#x2F;shell_reverse_tcp</p><p><img src="/images/tryhackme-Metasploit-%E7%A7%91%E6%99%AE/payload.png" alt="task5"></p><p><img src="/images/tryhackme-Metasploit-%E7%A7%91%E6%99%AE/payload1.png" alt="task5"></p><p><img src="/images/tryhackme-Metasploit-%E7%A7%91%E6%99%AE/payload3.png" alt="task5"></p><p>成功进入 用dir命令来搜一下我们需要的文件 再type一下就能查看文件</p><p><img src="/images/tryhackme-Metasploit-%E7%A7%91%E6%99%AE/flag.png" alt="task5"></p><p><img src="/images/tryhackme-Metasploit-%E7%A7%91%E6%99%AE/flag1.png" alt="task5"></p><p>第三问其实一开始就有点唐了 一直在Meterpreter那里 得先shell升级一下 用hashdump就能找到hash值</p><h2 id="Msfvenom"><a href="#Msfvenom" class="headerlink" title="Msfvenom"></a>Msfvenom</h2><p>Msfvenom 取代了 Msfpayload 和 Msfencode，它允许您生成有效载荷</p><h1 id="Metasploit：Meterpreter"><a href="#Metasploit：Meterpreter" class="headerlink" title="Metasploit：Meterpreter"></a>Metasploit：Meterpreter</h1><p>Meterpreter是一个Metasploit有效负载，它使用许多有价值的组件支持渗透测试过程。</p><p>getpid返回运行Meterpretergetpid 的进程 ID </p><p>msfvenom –list payloads 命令并 grep 了“meterpreter”有效载荷（添加| grep meterpreter到命令行）</p><p>决定使用哪个版本的Meterpreter主要基于三个因素；</p><ul><li>目标操作系统（目标操作系统是Linux还是 Windows？是 Mac 设备吗？是 Android 手机吗？等等）</li><li>目标系统上可用的组件（是否安装了 Python？这是一个PHP网站吗？等等）</li><li>目标系统可以拥有的网络连接类型（它们是否允许原始TCP连接？您只能拥有 HTTPS 反向连接吗？IPv6 地址是否不像 IPv4 地址那样受到严格监控？等等）</li></ul><p>Meterpreter将为您提供三类主要工具；</p><ul><li>内置命令</li><li>Meterpreter工具</li><li>Meterpreter脚本</li></ul><p>最后一个没啥好介绍的 上实战</p><p><img src="/images/tryhackme-Metasploit-%E7%A7%91%E6%99%AE/task6.png" alt="task6"></p><p>介绍中说了<br>可以使用（使用 exploit&#x2F;windows&#x2F; smb &#x2F;psexec）</p><p>用户名：ballen</p><p>密码：Password1</p><p>设置好smbpass smbuser和rhost就能开打了</p><p><img src="/images/tryhackme-Metasploit-%E7%A7%91%E6%99%AE/task51.png" alt="task6"></p><p>进去之后输入sysinfo查看信息</p><p>可以看到计算机名字和目标域的名字</p><p>计算机名字是ACME-TEST</p><p>目标域是FLASH</p><p><img src="/images/tryhackme-Metasploit-%E7%A7%91%E6%99%AE/task52.png" alt="task6"></p><p>第三问可能创建的共享域名字</p><p>这个需要用到别的模块 先把我们的meterpreter弄到session里面保存先</p><p><img src="/images/tryhackme-Metasploit-%E7%A7%91%E6%99%AE/task591.png" alt="task6"></p><p><img src="/images/tryhackme-Metasploit-%E7%A7%91%E6%99%AE/task59.png" alt="task6"></p><p>看了一下提示 是说要用post&#x2F;windows&#x2F;gather&#x2F;enum_shares这个模块的内容 设置session为我们保存过的那个 运行一次就能知道结果</p><p><img src="/images/tryhackme-Metasploit-%E7%A7%91%E6%99%AE/task592.png" alt="task6"></p><p>我们看结果有一个是shares的文件 可能就是ta 把名字输进去还真是speedster</p><p>第四问是问用户的ntlm哈希值</p><p>这里是用hashdump抓取密码</p><p><img src="/images/tryhackme-Metasploit-%E7%A7%91%E6%99%AE/task53.png" alt="task6"></p><p>将找到的值用在线破解工具试试</p><p><img src="/images/tryhackme-Metasploit-%E7%A7%91%E6%99%AE/task54.png" alt="task6"></p><p>密码为Trustno1</p><p>第六问和第八问问的都是文件在哪里</p><p>在这里可以用search命令去搜索 或者是 dir &#x2F;s &#x2F;b命令就能找到他们的路径</p><p>知道路径之后可以用type 加文件绝对路径来查看文件内容 </p><p><img src="/images/tryhackme-Metasploit-%E7%A7%91%E6%99%AE/task55.png" alt="task6"></p><p><img src="/images/tryhackme-Metasploit-%E7%A7%91%E6%99%AE/task56.png" alt="task6"></p><p><img src="/images/tryhackme-Metasploit-%E7%A7%91%E6%99%AE/task57.png" alt="task6"></p><p><img src="/images/tryhackme-Metasploit-%E7%A7%91%E6%99%AE/task58.png" alt="task6"></p><p>有一说一 msf这个工具是确实好用 很多地方我还不是很熟悉 得漫漫了解</p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>tryhackme-John the Ripper: The Basics</title>
       <link href="/2025/03/02/tryhackme-John-the-Ripper-The-Basics/"/>
       <url>/2025/03/02/tryhackme-John-the-Ripper-The-Basics/</url>
@@ -478,20 +491,9 @@
     
     
     <entry>
-      <title>Gallery</title>
-      <link href="/Gallery/index.html"/>
-      <url>/Gallery/index.html</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>categories</title>
-      <link href="/categories/index-1.html"/>
-      <url>/categories/index-1.html</url>
+      <link href="/categories/index.html"/>
+      <url>/categories/index.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
@@ -511,31 +513,9 @@
     
     
     <entry>
-      <title>about</title>
-      <link href="/about/index-1.html"/>
-      <url>/about/index-1.html</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>categories</title>
-      <link href="/categories/index.html"/>
-      <url>/categories/index.html</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>about</title>
-      <link href="/about/index.html"/>
-      <url>/about/index.html</url>
+      <link href="/categories/index-1.html"/>
+      <url>/categories/index-1.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
@@ -555,9 +535,20 @@
     
     
     <entry>
-      <title>music</title>
-      <link href="/music/index.html"/>
-      <url>/music/index.html</url>
+      <title></title>
+      <link href="/css/music.css"/>
+      <url>/css/music.css</url>
+      
+        <content type="html"><![CDATA[.aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {    left: -66px !important;    /* 默认情况下缩进左侧66px，只留一点箭头部分 */  }    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {    left: 0 !important;    /* 鼠标悬停是左侧缩进归零，完全显示按钮 */  }]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Gallery</title>
+      <link href="/Gallery/index.html"/>
+      <url>/Gallery/index.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
@@ -566,9 +557,20 @@
     
     
     <entry>
-      <title>tags</title>
-      <link href="/tags/index-2.html"/>
-      <url>/tags/index-2.html</url>
+      <title>about</title>
+      <link href="/about/index-1.html"/>
+      <url>/about/index-1.html</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>about</title>
+      <link href="/about/index.html"/>
+      <url>/about/index.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
@@ -588,9 +590,42 @@
     
     
     <entry>
+      <title></title>
+      <link href="/css/touming.css"/>
+      <url>/css/touming.css</url>
+      
+        <content type="html"><![CDATA[/* 文章页背景 */.layout_post>#post {  /* 透明度为 0.7 */  background: rgba(255, 255, 255, 0.7);}/* 所有页面背景 */#aside_content .card-widget, #recent-posts>.recent-post-item, .layout_page>div:first-child:not(.recent-posts), .layout_post>#page, .layout_post>#post, .read-mode .layout_post>#post {  /* 透明度为 0.7 */  background: rgba(255, 255, 255, 0.7);}/* 侧边卡片的透明度 */:root {  --card-bg: rgba(255, 255, 255, 0.7);}/* 页脚透明 */#footer {  /* 透明度为 0.7 */  background: rgba(255, 255, 255, 0.7);}]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>music</title>
+      <link href="/music/index.html"/>
+      <url>/music/index.html</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>tags</title>
       <link href="/tags/index-1.html"/>
       <url>/tags/index-1.html</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>tags</title>
+      <link href="/tags/index-2.html"/>
+      <url>/tags/index-2.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
@@ -615,28 +650,6 @@
       <url>/search/index.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title></title>
-      <link href="/css/music.css"/>
-      <url>/css/music.css</url>
-      
-        <content type="html"><![CDATA[.aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {    left: -66px !important;    /* 默认情况下缩进左侧66px，只留一点箭头部分 */  }    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {    left: 0 !important;    /* 鼠标悬停是左侧缩进归零，完全显示按钮 */  }]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title></title>
-      <link href="/css/touming.css"/>
-      <url>/css/touming.css</url>
-      
-        <content type="html"><![CDATA[/* 文章页背景 */.layout_post>#post {  /* 透明度为 0.7 */  background: rgba(255, 255, 255, 0.7);}/* 所有页面背景 */#aside_content .card-widget, #recent-posts>.recent-post-item, .layout_page>div:first-child:not(.recent-posts), .layout_post>#page, .layout_post>#post, .read-mode .layout_post>#post {  /* 透明度为 0.7 */  background: rgba(255, 255, 255, 0.7);}/* 侧边卡片的透明度 */:root {  --card-bg: rgba(255, 255, 255, 0.7);}/* 页脚透明 */#footer {  /* 透明度为 0.7 */  background: rgba(255, 255, 255, 0.7);}]]></content>
       
     </entry>
     
