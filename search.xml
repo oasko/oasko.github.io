@@ -4,6 +4,44 @@
   
     
     <entry>
+      <title>tryhackme-ice</title>
+      <link href="/2025/03/09/tryhackme-ice/"/>
+      <url>/2025/03/09/tryhackme-ice/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>今天来试试blue的下一个挑战 ice。</p><p>这个问题也蛮简单的 就是练练手了解一下流程</p><h2 id="task2"><a href="#task2" class="headerlink" title="task2"></a>task2</h2><p><img src="/images/tryhackme-ice/task2.png" alt="task"></p><p>第三问远程桌面是用3389端口</p><p>第四问在8000端口的服务是什么</p><p><img src="/images/tryhackme-ice/ice.png" alt="task"></p><p>我们搜一下这个服务的简写是Icecast</p><p>在nmap的报告中 能看到主机名</p><p><img src="/images/tryhackme-ice/pcname.png" alt="host"></p><h2 id="task3"><a href="#task3" class="headerlink" title="task3"></a>task3</h2><p><img src="/images/tryhackme-ice/task3.png" alt="task"></p><p>我们进网站去查看一下<a href="https://www.cvedetails.com/cve/CVE-2004-1561/">漏洞</a> </p><p>会发现这个漏洞的影响评分是6.4</p><p><img src="/images/tryhackme-ice/6.4.png" alt="msf"></p><p>cve编号为CVE-2004-1561</p><p>在msf中搜索 search icecast 就能找到我们要利用的模块</p><p><img src="/images/tryhackme-ice/search.png" alt="msf"></p><p>show options 需要配置一个rhost</p><h2 id="task4"><a href="#task4" class="headerlink" title="task4"></a>task4</h2><p><img src="/images/tryhackme-ice/task4.png" alt="task"></p><p><img src="/images/tryhackme-ice/task41.png" alt="task"></p><p>我们刚打进去的时候是用的是meterpreter的shell</p><p>我们用whoami来查看正在使用icecast进程的用户</p><p><img src="/images/tryhackme-ice/dark.png" alt="uid"></p><p>查看版本信息用sysinfo</p><p><img src="/images/tryhackme-ice/7601.png" alt="sys"></p><p>就能看到Windows的版本和进程的构架</p><p>在msf中search eventvwr(这个看了一下提示) 第一个就是我们要的漏洞</p><p><img src="/images/tryhackme-ice/searchev.png" alt="msf"></p><p>会话错误需要配置lhost 监听的ip</p><p>输入getprivs就可以找到权限 问题说的是拥有文件的所有权 SeTakeOwnershipPrivilege 这个就是我们要找的</p><p><img src="/images/tryhackme-ice/ownership.png" alt="msf"></p><h2 id="task5"><a href="#task5" class="headerlink" title="task5"></a>task5</h2><p><img src="/images/tryhackme-ice/task5.png" alt="task"></p><p>在meterpreter的shell中输入ps就能查看进程 提示中说了一个spool的名字</p><p><img src="/images/tryhackme-ice/spool.png" alt="msf"></p><p>服务名叫spoolsv.eve</p><p>用migrate -N PROCESS_NAME命令迁移进程</p><p><img src="/images/tryhackme-ice/migrate.png" alt="uid"></p><p>用getuid命令查看我们现在是什么用户</p><p><img src="/images/tryhackme-ice/getuid.png" alt="uid"></p><p>load kiwi之后我们help一下 查看kiwi能用啥命令</p><p><img src="/images/tryhackme-ice/kiwi.png" alt="kiwi"></p><p>这个就是我们需要的</p><p>用hashdump来转储用户和密码hash 在下面就能找到密码</p><p><img src="/images/tryhackme-ice/password.png" alt="hash"></p><h2 id="task6"><a href="#task6" class="headerlink" title="task6"></a>task6</h2><p><img src="/images/tryhackme-ice/task6.png" alt="task"></p><p>这个板块主要是给我们熟悉meterpreter的一些命令来的</p><p>第一问就是hashdump命令g</p><p>实时观看用户桌面是用screenshare命令</p><p>想连接系统的麦克风录音用record_mic命令</p><p>修改文件时间戳用timestomp命令</p><p>黄金票据是golden_ticket_create命令</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> linux tryhackme </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>tryhackme-Burp Suite：基础知识</title>
+      <link href="/2025/03/09/tryhackme-Burp-Suite%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
+      <url>/2025/03/09/tryhackme-Burp-Suite%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>这次介绍如何使用 Burp Suite 进行 Web 应用程序渗透测试。</p><p>重点将围绕以下关键方面：</p><ul><li>对Burp Suite的详细介绍。</li><li>全面概述框架内可用的各种工具。</li><li>有关在您的系统上安装Burp Suite的过程的详细指导。</li><li>导航和配置Burp Suite。</li></ul><h2 id="task2"><a href="#task2" class="headerlink" title="task2"></a>task2</h2><p><strong>Burp Suite</strong>是一个基于 Java 的框架，旨在作为进行 Web 应用程序渗透测试的综合解决方案。它已成为对 Web 和移动应用程序（包括依赖应用程序编程接口( API)的应用程序）进行实际安全评估的行业标准工具。</p><p>Burp Suite可以捕获并允许操纵浏览器和 Web 服务器之间的所有HTTP &#x2F;HTTPS 流量。这一基本功能构成了框架的支柱。通过拦截请求，用户可以灵活地将它们路由到Burp Suite框架内的各个组件</p><p>Burp Suite Professional是Burp Suite Community的不受限制版本。它具有以下功能：</p><ul><li>自动化漏洞扫描程序。</li><li>不受速率限制的模糊测试器&#x2F;暴力破解器。</li><li>保存项目以供将来使用和生成报告。</li><li>内置API允许与其他工具集成。</li><li>不受限制地访问以添加新的扩展以实现更强大的功能。</li><li>访问Burp Suite Collaborator（有效地提供一个自托管或- 在 Portswigger 拥有的服务器上运行的唯一请求捕获器）。</li></ul><p>Burp Suite Enterprise与社区版和专业版不同，主要用于持续扫描。它具有一个自动扫描器，可定期扫描 Web 应用程序是否存在漏洞，类似于 Nessus 等工具执行自动基础设施扫描的方式。与其他允许从本地机器进行手动攻击的版本不同，Burp Suite Enterprise 驻留在服务器上并不断扫描目标 Web 应用程序是否存在潜在漏洞。</p><p>看看task2</p><p><img src="/images/tryhackme-Burp-Suite%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/task2.png" alt="task2"></p><p>Burp Suite Enterprise提供持续扫描的功能</p><p>Burp Suite可以用于攻击web应用和移动应用程序</p><h2 id="task3"><a href="#task3" class="headerlink" title="task3"></a>task3</h2><p>Burp Suite主要功能：</p><p>Proxy代理：Burp代理是Burp Suite最著名的功能。它能够在与 Web 应用程序交互时拦截和修改请求和响应。</p><ul><li><p>Repeater(中继器也叫重放)：另一个众所周知的功能。 中继器允许多次捕获、修改和重新发送相同的请求。当通过反复试验（例如，在SQLi - 结构化查询语言注入中）制作有效负载或测试端点功能是否存在漏洞时，此功能特别有用。</p></li><li><p>Intruder(入侵者)：尽管Burp Suite社区有速率限制 ，但入侵者仍允许向端点发送请求。它通常用于暴力攻击或模糊端点。</p></li><li><p>Decoder(解码器)：解码器为数据转换提供了有价值的服务。它可以解码捕获的信息或编码有效载荷，然后再将其发送到目标。虽然存在用于此目的的替代服务，但利用 Burp Suite中的解码器可以非常高效。</p></li><li><p>Comparer(比较器)：顾名思义，比较器可以在字或字节级别比较两段数据。虽然这并非Burp Suite独有的功能，但使用单个键盘快捷键将可能很大的数据段直接发送到比较工具的功能可以显著加快该过程。</p></li><li><p>Sequencer(序列器)：序列器通常用于评估令牌的随机性，例如会话 cookie 值或其他据称随机生成的数据。如果用于生成这些值的算法缺乏安全随机性，则可能会暴露毁灭性攻击的途径。</p></li></ul><p><img src="/images/tryhackme-Burp-Suite%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/task3.png" alt="task3"></p><p>用proxy来拦截请求</p><p>用Intruder来强行破解</p><h2 id="task4"><a href="#task4" class="headerlink" title="task4"></a>task4</h2><p>这部分是安装 这个就略过了</p><h2 id="task5"><a href="#task5" class="headerlink" title="task5"></a>task5</h2><p><img src="/images/tryhackme-Burp-Suite%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/task5.png" alt="task3"></p><p>来看问题</p><p><img src="/images/tryhackme-Burp-Suite%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/task51.png" alt="task3"></p><p>event log 事件日志可以查看操作信息</p><h2 id="task6"><a href="#task6" class="headerlink" title="task6"></a>task6</h2><p>讲的是导航栏</p><p><img src="/images/tryhackme-Burp-Suite%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/daoh.png" alt="daoh"></p><p>快捷键<br>Ctrl + Shift + D 仪表板</p><p>Ctrl + Shift + T 目标选项卡</p><p>Ctrl + Shift + P 代理选项卡</p><p>Ctrl + Shift + I 入侵者标签</p><p>Ctrl + Shift + R 中继器选项卡</p><h2 id="task7"><a href="#task7" class="headerlink" title="task7"></a>task7</h2><p>先来了解一下配置Burp Suite的可用选项。有两种类型的设置：全局设置（也称为用户设置）和项目设置。</p><ul><li><p>全局设置：这些设置会影响整个Burp Suite安装，并在每次启动应用程序时应用。它们为您的Burp Suite 环境提供基准配置。</p></li><li><p>项目设置：这些设置特定于当前项目，仅在会话期间应用。但是，请注意，Burp Suite社区版不支持保存项目，因此关闭 Burp 时任何特定于项目的选项都将丢失。</p></li></ul><p>要访问设置，请点击顶部导航栏中的“设置”按钮。这将打开一个单独的设置窗口。</p><p>在“设置”窗口中，您会在左侧看到一个菜单。此菜单允许您在不同类型的设置之间切换，包括：</p><ul><li>搜索：使用关键字搜索特定设置。</li><li>类型过滤器：过滤用户和项目选项的设置 。</li><li>用户设置：显示影响整个Burp Suite安装的设置。</li><li>项目设置：显示特定于当前项目的设置。</li><li>类别：允许按类别选择设置。</li></ul><p><img src="/images/tryhackme-Burp-Suite%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/task7.png" alt="task7"></p><p>第一问 直接在设置里面搜索cookie jar</p><p><img src="/images/tryhackme-Burp-Suite%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/session.png" alt="task7"></p><p>第二问 搜索update</p><p><img src="/images/tryhackme-Burp-Suite%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/update.png" alt="task7"></p><p>第三问</p><p><img src="/images/tryhackme-Burp-Suite%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/hotkeys.png" alt="hotkey"></p><p>第四问毋庸置疑肯定是yea</p><h2 id="task8"><a href="#task8" class="headerlink" title="task8"></a>task8</h2><p> Burp代理的关键点</p><p>拦截请求：当通过 Burp代理发出请求时，这些请求会被拦截并阻止到达目标服务器。请求显示在“代理”选项卡中，允许进一步执行操作，例如转发、删除、编辑或将其发送到其他 Burp 模块。 要禁用拦截并允许请求不间断地通过代理，请单击按钮。 Intercept is on </p><p>控制：拦截请求的能力使测试人员能够完全控制网络流量，这对于测试网络应用程序非常有用。</p><p>Capture and Logging（捕获和记录）： Burp Suite默认捕获并记录通过代理发出的请求，即使拦截已关闭。此记录功能有助于以后分析和审查以前的请求。</p><p>WebSocket Support（WebSocket支持）： Burp Suite还能捕获并记录WebSocket 通信，在分析 Web 应用程序时提供额外的帮助。</p><p>日志和历史记录：可以在HTTP历史记录和WebSockets 历史记录子选项卡中查看捕获的请求 。</p><p>代理设置中的一些值得注意的功能</p><p>响应拦截：默认情况下，代理 不会拦截服务器响应，除非每个请求都明确要求。“根据以下规则拦截响应”复选框以及定义的规则允许更灵活的响应拦截。</p><p>匹配和替换：代理设置中的“匹配和替换”部分允许使用正则表达式 (regex) 修改传入和传出请求。此功能允许进行动态更改，例如修改用户代理或操纵 cookie。</p><h2 id="task9"><a href="#task9" class="headerlink" title="task9"></a>task9</h2><p>就是配置代理（proxy）然后用Burp Suite来抓包</p><h2 id="task10"><a href="#task10" class="headerlink" title="task10"></a>task10</h2><p>讲的是target选项卡<br>由三个子选项卡组成：</p><p>Site map（站点地图）：此子选项卡允许我们以树形结构绘制我们定位的 Web 应用程序。代理处于活动状态时访问的每个页面都将显示在站点地图上。此功能使我们能够通过简单地浏览 Web 应用程序来自动生成站点地图。</p><p>Issue definitions（问题定义）：提供的完整漏洞扫描功能，但我们仍然可以访问扫描器查找的所有漏洞的列表。</p><p>Scope settings（范围设置）：此设置允许控制 Burp Suite中的目标范围。它使我们能够包含或排除特定域&#x2F; IP来定义测试范围。</p><h2 id="task11"><a href="#task11" class="headerlink" title="task11"></a>task11</h2><p>讲的是The Burp Suite Browser</p><p>用这个浏览器的话 抓包啥的就比较方便</p><h2 id="task12"><a href="#task12" class="headerlink" title="task12"></a>task12</h2><p>可以定义Burp Suite中代理和记录的内容。可以限制Burp Suite仅针对我们要测试的特定 Web 应用程序。</p><p>最简单的方法是切换到选项Target卡，右键单击左侧列表中的目标，然后选择 Add To Scope。Burp 会提示我们选择是否要停止记录不在范围内的任何内容，在大多数情况下，要选择yes。</p><h2 id="task13"><a href="#task13" class="headerlink" title="task13"></a>task13</h2><p>代理https 我们可以导入ca证书来启用 TLS 的站点</p><h2 id="task14"><a href="#task14" class="headerlink" title="task14"></a>task14</h2><p>这显示的是个xxs漏洞</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> linux tryhackme </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>tryhackme-blue</title>
       <link href="/2025/03/08/tryhackme-blue/"/>
       <url>/2025/03/08/tryhackme-blue/</url>
@@ -74,32 +112,6 @@
             <tag> 渗透 linux </tag>
             
         </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title></title>
-      <link href="/2025/02/24/Windows%E7%9A%84%E5%91%BD%E4%BB%A4/"/>
-      <url>/2025/02/24/Windows%E7%9A%84%E5%91%BD%E4%BB%A4/</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>set命令</p><p>ver命令</p><p>ipconfig命令</p><p>顾名思义 ipconfig命令 或者后面加个&#x2F;all。</p><p> 下一个是tracert 代表跟踪路由。该命令tracert target_name跟踪到达目标所经过的网络路由<br> <br> nslook</p><p> netstat</p><p>cd命令</p><p>dir</p><p>chkdsk：检查文件系统和磁盘卷是否存在错误和坏扇区。</p><p>driverquery：显示已安装的设备驱动程序列表。</p><p>sfc &#x2F;scannow：扫描系统文件是否有损坏，并在可能的情况下修复它们。</p><p>shutdown</p><h2 id="powershell"><a href="#powershell" class="headerlink" title="powershell"></a>powershell</h2>]]></content>
-      
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title></title>
-      <link href="/2025/02/24/windows/"/>
-      <url>/2025/02/24/windows/</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>系统工具_<strong>Task Scheduler、Event Viewer、Shared Folders、Local Users and Groups、Performance、Device Manager</strong>_</p><p>lusrmgr.msc 本地用户和组<br>compmgmt 计算机管理 <strong>老版才行</strong><br>mscconfig 系统配置<br>perfmon 性能监视器<br>Msinfo32.exe  <em>Microsoft 系统信息</em><br>resmon 资源监视器<br>systeminfo 系统信息 但在win11就闪退了 不知道为sha</p>]]></content>
-      
-      
       
     </entry>
     
@@ -510,19 +522,6 @@
     </entry>
     
     
-    
-    <entry>
-      <title>Hello World</title>
-      <link href="/2024/12/29/hello-world/"/>
-      <url>/2024/12/29/hello-world/</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
-      
-      
-      
-    </entry>
-    
-    
   
   
     
@@ -531,28 +530,6 @@
       <title>Gallery</title>
       <link href="/Gallery/index.html"/>
       <url>/Gallery/index.html</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>network 网络概念</title>
-      <link href="/about/network-%E7%BD%91%E7%BB%9C%E6%A6%82%E5%BF%B5.html"/>
-      <url>/about/network-%E7%BD%91%E7%BB%9C%E6%A6%82%E5%BF%B5.html</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="网络知识的介绍"><a href="#网络知识的介绍" class="headerlink" title="网络知识的介绍"></a>网络知识的介绍</h1><h2 id="osi七层模型"><a href="#osi七层模型" class="headerlink" title="osi七层模型"></a>osi七层模型</h2><p>OSI 模型是一个描述网络功能的概念框架。简单来说，OSI 模型标对计算机系统彼此之间发送信息的方式进行了标准化。</p><p>分为：</p><ul><li>物理层</li><li>数据链路层</li><li>网络层</li><li>传输层</li><li>会话层</li><li>表示层</li><li>应用层</li></ul><h3 id="物理层"><a href="#物理层" class="headerlink" title="物理层"></a>物理层</h3><p><strong>物理层</strong>（Physical Layer）是计算机网络OSI模型中<strong>最低</strong>的一层，也是<strong>最基本</strong>的一层。简单的说，网络的物理层面确保<strong>原始的数据</strong>可在各种<strong>物理媒体</strong>上<strong>传输</strong>。</p><p>物理层规定：为传输数据，需要<strong>物理链路</strong>与<strong>设备</strong>的建立、维持、拆除，并具有<strong>机械的</strong>、<strong>电子的</strong>、<strong>功能的</strong>、<strong>规范</strong>的特性。</p><p>第一层的数据单元是<strong>比特</strong>（bit）。</p><h4 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h4><ol><li><p>为数据段设备提供传输数据的通路</p></li><li><p>传输数据</p></li></ol><h4 id="常见物理层设备"><a href="#常见物理层设备" class="headerlink" title="常见物理层设备"></a>常见物理层设备</h4><ul><li>光纤</li><li>CAT-5线</li><li>CAT-6线</li><li>CAT-7线</li><li>RJ-45接头</li><li>集线器</li><li>串口</li><li>并口</li></ul><h4 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h4><ul><li>曼彻斯特编码 </li><li>差分曼彻斯特编码</li></ul><h3 id="数据链路层"><a href="#数据链路层" class="headerlink" title="数据链路层"></a>数据链路层</h3><p>数据链路层（Data Link Layer）是OSI参考模型<strong>第二层</strong>，位于物理层与网络层之间。可以细分成<strong>介质访问控制（MAC）子层</strong>和<strong>逻辑链路控制（LLC）子层</strong>。</p><h4 id="主要功能"><a href="#主要功能" class="headerlink" title="主要功能"></a>主要功能</h4><p>数据链路层用于跨物理层在<strong>网段节点</strong>之间传输数据，通常指以太网、无线局域网等通信手段。数据链路层提供了在网络的两个实体之间传输数据的功能，并且提供了<strong>差错检测</strong>用于<strong>纠正</strong>物理层中发生的错误。</p><p>只提供导线的一端到另一端（本质是点到点）的<strong>数据传输</strong>。</p><p>数据链路层的以太网协议规定了一组二进制电信号为<strong>数据帧</strong>，数据帧的报头 head 就包含<strong>目标 MAC 地址</strong>和<strong>源 MAC 地址</strong></p><p>第二层的数据单元是 <strong>帧</strong>（frame）。</p><p>帧都包括一个帧头 主题和一个帧尾</p><ul><li>帧头：源节点和目的节点的mac地址</li><li>主体：要传输的比特</li><li>帧尾：包括错误检测信息</li></ul><h4 id="常见数据链路层的设备"><a href="#常见数据链路层的设备" class="headerlink" title="常见数据链路层的设备"></a>常见数据链路层的设备</h4><ul><li>网卡（物理层和数据链路层的MAC子层）</li><li>交换机 是数据链路层设备。</li><li>桥接器（又称网桥）</li></ul><h4 id="协议"><a href="#协议" class="headerlink" title="协议"></a>协议</h4><p>异步传输模式</p><ul><li><p>VLAN（IEEE 802.1Q）</p></li><li><p>以太网（IEEE 802.3）</p></li><li><p>Wi-Fi（IEEE 802.11）</p></li><li><p>PPP协议<br>点对点协议 一种数据链路层封装协议 有PAP和CHAP两种方式</p></li><li><p>PPPoE协议<br>，以太网上的点对点协议，是将点对点协议（PPP）封装在以太网（Ethernet）框架中的一种网络隧道协议。</p></li></ul><h3 id="网络层"><a href="#网络层" class="headerlink" title="网络层"></a>网络层</h3><p>网络层是<strong>互联网通信过程</strong>的一部分，这是连接发生的地方，在不同网络之间来回<strong>发送数据包</strong>来进行通信，处理不同网络之间的数据路由和发送。</p><p>用于将接收到的数据段从一台计算机传输到位于不同网络中的另一台计算机。</p><p>第三层的数据单元为<strong>数据包</strong></p><h4 id="功能-1"><a href="#功能-1" class="headerlink" title="功能"></a>功能</h4><ol><li>寻址<br>对网络层而言使用IP地址来<strong>唯一标识</strong>互联网上的各个寻址，网络层依靠IP地址进行<strong>相互通信</strong>（类似于MAC地址），详细的编址方案参见IPv4和IPv6。<br></li><li>路由<br>在同一个网络中的内部通信并不需要网络层设备，仅仅靠数据链路层就可以完成相互通信，对于不同的网络之间相互通信则必须借助路由器等三层设备。</li></ol><h4 id="网络层协议"><a href="#网络层协议" class="headerlink" title="网络层协议"></a>网络层协议</h4><ul><li>IP （V4、V6）</li><li>ICMP（V4、V6）</li><li>IPsec</li><li>RIP</li><li>OSPF</li></ul><h4 id="具有网络层功能的设备"><a href="#具有网络层功能的设备" class="headerlink" title="具有网络层功能的设备"></a>具有网络层功能的设备</h4><ul><li>路由</li><li>三层交换机</li></ul><h3 id="传输层"><a href="#传输层" class="headerlink" title="传输层"></a>传输层</h3><p>传输层通过分段、流量控制和差错控制来控制通信的可靠性。支持不同主机上运行的应用程序之间的端到端通信。</p><p>第四次的数据单元可以说<strong>报文段</strong>或<strong>数据段</strong>(<strong>tcp</strong>)和<strong>数据报</strong>(<strong>udp</strong>)</p><h4 id="协议-1"><a href="#协议-1" class="headerlink" title="协议"></a>协议</h4><ul><li>tcp</li><li>udp</li></ul><h3 id="会话层"><a href="#会话层" class="headerlink" title="会话层"></a>会话层</h3><p>主要利用传输层提供的端到端数据传输服务，为两个会话层实体进行<strong>会话</strong>（Session），而进行的对话连接的管理服务。</p><h4 id="会话层服务"><a href="#会话层服务" class="headerlink" title="会话层服务"></a>会话层服务</h4><ul><li>认证</li><li>权限</li><li>会话恢复</li></ul><h4 id="会话层协议"><a href="#会话层协议" class="headerlink" title="会话层协议"></a>会话层协议</h4><ul><li>PAP, 密码认证协议</li><li>PPTP, 点对点隧道协议</li><li>L2TP, 第二层隧道协议</li><li>RPC, 远程过程调用</li><li>SDP, 套接字直接协议</li></ul><h3 id="表示层"><a href="#表示层" class="headerlink" title="表示层"></a>表示层</h3><p>表示层向上对应用层服务，向下接受来自会话层的服务。表示层为在应用过程之间传送的信息提供表示方法的服务，它只关心信息发出的语法和语义</p><p>表示层从应用层接收数据。这些数据是以字符和数字的形式出现的，表示层将这些字符和数字转换成机器可理解的二进制格式。</p><p>为不同终端的上层用户提供数据和信息正确的语法表示变换方法。表示层确保数据以应用层可以理解的形式传递。处理数据编码、压缩和加密。</p><h4 id="表示层的主要功能"><a href="#表示层的主要功能" class="headerlink" title="表示层的主要功能"></a>表示层的主要功能</h4><ul><li>数据语法转换</li><li>语法表示</li><li>连接管理</li><li>数据处理</li><li>数据加密和解密</li><li>数据压缩和解压</li><li>数据编码和解码</li></ul><h4 id="表示层协议"><a href="#表示层协议" class="headerlink" title="表示层协议"></a>表示层协议</h4><ul><li>HTTP&#x2F;HTTPS</li><li>FTP&#x2F;FTPS</li><li>SSH</li><li>Telnet</li><li>ASN.1</li></ul><h3 id="应用层"><a href="#应用层" class="headerlink" title="应用层"></a>应用层</h3><p>用层直接和应用程序接口结合，并提供常见的网络应用服务。应用层也向第六层表示层发出请求。</p><p>应用层直接向最终用户应用程序提供网络服务。</p><h4 id="协议-2"><a href="#协议-2" class="headerlink" title="协议"></a>协议</h4><ul><li>DHCP</li><li>DNS</li><li>FTP</li><li>POP3</li></ul><p>简单来说 假如你在给你的异地女朋友发微信信息 微信这个app就是属于<strong>应用层</strong> 将你发的这个信息转化为机器<strong>能够懂的适合传输</strong>的形式 这个就是<strong>表示层</strong>的作用 这个信息要发给你的女朋友 你和女朋友的微信会创建一个<strong>会话连接</strong> 会话层会在信息发过去的时候<strong>保证传输</strong>顺利进行 传输层会把数据<strong>分成</strong>适合传输的<strong>数据包</strong>进行传输 网络层会规划一条<strong>合适的路径</strong>传输信息 数据链路层会通过物理网络将<strong>数据包传给</strong>物理层 物理层就能把数据包发送到接收方手机 就能接收到发送方的信息</p><h2 id="tcp-ip模型"><a href="#tcp-ip模型" class="headerlink" title="tcp&#x2F;ip模型"></a>tcp&#x2F;ip模型</h2><ul><li>应用层</li><li>传输层</li><li>网络接口层</li><li>链路层</li></ul><h2 id="ip地址"><a href="#ip地址" class="headerlink" title="ip地址"></a>ip地址</h2><p>由网络号和主机号组成</p><p>A类地址以0开头，第一个字节作为网络号，地址范围为：0.0.0.0~127.255.255.255</p><p>B类地址以10开头，前两个字节作为网络号，地址范围是：128.0.0.0~191.255.255.255</p><p>C类地址以110开头，前三个字节作为网络号，地址范围是：192.0.0.0~223.255.255.255</p><p>D类地址以1110开头，地址范围是224.0.0.0~239.255.255.255，D类地址作为组播地址（一对多的通信）</p><p>E类地址以1111开头，地址范围是240.0.0.0~255.255.255.255，E类地址为保留地址，供以后使用。</p><p>0.0.0.0用来寻找自己的ip</p><h3 id="私有地址"><a href="#私有地址" class="headerlink" title="私有地址"></a>私有地址</h3><ul><li>A类 10.0.0.0 - 10.255.255.255 (10&#x2F;8)</li><li>B类 172.16.0.0 - 172.31.255.255 (172.16&#x2F;12)</li><li>C类 192.168.0.0 - 192.168.255.255 (192.168&#x2F;16)</li></ul><h2 id="dhcp协议"><a href="#dhcp协议" class="headerlink" title="dhcp协议"></a>dhcp协议</h2><p>动态主机配置协议 用于集中对用户IP地址进行动态管理和配置。</p><h3 id="DHCP遵循四个步骤：发现、提供、请求和确认-DORA-："><a href="#DHCP遵循四个步骤：发现、提供、请求和确认-DORA-：" class="headerlink" title="DHCP遵循四个步骤：发现、提供、请求和确认 (DORA)："></a>DHCP遵循四个步骤：发现、提供、请求和确认 (DORA)：</h3><ul><li>DHCP发现：客户端将广播 DHCPDISCOVER 消息，寻找本地DHCP服务器（如果存在）。</li><li>DHCP提供：服务器以 DHCPOFFER 消息进行响应，其中包含可供客户端接受的 IP 地址。</li><li>DHCP请求：客户端以 DHCPREQUEST 消息进行响应，表明它已接受提供的 IP。</li><li>DHCP确认：服务器以 DHCPACK 消息进行响应，以确认提供的 IP 地址现已分配给该客户端。</li></ul><h2 id="arp协议"><a href="#arp协议" class="headerlink" title="arp协议"></a>arp协议</h2><p>arp协议(地址解析协议) IP地址对mac地址的映射 询问IP地址对应的mac地址</p><p>目标 MAC 地址<br>源 MAC 地址</p>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>categories</title>
-      <link href="/categories/index.html"/>
-      <url>/categories/index.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
@@ -572,9 +549,9 @@
     
     
     <entry>
-      <title>categories</title>
-      <link href="/categories/index-1.html"/>
-      <url>/categories/index-1.html</url>
+      <title>about</title>
+      <link href="/about/index-1.html"/>
+      <url>/about/index-1.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
@@ -583,11 +560,22 @@
     
     
     <entry>
-      <title>about</title>
-      <link href="/about/index-1.html"/>
-      <url>/about/index-1.html</url>
+      <title>network 网络概念</title>
+      <link href="/about/network-%E7%BD%91%E7%BB%9C%E6%A6%82%E5%BF%B5.html"/>
+      <url>/about/network-%E7%BD%91%E7%BB%9C%E6%A6%82%E5%BF%B5.html</url>
       
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="网络知识的介绍"><a href="#网络知识的介绍" class="headerlink" title="网络知识的介绍"></a>网络知识的介绍</h1><h2 id="osi七层模型"><a href="#osi七层模型" class="headerlink" title="osi七层模型"></a>osi七层模型</h2><p>OSI 模型是一个描述网络功能的概念框架。简单来说，OSI 模型标对计算机系统彼此之间发送信息的方式进行了标准化。</p><p>分为：</p><ul><li>物理层</li><li>数据链路层</li><li>网络层</li><li>传输层</li><li>会话层</li><li>表示层</li><li>应用层</li></ul><h3 id="物理层"><a href="#物理层" class="headerlink" title="物理层"></a>物理层</h3><p><strong>物理层</strong>（Physical Layer）是计算机网络OSI模型中<strong>最低</strong>的一层，也是<strong>最基本</strong>的一层。简单的说，网络的物理层面确保<strong>原始的数据</strong>可在各种<strong>物理媒体</strong>上<strong>传输</strong>。</p><p>物理层规定：为传输数据，需要<strong>物理链路</strong>与<strong>设备</strong>的建立、维持、拆除，并具有<strong>机械的</strong>、<strong>电子的</strong>、<strong>功能的</strong>、<strong>规范</strong>的特性。</p><p>第一层的数据单元是<strong>比特</strong>（bit）。</p><h4 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h4><ol><li><p>为数据段设备提供传输数据的通路</p></li><li><p>传输数据</p></li></ol><h4 id="常见物理层设备"><a href="#常见物理层设备" class="headerlink" title="常见物理层设备"></a>常见物理层设备</h4><ul><li>光纤</li><li>CAT-5线</li><li>CAT-6线</li><li>CAT-7线</li><li>RJ-45接头</li><li>集线器</li><li>串口</li><li>并口</li></ul><h4 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h4><ul><li>曼彻斯特编码 </li><li>差分曼彻斯特编码</li></ul><h3 id="数据链路层"><a href="#数据链路层" class="headerlink" title="数据链路层"></a>数据链路层</h3><p>数据链路层（Data Link Layer）是OSI参考模型<strong>第二层</strong>，位于物理层与网络层之间。可以细分成<strong>介质访问控制（MAC）子层</strong>和<strong>逻辑链路控制（LLC）子层</strong>。</p><h4 id="主要功能"><a href="#主要功能" class="headerlink" title="主要功能"></a>主要功能</h4><p>数据链路层用于跨物理层在<strong>网段节点</strong>之间传输数据，通常指以太网、无线局域网等通信手段。数据链路层提供了在网络的两个实体之间传输数据的功能，并且提供了<strong>差错检测</strong>用于<strong>纠正</strong>物理层中发生的错误。</p><p>只提供导线的一端到另一端（本质是点到点）的<strong>数据传输</strong>。</p><p>数据链路层的以太网协议规定了一组二进制电信号为<strong>数据帧</strong>，数据帧的报头 head 就包含<strong>目标 MAC 地址</strong>和<strong>源 MAC 地址</strong></p><p>第二层的数据单元是 <strong>帧</strong>（frame）。</p><p>帧都包括一个帧头 主题和一个帧尾</p><ul><li>帧头：源节点和目的节点的mac地址</li><li>主体：要传输的比特</li><li>帧尾：包括错误检测信息</li></ul><h4 id="常见数据链路层的设备"><a href="#常见数据链路层的设备" class="headerlink" title="常见数据链路层的设备"></a>常见数据链路层的设备</h4><ul><li>网卡（物理层和数据链路层的MAC子层）</li><li>交换机 是数据链路层设备。</li><li>桥接器（又称网桥）</li></ul><h4 id="协议"><a href="#协议" class="headerlink" title="协议"></a>协议</h4><p>异步传输模式</p><ul><li><p>VLAN（IEEE 802.1Q）</p></li><li><p>以太网（IEEE 802.3）</p></li><li><p>Wi-Fi（IEEE 802.11）</p></li><li><p>PPP协议<br>点对点协议 一种数据链路层封装协议 有PAP和CHAP两种方式</p></li><li><p>PPPoE协议<br>，以太网上的点对点协议，是将点对点协议（PPP）封装在以太网（Ethernet）框架中的一种网络隧道协议。</p></li></ul><h3 id="网络层"><a href="#网络层" class="headerlink" title="网络层"></a>网络层</h3><p>网络层是<strong>互联网通信过程</strong>的一部分，这是连接发生的地方，在不同网络之间来回<strong>发送数据包</strong>来进行通信，处理不同网络之间的数据路由和发送。</p><p>用于将接收到的数据段从一台计算机传输到位于不同网络中的另一台计算机。</p><p>第三层的数据单元为<strong>数据包</strong></p><h4 id="功能-1"><a href="#功能-1" class="headerlink" title="功能"></a>功能</h4><ol><li>寻址<br>对网络层而言使用IP地址来<strong>唯一标识</strong>互联网上的各个寻址，网络层依靠IP地址进行<strong>相互通信</strong>（类似于MAC地址），详细的编址方案参见IPv4和IPv6。<br></li><li>路由<br>在同一个网络中的内部通信并不需要网络层设备，仅仅靠数据链路层就可以完成相互通信，对于不同的网络之间相互通信则必须借助路由器等三层设备。</li></ol><h4 id="网络层协议"><a href="#网络层协议" class="headerlink" title="网络层协议"></a>网络层协议</h4><ul><li>IP （V4、V6）</li><li>ICMP（V4、V6）</li><li>IPsec</li><li>RIP</li><li>OSPF</li></ul><h4 id="具有网络层功能的设备"><a href="#具有网络层功能的设备" class="headerlink" title="具有网络层功能的设备"></a>具有网络层功能的设备</h4><ul><li>路由</li><li>三层交换机</li></ul><h3 id="传输层"><a href="#传输层" class="headerlink" title="传输层"></a>传输层</h3><p>传输层通过分段、流量控制和差错控制来控制通信的可靠性。支持不同主机上运行的应用程序之间的端到端通信。</p><p>第四次的数据单元可以说<strong>报文段</strong>或<strong>数据段</strong>(<strong>tcp</strong>)和<strong>数据报</strong>(<strong>udp</strong>)</p><h4 id="协议-1"><a href="#协议-1" class="headerlink" title="协议"></a>协议</h4><ul><li>tcp</li><li>udp</li></ul><h3 id="会话层"><a href="#会话层" class="headerlink" title="会话层"></a>会话层</h3><p>主要利用传输层提供的端到端数据传输服务，为两个会话层实体进行<strong>会话</strong>（Session），而进行的对话连接的管理服务。</p><h4 id="会话层服务"><a href="#会话层服务" class="headerlink" title="会话层服务"></a>会话层服务</h4><ul><li>认证</li><li>权限</li><li>会话恢复</li></ul><h4 id="会话层协议"><a href="#会话层协议" class="headerlink" title="会话层协议"></a>会话层协议</h4><ul><li>PAP, 密码认证协议</li><li>PPTP, 点对点隧道协议</li><li>L2TP, 第二层隧道协议</li><li>RPC, 远程过程调用</li><li>SDP, 套接字直接协议</li></ul><h3 id="表示层"><a href="#表示层" class="headerlink" title="表示层"></a>表示层</h3><p>表示层向上对应用层服务，向下接受来自会话层的服务。表示层为在应用过程之间传送的信息提供表示方法的服务，它只关心信息发出的语法和语义</p><p>表示层从应用层接收数据。这些数据是以字符和数字的形式出现的，表示层将这些字符和数字转换成机器可理解的二进制格式。</p><p>为不同终端的上层用户提供数据和信息正确的语法表示变换方法。表示层确保数据以应用层可以理解的形式传递。处理数据编码、压缩和加密。</p><h4 id="表示层的主要功能"><a href="#表示层的主要功能" class="headerlink" title="表示层的主要功能"></a>表示层的主要功能</h4><ul><li>数据语法转换</li><li>语法表示</li><li>连接管理</li><li>数据处理</li><li>数据加密和解密</li><li>数据压缩和解压</li><li>数据编码和解码</li></ul><h4 id="表示层协议"><a href="#表示层协议" class="headerlink" title="表示层协议"></a>表示层协议</h4><ul><li>HTTP&#x2F;HTTPS</li><li>FTP&#x2F;FTPS</li><li>SSH</li><li>Telnet</li><li>ASN.1</li></ul><h3 id="应用层"><a href="#应用层" class="headerlink" title="应用层"></a>应用层</h3><p>用层直接和应用程序接口结合，并提供常见的网络应用服务。应用层也向第六层表示层发出请求。</p><p>应用层直接向最终用户应用程序提供网络服务。</p><h4 id="协议-2"><a href="#协议-2" class="headerlink" title="协议"></a>协议</h4><ul><li>DHCP</li><li>DNS</li><li>FTP</li><li>POP3</li></ul><p>简单来说 假如你在给你的异地女朋友发微信信息 微信这个app就是属于<strong>应用层</strong> 将你发的这个信息转化为机器<strong>能够懂的适合传输</strong>的形式 这个就是<strong>表示层</strong>的作用 这个信息要发给你的女朋友 你和女朋友的微信会创建一个<strong>会话连接</strong> 会话层会在信息发过去的时候<strong>保证传输</strong>顺利进行 传输层会把数据<strong>分成</strong>适合传输的<strong>数据包</strong>进行传输 网络层会规划一条<strong>合适的路径</strong>传输信息 数据链路层会通过物理网络将<strong>数据包传给</strong>物理层 物理层就能把数据包发送到接收方手机 就能接收到发送方的信息</p><h2 id="tcp-ip模型"><a href="#tcp-ip模型" class="headerlink" title="tcp&#x2F;ip模型"></a>tcp&#x2F;ip模型</h2><ul><li>应用层</li><li>传输层</li><li>网络接口层</li><li>链路层</li></ul><h2 id="ip地址"><a href="#ip地址" class="headerlink" title="ip地址"></a>ip地址</h2><p>由网络号和主机号组成</p><p>A类地址以0开头，第一个字节作为网络号，地址范围为：0.0.0.0~127.255.255.255</p><p>B类地址以10开头，前两个字节作为网络号，地址范围是：128.0.0.0~191.255.255.255</p><p>C类地址以110开头，前三个字节作为网络号，地址范围是：192.0.0.0~223.255.255.255</p><p>D类地址以1110开头，地址范围是224.0.0.0~239.255.255.255，D类地址作为组播地址（一对多的通信）</p><p>E类地址以1111开头，地址范围是240.0.0.0~255.255.255.255，E类地址为保留地址，供以后使用。</p><p>0.0.0.0用来寻找自己的ip</p><h3 id="私有地址"><a href="#私有地址" class="headerlink" title="私有地址"></a>私有地址</h3><ul><li>A类 10.0.0.0 - 10.255.255.255 (10&#x2F;8)</li><li>B类 172.16.0.0 - 172.31.255.255 (172.16&#x2F;12)</li><li>C类 192.168.0.0 - 192.168.255.255 (192.168&#x2F;16)</li></ul><h2 id="dhcp协议"><a href="#dhcp协议" class="headerlink" title="dhcp协议"></a>dhcp协议</h2><p>动态主机配置协议 用于集中对用户IP地址进行动态管理和配置。</p><h3 id="DHCP遵循四个步骤：发现、提供、请求和确认-DORA-："><a href="#DHCP遵循四个步骤：发现、提供、请求和确认-DORA-：" class="headerlink" title="DHCP遵循四个步骤：发现、提供、请求和确认 (DORA)："></a>DHCP遵循四个步骤：发现、提供、请求和确认 (DORA)：</h3><ul><li>DHCP发现：客户端将广播 DHCPDISCOVER 消息，寻找本地DHCP服务器（如果存在）。</li><li>DHCP提供：服务器以 DHCPOFFER 消息进行响应，其中包含可供客户端接受的 IP 地址。</li><li>DHCP请求：客户端以 DHCPREQUEST 消息进行响应，表明它已接受提供的 IP。</li><li>DHCP确认：服务器以 DHCPACK 消息进行响应，以确认提供的 IP 地址现已分配给该客户端。</li></ul><h2 id="arp协议"><a href="#arp协议" class="headerlink" title="arp协议"></a>arp协议</h2><p>arp协议(地址解析协议) IP地址对mac地址的映射 询问IP地址对应的mac地址</p><p>目标 MAC 地址<br>源 MAC 地址</p>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title></title>
+      <link href="/css/music.css"/>
+      <url>/css/music.css</url>
+      
+        <content type="html"><![CDATA[.aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {    left: -66px !important;    /* 默认情况下缩进左侧66px，只留一点箭头部分 */  }    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {    left: 0 !important;    /* 鼠标悬停是左侧缩进归零，完全显示按钮 */  }]]></content>
       
     </entry>
     
@@ -605,11 +593,22 @@
     
     
     <entry>
-      <title></title>
-      <link href="/css/music.css"/>
-      <url>/css/music.css</url>
+      <title>categories</title>
+      <link href="/categories/index.html"/>
+      <url>/categories/index.html</url>
       
-        <content type="html"><![CDATA[.aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {    left: -66px !important;    /* 默认情况下缩进左侧66px，只留一点箭头部分 */  }    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {    left: 0 !important;    /* 鼠标悬停是左侧缩进归零，完全显示按钮 */  }]]></content>
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>categories</title>
+      <link href="/categories/index-1.html"/>
+      <url>/categories/index-1.html</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
     </entry>
     
@@ -639,8 +638,8 @@
     
     <entry>
       <title>tags</title>
-      <link href="/tags/index.html"/>
-      <url>/tags/index.html</url>
+      <link href="/tags/index-1.html"/>
+      <url>/tags/index-1.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
@@ -650,8 +649,8 @@
     
     <entry>
       <title>tags</title>
-      <link href="/tags/index-1.html"/>
-      <url>/tags/index-1.html</url>
+      <link href="/tags/index.html"/>
+      <url>/tags/index.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
@@ -671,9 +670,9 @@
     
     
     <entry>
-      <title>tags</title>
-      <link href="/tags/index-2.html"/>
-      <url>/tags/index-2.html</url>
+      <title>search</title>
+      <link href="/search/index.html"/>
+      <url>/search/index.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
@@ -682,9 +681,9 @@
     
     
     <entry>
-      <title>search</title>
-      <link href="/search/index.html"/>
-      <url>/search/index.html</url>
+      <title>tags</title>
+      <link href="/tags/index-2.html"/>
+      <url>/tags/index-2.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       

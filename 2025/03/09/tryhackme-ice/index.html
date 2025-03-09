@@ -1,0 +1,308 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>tryhackme-ice | Asuna</title><meta name="author" content="Asuna"><meta name="copyright" content="Asuna"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="今天来试试blue的下一个挑战 ice。 这个问题也蛮简单的 就是练练手了解一下流程 task2 第三问远程桌面是用3389端口 第四问在8000端口的服务是什么  我们搜一下这个服务的简写是Icecast 在nmap的报告中 能看到主机名  task3 我们进网站去查看一下漏洞  会发现这个漏洞的影响评分是6.4  cve编号为CVE-2004-1561 在msf中搜索 search iceca">
+<meta property="og:type" content="article">
+<meta property="og:title" content="tryhackme-ice">
+<meta property="og:url" content="https://oasko.github.io/2025/03/09/tryhackme-ice/index.html">
+<meta property="og:site_name" content="Asuna">
+<meta property="og:description" content="今天来试试blue的下一个挑战 ice。 这个问题也蛮简单的 就是练练手了解一下流程 task2 第三问远程桌面是用3389端口 第四问在8000端口的服务是什么  我们搜一下这个服务的简写是Icecast 在nmap的报告中 能看到主机名  task3 我们进网站去查看一下漏洞  会发现这个漏洞的影响评分是6.4  cve编号为CVE-2004-1561 在msf中搜索 search iceca">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2025/01/19/47KGSaY3sudRFjV.jpg">
+<meta property="article:published_time" content="2025-03-09T12:29:45.000Z">
+<meta property="article:modified_time" content="2025-03-09T15:40:07.639Z">
+<meta property="article:author" content="Asuna">
+<meta property="article:tag" content="linux tryhackme">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2025/01/19/47KGSaY3sudRFjV.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "tryhackme-ice",
+  "url": "https://oasko.github.io/2025/03/09/tryhackme-ice/",
+  "image": "https://s2.loli.net/2025/01/19/47KGSaY3sudRFjV.jpg",
+  "datePublished": "2025-03-09T12:29:45.000Z",
+  "dateModified": "2025-03-09T15:40:07.639Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Asuna",
+      "url": "https://oasko.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://oasko.github.io/2025/03/09/tryhackme-ice/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'tryhackme-ice',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/touming.css"><meta name="generator" content="Hexo 7.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load', preloader.endLoading)
+
+  if (false) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="web_bg" style="background-image: url(https://s2.loli.net/2024/12/28/fdpLbCNQwExoPan.jpg);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="https://s2.loli.net/2025/01/19/47KGSaY3sudRFjV.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">28</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">21</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> tag</span></a></li><li><a class="site-page child" href="/books/"><i class="fa-fw fa fa-book"></i><span> 图书</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></div><div class="menus_item"><a class="site-page" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 知识点</span></a></div><div class="menus_item"><a class="site-page" href="/chat/"><i class="fa-fw fa fa-lightbulb-o"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background: transparent;"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Asuna</span></a><a class="nav-page-title" href="/"><span class="site-name">tryhackme-ice</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> tag</span></a></li><li><a class="site-page child" href="/books/"><i class="fa-fw fa fa-book"></i><span> 图书</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></div><div class="menus_item"><a class="site-page" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 知识点</span></a></div><div class="menus_item"><a class="site-page" href="/chat/"><i class="fa-fw fa fa-lightbulb-o"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">tryhackme-ice</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-03-09T12:29:45.000Z" title="发表于 2025-03-09 20:29:45">2025-03-09</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-03-09T15:40:07.639Z" title="更新于 2025-03-09 23:40:07">2025-03-09</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">445</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>1分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>今天来试试blue的下一个挑战 ice。</p>
+<p>这个问题也蛮简单的 就是练练手了解一下流程</p>
+<h2 id="task2"><a href="#task2" class="headerlink" title="task2"></a>task2</h2><p><img src="/images/tryhackme-ice/task2.png" alt="task"></p>
+<p>第三问远程桌面是用3389端口</p>
+<p>第四问在8000端口的服务是什么</p>
+<p><img src="/images/tryhackme-ice/ice.png" alt="task"></p>
+<p>我们搜一下这个服务的简写是Icecast</p>
+<p>在nmap的报告中 能看到主机名</p>
+<p><img src="/images/tryhackme-ice/pcname.png" alt="host"></p>
+<h2 id="task3"><a href="#task3" class="headerlink" title="task3"></a>task3</h2><p><img src="/images/tryhackme-ice/task3.png" alt="task"></p>
+<p>我们进网站去查看一下<a target="_blank" rel="noopener" href="https://www.cvedetails.com/cve/CVE-2004-1561/">漏洞</a> </p>
+<p>会发现这个漏洞的影响评分是6.4</p>
+<p><img src="/images/tryhackme-ice/6.4.png" alt="msf"></p>
+<p>cve编号为CVE-2004-1561</p>
+<p>在msf中搜索 search icecast 就能找到我们要利用的模块</p>
+<p><img src="/images/tryhackme-ice/search.png" alt="msf"></p>
+<p>show options 需要配置一个rhost</p>
+<h2 id="task4"><a href="#task4" class="headerlink" title="task4"></a>task4</h2><p><img src="/images/tryhackme-ice/task4.png" alt="task"></p>
+<p><img src="/images/tryhackme-ice/task41.png" alt="task"></p>
+<p>我们刚打进去的时候是用的是meterpreter的shell</p>
+<p>我们用whoami来查看正在使用icecast进程的用户</p>
+<p><img src="/images/tryhackme-ice/dark.png" alt="uid"></p>
+<p>查看版本信息用sysinfo</p>
+<p><img src="/images/tryhackme-ice/7601.png" alt="sys"></p>
+<p>就能看到Windows的版本和进程的构架</p>
+<p>在msf中search eventvwr(这个看了一下提示) 第一个就是我们要的漏洞</p>
+<p><img src="/images/tryhackme-ice/searchev.png" alt="msf"></p>
+<p>会话错误需要配置lhost 监听的ip</p>
+<p>输入getprivs就可以找到权限 问题说的是拥有文件的所有权 SeTakeOwnershipPrivilege 这个就是我们要找的</p>
+<p><img src="/images/tryhackme-ice/ownership.png" alt="msf"></p>
+<h2 id="task5"><a href="#task5" class="headerlink" title="task5"></a>task5</h2><p><img src="/images/tryhackme-ice/task5.png" alt="task"></p>
+<p>在meterpreter的shell中输入ps就能查看进程 提示中说了一个spool的名字</p>
+<p><img src="/images/tryhackme-ice/spool.png" alt="msf"></p>
+<p>服务名叫spoolsv.eve</p>
+<p>用migrate -N PROCESS_NAME命令迁移进程</p>
+<p><img src="/images/tryhackme-ice/migrate.png" alt="uid"></p>
+<p>用getuid命令查看我们现在是什么用户</p>
+<p><img src="/images/tryhackme-ice/getuid.png" alt="uid"></p>
+<p>load kiwi之后我们help一下 查看kiwi能用啥命令</p>
+<p><img src="/images/tryhackme-ice/kiwi.png" alt="kiwi"></p>
+<p>这个就是我们需要的</p>
+<p>用hashdump来转储用户和密码hash 在下面就能找到密码</p>
+<p><img src="/images/tryhackme-ice/password.png" alt="hash"></p>
+<h2 id="task6"><a href="#task6" class="headerlink" title="task6"></a>task6</h2><p><img src="/images/tryhackme-ice/task6.png" alt="task"></p>
+<p>这个板块主要是给我们熟悉meterpreter的一些命令来的</p>
+<p>第一问就是hashdump命令g</p>
+<p>实时观看用户桌面是用screenshare命令</p>
+<p>想连接系统的麦克风录音用record_mic命令</p>
+<p>修改文件时间戳用timestomp命令</p>
+<p>黄金票据是golden_ticket_create命令</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://oasko.github.io">Asuna</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://oasko.github.io/2025/03/09/tryhackme-ice/">https://oasko.github.io/2025/03/09/tryhackme-ice/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://oasko.github.io" target="_blank">Asuna</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/linux-tryhackme/">linux tryhackme</a></div><div class="post-share"><div class="social-share" data-image="https://s2.loli.net/2025/01/19/47KGSaY3sudRFjV.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2025/03/09/tryhackme-Burp-Suite%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="tryhackme-Burp Suite：基础知识"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-09</div><div class="info-item-2">tryhackme-Burp Suite：基础知识</div></div><div class="info-2"><div class="info-item-1">这次介绍如何使用 Burp Suite 进行 Web 应用程序渗透测试。 重点将围绕以下关键方面：  对Burp Suite的详细介绍。 全面概述框架内可用的各种工具。 有关在您的系统上安装Burp Suite的过程的详细指导。 导航和配置Burp Suite。  task2Burp Suite是一个基于 Java 的框架，旨在作为进行 Web 应用程序渗透测试的综合解决方案。它已成为对 Web 和移动应用程序（包括依赖应用程序编程接口( API)的应用程序）进行实际安全评估的行业标准工具。 Burp Suite可以捕获并允许操纵浏览器和 Web 服务器之间的所有HTTP &#x2F;HTTPS 流量。这一基本功能构成了框架的支柱。通过拦截请求，用户可以灵活地将它们路由到Burp Suite框架内的各个组件 Burp Suite Professional是Burp Suite...</div></div></div></a><a class="pagination-related" href="/2025/03/08/tryhackme-blue/" title="tryhackme-blue"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-08</div><div class="info-item-2">tryhackme-blue</div></div><div class="info-2"><div class="info-item-1">这个是个蛮简单的虚拟机的测试 就当随便玩玩 task1 下载完虚拟机之后 我是用nmap扫描有啥端口 在后面的时候了解到了个新的参数 –scrip&#x3D;vuln 在nmap中扫描漏洞   1000以下的开放端口有三个 本来是有四个的 其中有一个状态并不是开放的 我们加上参数–scrip&#x3D;vuln扫描之后会发现 扫出来了一个ms17-010漏洞 task2来看看任务2  task2的话 问题就是基础的问题  第二问 我们到msfconsole中搜索ms17-010 第一个就是我们需要的漏洞 exploit&#x2F;windows&#x2F;smb&#x2F;ms17_010_eternalblue 第三问的话 肯定要去配置rhost的 就是你的攻击目标的ip 我有时候会不成功 最好加set payload windows&#x2F;x64&#x2F;shell&#x2F;reverse_tcp进去...</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="https://s2.loli.net/2025/01/19/47KGSaY3sudRFjV.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Asuna</div><div class="author-info-description">Do not go gentle into that good night</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">28</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">21</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">祝你青葱加鱼块 烧油又紫菜</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#task2"><span class="toc-number">1.</span> <span class="toc-text">task2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#task3"><span class="toc-number">2.</span> <span class="toc-text">task3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#task4"><span class="toc-number">3.</span> <span class="toc-text">task4</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#task5"><span class="toc-number">4.</span> <span class="toc-text">task5</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#task6"><span class="toc-number">5.</span> <span class="toc-text">task6</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/09/tryhackme-ice/" title="tryhackme-ice">tryhackme-ice</a><time datetime="2025-03-09T12:29:45.000Z" title="发表于 2025-03-09 20:29:45">2025-03-09</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/09/tryhackme-Burp-Suite%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="tryhackme-Burp Suite：基础知识">tryhackme-Burp Suite：基础知识</a><time datetime="2025-03-09T07:02:59.000Z" title="发表于 2025-03-09 15:02:59">2025-03-09</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/08/tryhackme-blue/" title="tryhackme-blue">tryhackme-blue</a><time datetime="2025-03-08T07:54:37.000Z" title="发表于 2025-03-08 15:54:37">2025-03-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/07/tryhackme-Metasploit-%E7%A7%91%E6%99%AE/" title="tryhackme-Metasploit 科普">tryhackme-Metasploit 科普</a><time datetime="2025-03-07T07:22:27.000Z" title="发表于 2025-03-07 15:22:27">2025-03-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/02/tryhackme-John-the-Ripper-The-Basics/" title="tryhackme-John the Ripper: The Basics">tryhackme-John the Ripper: The Basics</a><time datetime="2025-03-02T06:39:19.000Z" title="发表于 2025-03-02 14:39:19">2025-03-02</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent;"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By Asuna</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const getGiscusTheme = theme => theme === 'dark' ? 'dark' : 'light'
+
+  const createScriptElement = config => {
+    const ele = document.createElement('script')
+    Object.entries(config).forEach(([key, value]) => {
+      ele.setAttribute(key, value)
+    })
+    return ele
+  }
+
+  const loadGiscus = (el = document, key) => {
+    const mappingConfig = isShuoshuo
+      ? { 'data-mapping': 'specific', 'data-term': key }
+      : { 'data-mapping': (option && option['data-mapping']) || 'pathname' }
+
+    const giscusConfig = {
+      src: 'https://giscus.app/client.js',
+      'data-repo': 'oasko/Giscus-demo',
+      'data-repo-id': 'R_kgDONt6VLw',
+      'data-category-id': 'DIC_kwDONt6VL84CmPGu',
+      'data-theme': getGiscusTheme(document.documentElement.getAttribute('data-theme')),
+      'data-reactions-enabled': '1',
+      crossorigin: 'anonymous',
+      async: true,
+      ...option,
+      ...mappingConfig
+    }
+
+    const scriptElement = createScriptElement(giscusConfig)
+
+    el.querySelector('#giscus-wrap').appendChild(scriptElement)
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyGiscus = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const changeGiscusTheme = theme => {
+    const iframe = document.querySelector('#giscus-wrap iframe')
+    if (iframe) {
+      const message = {
+        giscus: {
+          setConfig: {
+            theme: getGiscusTheme(theme)
+          }
+        }
+      }
+      iframe.contentWindow.postMessage(message, 'https://giscus.app')
+    }
+  }
+
+  btf.addGlobalFn('themeChange', changeGiscusTheme, 'giscus')
+
+  if (isShuoshuo) {
+    'Giscus' === 'Giscus'
+      ? window.shuoshuoComment = { loadComment: loadGiscus }
+      : window.loadOtherComment = loadGiscus
+    return
+  }
+
+  if ('Giscus' === 'Giscus' || !false) {
+    if (false) btf.loadComment(document.getElementById('giscus-wrap'), loadGiscus)
+    else loadGiscus()
+  } else {
+    window.loadOtherComment = loadGiscus
+  }
+})()</script></div><div class="aplayer no-destroy" data-id="7495004841" data-server="netease" data-type="playlist" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="false" muted></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
