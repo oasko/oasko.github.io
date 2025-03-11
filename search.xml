@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>tryhackme-SQL 基础知识</title>
+      <link href="/2025/03/11/tryhackme-SQL-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
+      <url>/2025/03/11/tryhackme-SQL-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>这次来看看sql的基础知识</p><p><img src="/source/images/tryhackme-SQL-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/sql.png" alt="sql"></p><p>学习目标：</p><ul><li>了解数据库是什么以及关键术语和概念</li><li>了解不同类型的数据库 </li><li>了解SQL​</li><li>理解并能够使用SQL CRUD 操作</li><li>理解并能够使用SQL子句操作</li><li>理解并能够使用SQL操作</li><li>理解并能够使用SQL运算符</li><li>理解并能够使用SQL函数</li></ul><h2 id="task2"><a href="#task2" class="headerlink" title="task2"></a>task2</h2><p>数据库是结构化信息或数据的有组织的集合</p><p>两种主要类型：</p><ul><li>关系数据库（Relational databases）（又名SQL）</li><li>非关系数据库（non-Relational databases）（又名 NoSQL）</li></ul><p>关系数据库： 存储结构化数据，这意味着插入到此数据库中的数据遵循某种结构。</p><p>非关系数据库：要以非表格格式存储数据</p><p>关系数据库中存储的所有数据都将存储在表（table）中</p><p>创建此表时，您需要定义定义书籍记录所需的信息，例如“id”、“Name”和“Published_date”。这些将成为列（columns）定义这些列时，还需要定义此列应包含的数据类型</p><p>创建了定义列的列表之后 数据进入比如“id&#x3D;1 name&#x3D;ikun publish_data&#x3D;2018”这串数据将会表示成行（row）</p><p>数据库中有两种键：</p><ul><li><p>主键<br>主键是唯一的，确保在某一列中收集的数据是唯一的 不会重复</p></li><li><p>外键<br>外键是数据库中另一个表中也存在的表中的一个列（或多个列），因此提供了两个表之间的链接。</p></li></ul><p><img src="/images/tryhackme-SQL-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/task2.png" alt="task2"></p><h2 id="task3"><a href="#task3" class="headerlink" title="task3"></a>task3</h2><p>这次介绍的是sql</p><p>数据库通常使用数据库管理系统 (DBMS) 进行控制。DBMS 是最终用户和数据库之间的接口</p><p>以下是学习和使用SQL 的一些好处：</p><ul><li><p>速度快： 关系数据库（即SQL用于的数据库）由于使用的存储空间少且处理速度快，因此几乎可以立即返回大量数据。 </p></li><li><p>易于学习： 与许多编程语言不同，SQL是用浅显易懂的英语编写的，因此更容易掌握。该语言的可读性高，这意味着用户可以专注于学习函数和语法。</p></li><li><p>可靠： 如前所述，关系数据库可以通过定义数据集必须符合的严格结构来保证数据的准确性。</p></li><li><p>灵活：  SQL在查询数据库时提供了各种功能；这使用户能够非常高效地执行大量数据分析任务。</p></li></ul><p><img src="/images/tryhackme-SQL-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/task3.png" alt="task3"></p><h2 id="task4"><a href="#task4" class="headerlink" title="task4"></a>task4</h2><h3 id="数据库语法"><a href="#数据库语法" class="headerlink" title="数据库语法"></a>数据库语法</h3><ol><li><p>创建数据库<br>mysql&gt; CREATE DATABASE database_name;</p></li><li><p>显示数据库<br>mysql&gt; SHOW DATABASES;</p></li><li><p>使用数据库<br>mysql&gt; USE database_name</p></li><li><p>删除数据库<br>mysql&gt; DROP database database_name;</p></li></ol><h3 id="表语句"><a href="#表语句" class="headerlink" title="表语句"></a>表语句</h3><ol><li><p>创建表</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; CREATE TABLE example_table_name (</span><br><span class="line">    example_column1 data_type,</span><br><span class="line">    example_column2 data_type,</span><br><span class="line">    example_column3 data_type</span><br><span class="line">);</span><br></pre></td></tr></table></figure></li><li><p>显示表<br>show table_name；</p></li><li><p>描述<br>DESCRIBE也可以简称为DESC<br>查看表中包含哪些列（以及它们的数据类型）</p></li></ol><p>mysql&gt; DESCRIBE table_name；</p><p>来看问题 练练手</p><p><img src="/images/tryhackme-SQL-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/tasl4.png" alt="task"></p><p>第一问就是直接 show databases;就能看到flag</p><p><img src="/images/tryhackme-SQL-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/flag1.png" alt="task4"></p><p>第二问就是使用问题说的task4_db这个数据库 然后show databases;就能看到</p><p><img src="/images/tryhackme-SQL-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/flag2.png" alt="task4"></p><h2 id="task5"><a href="#task5" class="headerlink" title="task5"></a>task5</h2><p>CRUD 语法</p><p>crub语法可以理解为增删改查这四个操作    </p><ul><li>INSERT 语句 - 向表中添加新记录。</li><li>SELECT 语句 -从表中检索记录。</li><li>UPDATE 语句 - 修改表中现有数据。</li><li>DELETE 语句 - 从表中删除记录。</li></ul><ol><li>创建操作（insert）<br>这个可以用insert into语法来解决<br>eg</li></ol><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">insert into (&quot;id&quot;,&quot;Name&quot;,&quot;Published_date&quot;) VALUE(&quot;1&quot;,&quot;ikun&quot;,&quot;2018&quot;  )</span><br></pre></td></tr></table></figure><ol start="2"><li><p>读操作（SELECT）<br>用select语句，用于从表中读取或检索信息。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">select * from database_name</span><br><span class="line"># *是检索所有列</span><br><span class="line"></span><br><span class="line">select id,name from database_name</span><br></pre></td></tr></table></figure></li><li><p>更新操作（UPDATE）<br>更新操作会修改表中现有的记录</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">update database_name  set Name=&quot;xiaoheizi&quot; where id=1</span><br><span class="line"></span><br><span class="line">SET后跟要更新的列名。WHERE子句指定在满足子句时要更新哪一行，在本例中为id 为 1 的行。</span><br></pre></td></tr></table></figure></li><li><p>删除操作 (DELETE)</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; DELETE FROM books WHERE id = 1;</span><br></pre></td></tr></table></figure></li></ol><p>练练手</p><p><img src="/images/tryhackme-SQL-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/task5.png" alt="task5"></p><p>主要还是用select工具查出来 </p><p><img src="/images/tryhackme-SQL-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/hacking.png" alt="taKS"></p><p>第二问也一样 只是去找一下他们的类别</p><p><img src="/images/tryhackme-SQL-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/usb.png" alt="task"></p><h2 id="task6"><a href="#task6" class="headerlink" title="task6"></a>task6</h2><p>子句可以帮助我们定义数据的类型以及如何检索或排序数据</p><ol><li>DISTINCT子句<br>DISTINCT子句用于在查询时避免重复记录，仅返回唯一的值。</li></ol><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT * FROM books;</span><br><span class="line">+----+----------------------------+----------------+--------------------------------------------------------+</span><br><span class="line">| id | name                       | published_date | description                                            |</span><br><span class="line">+----+----------------------------+----------------+--------------------------------------------------------+</span><br><span class="line">|  1 | Android Security Internals | 2014-10-14     | An In-Depth Guide to Android&#x27;s Security Architecture   |</span><br><span class="line">|  2 | Bug Bounty Bootcamp        | 2021-11-16     | The Guide to Finding and Reporting Web Vulnerabilities |</span><br><span class="line">|  3 | Car Hacker&#x27;s Handbook      | 2016-02-25     | A Guide for the Penetration Tester                     |</span><br><span class="line">|  4 | Designing Secure Software  | 2021-12-21     | A Guide for Developers                                 |</span><br><span class="line">|  5 | Ethical Hacking            | 2021-11-02     | A Hands-on Introduction to Breaking In                 |</span><br><span class="line">|  6 | Ethical Hacking            | 2021-11-02     |                                                        |</span><br><span class="line">+----+----------------------------+----------------+--------------------------------------------------------+</span><br><span class="line"></span><br><span class="line">6 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure><p>使用了distinct子句之后</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT DISTINCT name FROM books;</span><br><span class="line">+----------------------------+</span><br><span class="line">| name                       |</span><br><span class="line">+----------------------------+</span><br><span class="line">| Android Security Internals |</span><br><span class="line">| Bug Bounty Bootcamp        |</span><br><span class="line">| Car Hacker&#x27;s Handbook      |</span><br><span class="line">| Designing Secure Software  |</span><br><span class="line">| Ethical Hacking            |</span><br><span class="line">+----------------------------+</span><br><span class="line"></span><br><span class="line">5 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure><p>把原来重复的数据排掉了 只返回唯一的值</p><ol start="2"><li>GROUP BY子句<br>GROUP BY子句聚合来自多个记录的数据并将查询结果分组到列中。</li></ol><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT name, COUNT(*)</span><br><span class="line">    FROM books</span><br><span class="line">    GROUP BY name;</span><br><span class="line">+----------------------------+----------+</span><br><span class="line">| name                       | COUNT(*) |</span><br><span class="line">+----------------------------+----------+</span><br><span class="line">| Android Security Internals |        1 |</span><br><span class="line">| Bug Bounty Bootcamp        |        1 |</span><br><span class="line">| Car Hacker&#x27;s Handbook      |        1 |</span><br><span class="line">| Designing Secure Software  |        1 |</span><br><span class="line">| Ethical Hacking            |        2 |</span><br><span class="line">+----------------------------+----------+</span><br><span class="line"></span><br><span class="line">5 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure><ol start="3"><li>ORDER BY 子句<br>ORDER BY子句可用于按升序或降序对查询返回的记录进行排序。使用ASC(升序)和之类的函数DESC(降序)</li></ol><p><img src="/images/tryhackme-SQL-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/task6.png" alt="task6"></p><p>第一问 我们要加一个count(*)函数和GROUP BY函数</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select category,count(*) from hacking_tools group by category;</span><br></pre></td></tr></table></figure><p><img src="/images/tryhackme-SQL-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/6.png" alt="task6"></p><p>第二问</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from hacking_tools order by name asc;</span><br></pre></td></tr></table></figure><p><img src="/images/tryhackme-SQL-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/asc.png" alt="task"></p><p>能查出第一个是 bash bunny</p><p>第三问也是异曲同工之妙</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from hacking_tools order by name desc;</span><br></pre></td></tr></table></figure><p><img src="/images/tryhackme-SQL-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/desc.png" alt="task"></p><h2 id="task7"><a href="#task7" class="headerlink" title="task7"></a>task7</h2><p>逻辑运算符</p><ol><li><p>LIKE<br>LIKE运算符通常与子句一起使用</p></li><li><p>AND 运算符<br>运算符AND在查询中使用多个条件，如果所有条件都为真则返回。</p></li><li><p>OR 运算符<br>该OR运算符组合查询中的多个条件，并返回其中至少有一个条件为真时的结果</p></li><li><p>NOT 运算符<br>NOT运算符反转布尔运算符的值,能够排除特定条件。</p></li><li><p>BETWEEN 运算符<br>BETWEEN运算符允许我们测试某个值是否存在于定义的范围内。</p></li></ol><p>比较运算符<br>用数学符号的运算符</p><table><thead><tr><th>运算符</th><th>说明</th></tr></thead><tbody><tr><td><code>=</code></td><td>等于运算符，判断是否相等</td></tr><tr><td><code>!=</code> 或 <code>&lt;&gt;</code></td><td>不等于运算符，判断是否不相等</td></tr><tr><td><code>&lt;</code></td><td>小于运算符，判断是否小于</td></tr><tr><td><code>&gt;</code></td><td>大于运算符，判断是否大于</td></tr><tr><td><code>&lt;=</code></td><td>小于或等于运算符</td></tr><tr><td><code>&gt;=</code></td><td>大于或等于运算符</td></tr></tbody></table><p><img src="/images/tryhackme-SQL-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/task7.png" alt="task7"></p><p>第一问 用like 筛选出Multi-tool</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from hacking_tools where category like &quot;%Multi-tool%&quot;;</span><br></pre></td></tr></table></figure><p><img src="/images/tryhackme-SQL-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/zero.png" alt="task"></p><p>第二问 能看到category是RFID cloning</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from hacking_tools where amount &gt;=&quot;300&quot;;</span><br></pre></td></tr></table></figure><p><img src="/images/tryhackme-SQL-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/300.png" alt="task"></p><p>第三问 需要用到where like和＜</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from hacking_tools where category like &quot;%Network intelligence%&quot; and amount &lt;&quot;100&quot;;</span><br></pre></td></tr></table></figure><p><img src="/images/tryhackme-SQL-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/100.png" alt="task"></p><h2 id="task8"><a href="#task8" class="headerlink" title="task8"></a>task8</h2><h3 id="字符串函数"><a href="#字符串函数" class="headerlink" title="字符串函数"></a>字符串函数</h3><ol><li><p>CONCAT() 函数<br>此函数用于将两个或多个字符串相加。它对于合并不同列的文本非常有用。</p></li><li><p>GROUP_CONCAT() 函数<br>此函数可以帮助我们将多行数据连接到一个字段。</p></li><li><p>SUBSTRING() 函数<br>此函数将从查询中的字符串中检索子字符串，从确定的位置开始。</p></li><li><p>LENGTH() 函数<br>此函数返回字符串中的字符数。这包括空格和标点符号。</p></li></ol><h3 id="聚合函数"><a href="#聚合函数" class="headerlink" title="聚合函数"></a>聚合函数</h3><p>函数聚合查询中一个指定条件内的多行值；它可以将多个值组合成一个结果。</p><ol><li><p>COUNT() 函数<br>此函数返回表达式内的记录数</p></li><li><p>SUM() 函数<br>此函数对确定列的所有值（非 NULL）求和。</p></li><li><p>MAX() 函数<br>此函数计算表达式中提供的列中的最大值。</p></li><li><p>MIN() 函数<br>此函数计算表达式中提供的列中的最小值。</p></li></ol><p><img src="/images/tryhackme-SQL-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/task8.png" alt="task"></p><p>第一问 用order by函数</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select name from hacking_tools order by length(name);</span><br></pre></td></tr></table></figure><p><img src="/images/tryhackme-SQL-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/chang.png" alt="task"></p><p>第二问 需要用到sum函数</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select sum(amount) from hacking_tools;</span><br></pre></td></tr></table></figure><p><img src="/images/tryhackme-SQL-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/1444.png" alt="task"></p><p>第三问</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">SELECT GROUP_CONCAT(name SEPARATOR &quot; &amp; &quot;) AS name_nonzero FROM hacking_tools WHERE SUBSTRING(amount, -1, 1) != 0;</span><br><span class="line"></span><br><span class="line"># SELECT 语句</span><br><span class="line">SELECT GROUP_CONCAT(name SEPARATOR &quot; &amp; &quot;) AS name_nonzero：查询的这一部分指定您想要选择一个字段，name_nonzero它将包含工具的连接名称。</span><br><span class="line">GROUP_CONCAT(name SEPARATOR &quot; &amp; &quot;)：</span><br><span class="line">GROUP_CONCAT()是一个聚合函数，将多行的值连接成一个字符串。</span><br><span class="line">指定SEPARATOR &quot; &amp; &quot;连接字符串中的每个名称应以“&amp;”分隔。</span><br><span class="line">例如，如果名称是“工具 A”和“工具 B”，则结果将是“工具 A &amp; 工具 B”。</span><br><span class="line"></span><br><span class="line"># FROM 子句</span><br><span class="line">FROM hacking_tools：这指定从中检索数据的表，在本例中为hacking_tools。</span><br><span class="line"></span><br><span class="line"># WHERE 子句</span><br><span class="line">WHERE SUBSTRING(amount, -1, 1) != 0：此子句根据与列相关的条件过滤行amount。</span><br><span class="line">SUBSTRING(amount, -1, 1)：</span><br><span class="line">该SUBSTRING()函数提取字符串的一部分。</span><br><span class="line">这里，它用于获取amount字符串的最后一个字符：</span><br><span class="line">第一个参数是amount列。</span><br><span class="line">第二个参数-1表示它应该从最后一个字符开始。</span><br><span class="line">第三个参数1表示它应该只提取一个字符。</span><br><span class="line">!= 0：检查的最后一个字符是否amount不等于0。这意味着查询将仅考虑amount不以零结尾的行。</span><br></pre></td></tr></table></figure><p><img src="/images/tryhackme-SQL-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/last.png" alt="task"></p><p>最后一个真的有点难度 查了一波资料和wp</p><p>sql就简单介绍到这</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> sql tryhackme </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>tryhackme-Web应用程序基础</title>
       <link href="/2025/03/10/tryhackme-Web%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%9F%BA%E7%A1%80/"/>
       <url>/2025/03/10/tryhackme-Web%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%9F%BA%E7%A1%80/</url>
@@ -546,9 +565,9 @@
     
     
     <entry>
-      <title>about</title>
-      <link href="/about/index-1.html"/>
-      <url>/about/index-1.html</url>
+      <title>Gallery</title>
+      <link href="/Gallery/index.html"/>
+      <url>/Gallery/index.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
@@ -557,9 +576,20 @@
     
     
     <entry>
-      <title>Gallery</title>
-      <link href="/Gallery/index.html"/>
-      <url>/Gallery/index.html</url>
+      <title></title>
+      <link href="/css/touming.css"/>
+      <url>/css/touming.css</url>
+      
+        <content type="html"><![CDATA[/* 文章页背景 */.layout_post>#post {  /* 透明度为 0.7 */  background: rgba(255, 255, 255, 0.7);}/* 所有页面背景 */#aside_content .card-widget, #recent-posts>.recent-post-item, .layout_page>div:first-child:not(.recent-posts), .layout_post>#page, .layout_post>#post, .read-mode .layout_post>#post {  /* 透明度为 0.7 */  background: rgba(255, 255, 255, 0.7);}/* 侧边卡片的透明度 */:root {  --card-bg: rgba(255, 255, 255, 0.7);}/* 页脚透明 */#footer {  /* 透明度为 0.7 */  background: rgba(255, 255, 255, 0.7);}]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>about</title>
+      <link href="/about/index.html"/>
+      <url>/about/index.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
@@ -579,44 +609,11 @@
     
     
     <entry>
-      <title>categories</title>
-      <link href="/categories/index-1.html"/>
-      <url>/categories/index-1.html</url>
+      <title></title>
+      <link href="/css/music.css"/>
+      <url>/css/music.css</url>
       
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>about</title>
-      <link href="/about/index.html"/>
-      <url>/about/index.html</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>categories</title>
-      <link href="/categories/index.html"/>
-      <url>/categories/index.html</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>books</title>
-      <link href="/books/index.html"/>
-      <url>/books/index.html</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+        <content type="html"><![CDATA[.aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {    left: -66px !important;    /* 默认情况下缩进左侧66px，只留一点箭头部分 */  }    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {    left: 0 !important;    /* 鼠标悬停是左侧缩进归零，完全显示按钮 */  }]]></content>
       
     </entry>
     
@@ -634,17 +631,6 @@
     
     
     <entry>
-      <title></title>
-      <link href="/css/music.css"/>
-      <url>/css/music.css</url>
-      
-        <content type="html"><![CDATA[.aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {    left: -66px !important;    /* 默认情况下缩进左侧66px，只留一点箭头部分 */  }    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {    left: 0 !important;    /* 鼠标悬停是左侧缩进归零，完全显示按钮 */  }]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>music</title>
       <link href="/music/index.html"/>
       <url>/music/index.html</url>
@@ -656,9 +642,9 @@
     
     
     <entry>
-      <title>movies</title>
-      <link href="/movies/index.html"/>
-      <url>/movies/index.html</url>
+      <title>tags</title>
+      <link href="/tags/index-1.html"/>
+      <url>/tags/index-1.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
@@ -667,9 +653,9 @@
     
     
     <entry>
-      <title>tags</title>
-      <link href="/tags/index-1.html"/>
-      <url>/tags/index-1.html</url>
+      <title>about</title>
+      <link href="/about/index-1.html"/>
+      <url>/about/index-1.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
@@ -700,11 +686,44 @@
     
     
     <entry>
-      <title></title>
-      <link href="/css/touming.css"/>
-      <url>/css/touming.css</url>
+      <title>categories</title>
+      <link href="/categories/index.html"/>
+      <url>/categories/index.html</url>
       
-        <content type="html"><![CDATA[/* 文章页背景 */.layout_post>#post {  /* 透明度为 0.7 */  background: rgba(255, 255, 255, 0.7);}/* 所有页面背景 */#aside_content .card-widget, #recent-posts>.recent-post-item, .layout_page>div:first-child:not(.recent-posts), .layout_post>#page, .layout_post>#post, .read-mode .layout_post>#post {  /* 透明度为 0.7 */  background: rgba(255, 255, 255, 0.7);}/* 侧边卡片的透明度 */:root {  --card-bg: rgba(255, 255, 255, 0.7);}/* 页脚透明 */#footer {  /* 透明度为 0.7 */  background: rgba(255, 255, 255, 0.7);}]]></content>
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>books</title>
+      <link href="/books/index.html"/>
+      <url>/books/index.html</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>movies</title>
+      <link href="/movies/index.html"/>
+      <url>/movies/index.html</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>categories</title>
+      <link href="/categories/index-1.html"/>
+      <url>/categories/index-1.html</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
     </entry>
     
