@@ -1,0 +1,327 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>tryhackme-JavaScript 基础知识 | Asuna</title><meta name="author" content="Asuna"><meta name="copyright" content="Asuna"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="话说回来 这还是第一次碰碰js 一开始对js的最大印象就是那些高端网站的动效等等。代码审计比这个更难更难 就当是入坑的第一站了 task2基本概念 变量Variables变量是允许您在其中存储数据值的容器。与任何其他语言一样，JS 中的变量类似于存储数据的容器。 在 JS 中，每个变量都有一个名称；当我们在变量中存储某个值时，我们会为其分配一个名称以便以后引用它。 var、let 和 const">
+<meta property="og:type" content="article">
+<meta property="og:title" content="tryhackme-JavaScript 基础知识">
+<meta property="og:url" content="https://oasko.github.io/2025/03/11/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/index.html">
+<meta property="og:site_name" content="Asuna">
+<meta property="og:description" content="话说回来 这还是第一次碰碰js 一开始对js的最大印象就是那些高端网站的动效等等。代码审计比这个更难更难 就当是入坑的第一站了 task2基本概念 变量Variables变量是允许您在其中存储数据值的容器。与任何其他语言一样，JS 中的变量类似于存储数据的容器。 在 JS 中，每个变量都有一个名称；当我们在变量中存储某个值时，我们会为其分配一个名称以便以后引用它。 var、let 和 const">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2025/01/19/47KGSaY3sudRFjV.jpg">
+<meta property="article:published_time" content="2025-03-11T12:58:32.000Z">
+<meta property="article:modified_time" content="2025-03-12T15:34:47.972Z">
+<meta property="article:author" content="Asuna">
+<meta property="article:tag" content="js tryhackme">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2025/01/19/47KGSaY3sudRFjV.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "tryhackme-JavaScript 基础知识",
+  "url": "https://oasko.github.io/2025/03/11/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/",
+  "image": "https://s2.loli.net/2025/01/19/47KGSaY3sudRFjV.jpg",
+  "datePublished": "2025-03-11T12:58:32.000Z",
+  "dateModified": "2025-03-12T15:34:47.972Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Asuna",
+      "url": "https://oasko.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://oasko.github.io/2025/03/11/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'tryhackme-JavaScript 基础知识',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/touming.css"><meta name="generator" content="Hexo 7.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load', preloader.endLoading)
+
+  if (false) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="web_bg" style="background-image: url(https://s2.loli.net/2024/12/28/fdpLbCNQwExoPan.jpg);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="https://s2.loli.net/2025/01/19/47KGSaY3sudRFjV.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">31</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">24</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> tag</span></a></li><li><a class="site-page child" href="/books/"><i class="fa-fw fa fa-book"></i><span> 图书</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></div><div class="menus_item"><a class="site-page" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 知识点</span></a></div><div class="menus_item"><a class="site-page" href="/chat/"><i class="fa-fw fa fa-lightbulb-o"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background: [object Object];"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Asuna</span></a><a class="nav-page-title" href="/"><span class="site-name">tryhackme-JavaScript 基础知识</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> tag</span></a></li><li><a class="site-page child" href="/books/"><i class="fa-fw fa fa-book"></i><span> 图书</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></div><div class="menus_item"><a class="site-page" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 知识点</span></a></div><div class="menus_item"><a class="site-page" href="/chat/"><i class="fa-fw fa fa-lightbulb-o"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">tryhackme-JavaScript 基础知识</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-03-11T12:58:32.000Z" title="发表于 2025-03-11 20:58:32">2025-03-11</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-03-12T15:34:47.972Z" title="更新于 2025-03-12 23:34:47">2025-03-12</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>6分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>话说回来 这还是第一次碰碰js 一开始对js的最大印象就是那些高端网站的动效等等。代码审计比这个更难更难 就当是入坑的第一站了</p>
+<h2 id="task2"><a href="#task2" class="headerlink" title="task2"></a>task2</h2><p>基本概念</p>
+<h3 id="变量Variables"><a href="#变量Variables" class="headerlink" title="变量Variables"></a>变量Variables</h3><p>变量是允许您在其中存储数据值的容器。与任何其他语言一样，JS 中的变量类似于存储数据的容器。</p>
+<p>在 JS 中，每个变量都有一个名称；当我们在变量中存储某个值时，我们会为其分配一个名称以便以后引用它。 var、let 和 const 类型的图像在 JS 中有三种声明变量的方式：var、let和const。</p>
+<h3 id="数据类型Data-Types"><a href="#数据类型Data-Types" class="headerlink" title="数据类型Data Types"></a>数据类型Data Types</h3><p>在 JS 中，数据类型定义变量可以保存的值的类型。示例包括string(text)、、number( booleantrue&#x2F;false)、null、undefined 和 object（适用于数组或对象等更复杂的数据）。</p>
+<h3 id="功能function"><a href="#功能function" class="headerlink" title="功能function"></a>功能function</h3><p>函数表示用于执行特定任务的代码块。在函数内部，您可以将需要执行类似任务的代码分组。</p>
+<h3 id="循环loop"><a href="#循环loop" class="headerlink" title="循环loop"></a>循环loop</h3><p>只要条件为true，循环允许多次运行代码块。JS 中常见的循环是for、while,和do…while，它们用于重复任务</p>
+<p><img src="/source/images/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/task2.png" alt="task"></p>
+<p>loop就是循环 能多次运行代码块</p>
+<h2 id="task3"><a href="#task3" class="headerlink" title="task3"></a>task3</h2><p>JavaScript 概述</p>
+<p>JS 是一种解释型语言，这意味着代码无需事先编译即可在浏览器中直接执行。</p>
+<p>根据文章 我们在浏览器写写代码 试试看</p>
+<p><img src="/source/images/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/20.png" alt="task"></p>
+<p><img src="/source/images/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/task3.png" alt="task3"></p>
+<p>刚才的提升就给出答案了 </p>
+<h2 id="task4"><a href="#task4" class="headerlink" title="task4"></a>task4</h2><h3 id="内部-JavaScript"><a href="#内部-JavaScript" class="headerlink" title="内部 JavaScript"></a>内部 JavaScript</h3><p>内部 JS 是指将 JS 代码直接嵌入 HTML 文档中。</p>
+<p>脚本插入在script标签之间。这些标签可以放在head部分内，通常用于需要在呈现页面内容之前加载的脚本，也可以放在body部分内，其中脚本可用于在网页上加载元素时与元素进行交互。</p>
+<p>根据文章 我们打开internal.html</p>
+<p><img src="/source/images/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/15.png" alt="task4"></p>
+<p><img src="/source/images/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/nei.png" alt="task4"></p>
+<p>里面的格式是这样的</p>
+<p>JS 通过选择一个元素（带有 id&#x3D;”result” 的 </p><p>）并使用 document.getElementById(“result”).innerHTML更新其内容来与 HTML 交互</p>
+<h3 id="外部-JavaScript"><a href="#外部-JavaScript" class="headerlink" title="外部 JavaScript"></a>外部 JavaScript</h3><p>外部 JS 涉及在以文件扩展名结尾的单独文件中创建和存储 JS 代码 .js 。此方法可帮助开发人员保持 HTML 文档的整洁有序。外部 JS 文件可以存储或托管在与 HTML 文档相同的 Web 服务器上，也可以存储在外部 Web 服务器（例如云）上。</p>
+<p>我们打开文件夹中的script.js和external.html</p>
+<p><img src="/source/images/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/waibu.png" alt="task"></p>
+<p>所做的不同之处在于使用 script标记中的 src 属性从外部文件加载 JS。当浏览器加载页面时，它会查找 script.js 文件并将其内容加载到 HTML 文档中。这种方法使我们能够将 JS 代码与 HTML 分开，使代码更有条理且更易于维护，尤其是在处理较大的项目时。</p>
+<h3 id="验证内部或外部-JS"><a href="#验证内部或外部-JS" class="headerlink" title="验证内部或外部 JS"></a>验证内部或外部 JS</h3><p>在对 Web 应用程序进行渗透测试时，检查网站使用的是内部 JS 还是外部 JS 非常重要。通过查看页面的源代码可以轻松验证这一点。为此，请打开external_test.html 位于exercise文件夹中的页面Chrome，右键单击页面上的任意位置，然后选择View Page Source。</p>
+<p>这将显示渲染页面的 HTML 代码。在源代码中，任何直接在页面上编写的 JS 都将出现在不带属性的script标记之间src。如果您看到带有src属性的script标记，则表示页面正在从单独的文件加载外部 JS。</p>
+<p><img src="/source/images/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/task4.png" alt="task4"></p>
+<p>内部js就是集成在html文档中</p>
+<p>外部js适合跨多个文件重用js</p>
+<p>打开这个文档查看源码 就能发现这个是用外部js调用thm_external.js</p>
+<p><img src="/source/images/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/thmjs.png" alt="task4"></p>
+<p>用src标签来链接外部js文件</p>
+<h2 id="task5"><a href="#task5" class="headerlink" title="task5"></a>task5</h2><p>Abusing Dialogue Functions 滥用对话功能<br>JS 的主要目标之一是提供对话框以便与用户交互并动态更新网页内容。</p>
+<p>Alert<br>alert 函数在带有“ ”按钮的对话框中显示一条消息OK，通常用于向用户传达信息或警告。例如，如果我们想Hello THM向用户显示“ ”，我们将使用 alert(“HelloTHM”);。要试用它，请打开 Chrome 控制台，输入alert(“Hello THM”)，然后按 Enter。屏幕上将出现一个带有消息的对话</p>
+<p>Prompt<br>prompt 函数显示一个对话框，要求用户输入。当用户单击“ OK”时，它返回输入的值；如果用户单击“ Cancel”，则返回 null。例如，要询问用户的姓名，我们将使用prompt(“What is your name?”);。</p>
+<p>Confirm<br>确认函数显示一个对话框，其中包含一条消息和两个按钮：“ OK”和“ Cancel”。如果用户点击“ OK”，则返回 true，如果用户点击“ Cancel”，则返回 false。例如，要要求用户确认，我们将使用confirm(“Are you sure?”);。要尝试此操作，请打开 Chrome 控制台，输入confirm(“Do you want to proceed?”)，然后按Enter。 </p>
+<p><img src="/source/images/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/task5.png" alt="task5"></p>
+<p>打开源码的话会发现</p>
+<p><img src="/source/images/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/yuan.png" alt="task5"></p>
+<p>超过五次就没有这个提示 那就是警报五次</p>
+<p>prompt这个函数用来与用户交互</p>
+<p>输入tesla的话 就是存储了tesla的值</p>
+<h2 id="task6"><a href="#task6" class="headerlink" title="task6"></a>task6</h2><p>绕过控制流语句</p>
+<p>JS 提供了多种控制流结构，例如if-else，switch语句用于做出决策，以及循环（例如for，，while和）do…while用于重复操作。</p>
+<p>条件语句的实际应用</p>
+<p>最常用的条件语句之一是if-else语句，它允许您根据条件的计算结果if-else 是否（true false）为来执行不同的代码块。</p>
+<p><img src="/source/images/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/task6.png" alt="task6"></p>
+<p>第一题打开age.html 输入一个比18小的数字就行 就能出提示</p>
+<p><img src="/source/images/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/17.png" alt="task6"></p>
+<p>第二题就是打开login.html 打开源码就能找到密码</p>
+<p><img src="/source/images/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/admin.png" alt="task6"></p>
+<h2 id="task7"><a href="#task7" class="headerlink" title="task7"></a>task7</h2><p>探索最小化文件</p>
+<p>JS 中的压缩是通过删除所有不必要的字符（例如空格、换行符、注释，甚至缩短变量名）来压缩 JS 文件的过程。这有助于减小文件大小并缩短网页的加载时间，尤其是在生产环境中。压缩后的文件使代码更紧凑，更难被人类阅读，但它们的功能仍然完全相同。</p>
+<p>混淆（Obfuscation）通常用于通过添加不需要的代码、将变量和函数重命名为无意义的名称，甚至插入虚拟代码来使 JS 更难理解。</p>
+<p><img src="/source/images/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/hello1.png" alt="hello"></p>
+<p>这个就是混淆</p>
+<p>我们可以通过<a target="_blank" rel="noopener" href="https://obf-io.deobfuscate.io/">网站</a>来进行混淆和反混淆（Deobfuscation）的操作</p>
+<p><img src="/source/images/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/task7.png" alt="task7"></p>
+<p>第一问 打开hello.html就能看到警报</p>
+<p><img src="/source/images/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/welcome.png" alt="task7"></p>
+<p>第二问 拿到网站就能反混淆</p>
+<p><img src="/source/images/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/21.png" alt="task7"></p>
+<h2 id="task8"><a href="#task8" class="headerlink" title="task8"></a>task8</h2><p>避免仅依赖客户端验证<br>JS 的主要功能之一是执行客户端验证。开发人员有时会使用它来验证表单并完全依赖它，这不是一个好的做法。由于用户可以在客户端禁用&#x2F;操纵JS，因此在服务器端执行验证也是必不可少的。</p>
+<p>避免添加不受信任的库<br>如前面的任务中所述，JS 允许您使用src标签内的属性包含任何其他 JS 脚本script。但您是否考虑过我们包含的库是否来自可信来源？不良行为者已将一组名称与合法库相似的库上传到互联网上。因此，如果您盲目地包含恶意库，您的 Web 应用程序将面临威胁。</p>
+<p>避免硬编码<br>切勿将API密钥、访问令牌或凭据等敏感数据硬编码到 JS 代码中，因为用户可以轻松检查源代码并获取密码。</p>
+<p>压缩并混淆你的 JavaScript 代码<br>压缩和混淆 JS 代码可减少其大小、缩短加载时间，并使攻击者更难理解代码的逻辑。因此，在生产中使用代码时，请务必 压缩 和 混淆 代码。</p>
+<p>简单介绍就到这里</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://oasko.github.io">Asuna</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://oasko.github.io/2025/03/11/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">https://oasko.github.io/2025/03/11/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://oasko.github.io" target="_blank">Asuna</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/js-tryhackme/">js tryhackme</a></div><div class="post-share"><div class="social-share" data-image="https://s2.loli.net/2025/01/19/47KGSaY3sudRFjV.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="https://s2.loli.net/2025/01/19/47KGSaY3sudRFjV.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Asuna</div><div class="author-info-description">Do not go gentle into that good night</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">31</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">24</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">祝你青葱加鱼块 烧油又紫菜</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#task2"><span class="toc-number">1.</span> <span class="toc-text">task2</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%98%E9%87%8FVariables"><span class="toc-number">1.1.</span> <span class="toc-text">变量Variables</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8BData-Types"><span class="toc-number">1.2.</span> <span class="toc-text">数据类型Data Types</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%9F%E8%83%BDfunction"><span class="toc-number">1.3.</span> <span class="toc-text">功能function</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%AA%E7%8E%AFloop"><span class="toc-number">1.4.</span> <span class="toc-text">循环loop</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#task3"><span class="toc-number">2.</span> <span class="toc-text">task3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#task4"><span class="toc-number">3.</span> <span class="toc-text">task4</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E9%83%A8-JavaScript"><span class="toc-number">3.1.</span> <span class="toc-text">内部 JavaScript</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%96%E9%83%A8-JavaScript"><span class="toc-number">3.2.</span> <span class="toc-text">外部 JavaScript</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AA%8C%E8%AF%81%E5%86%85%E9%83%A8%E6%88%96%E5%A4%96%E9%83%A8-JS"><span class="toc-number">3.3.</span> <span class="toc-text">验证内部或外部 JS</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#task5"><span class="toc-number">4.</span> <span class="toc-text">task5</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#task6"><span class="toc-number">5.</span> <span class="toc-text">task6</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#task7"><span class="toc-number">6.</span> <span class="toc-text">task7</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#task8"><span class="toc-number">7.</span> <span class="toc-text">task8</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/11/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="tryhackme-JavaScript 基础知识">tryhackme-JavaScript 基础知识</a><time datetime="2025-03-11T12:58:32.000Z" title="发表于 2025-03-11 20:58:32">2025-03-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/11/tryhackme-SQL-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="tryhackme-SQL 基础知识">tryhackme-SQL 基础知识</a><time datetime="2025-03-11T07:47:29.000Z" title="发表于 2025-03-11 15:47:29">2025-03-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/10/tryhackme-Web%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%9F%BA%E7%A1%80/" title="tryhackme-Web应用程序基础">tryhackme-Web应用程序基础</a><time datetime="2025-03-10T01:27:48.000Z" title="发表于 2025-03-10 09:27:48">2025-03-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/09/tryhackme-ice/" title="tryhackme-ice">tryhackme-ice</a><time datetime="2025-03-09T12:29:45.000Z" title="发表于 2025-03-09 20:29:45">2025-03-09</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/09/tryhackme-Burp-Suite%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="tryhackme-Burp Suite：基础知识">tryhackme-Burp Suite：基础知识</a><time datetime="2025-03-09T07:02:59.000Z" title="发表于 2025-03-09 15:02:59">2025-03-09</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent;"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By Asuna</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const getGiscusTheme = theme => theme === 'dark' ? 'dark' : 'light'
+
+  const createScriptElement = config => {
+    const ele = document.createElement('script')
+    Object.entries(config).forEach(([key, value]) => {
+      ele.setAttribute(key, value)
+    })
+    return ele
+  }
+
+  const loadGiscus = (el = document, key) => {
+    const mappingConfig = isShuoshuo
+      ? { 'data-mapping': 'specific', 'data-term': key }
+      : { 'data-mapping': (option && option['data-mapping']) || 'pathname' }
+
+    const giscusConfig = {
+      src: 'https://giscus.app/client.js',
+      'data-repo': 'oasko/Giscus-demo',
+      'data-repo-id': 'R_kgDONt6VLw',
+      'data-category-id': 'DIC_kwDONt6VL84CmPGu',
+      'data-theme': getGiscusTheme(document.documentElement.getAttribute('data-theme')),
+      'data-reactions-enabled': '1',
+      crossorigin: 'anonymous',
+      async: true,
+      ...option,
+      ...mappingConfig
+    }
+
+    const scriptElement = createScriptElement(giscusConfig)
+
+    el.querySelector('#giscus-wrap').appendChild(scriptElement)
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyGiscus = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const changeGiscusTheme = theme => {
+    const iframe = document.querySelector('#giscus-wrap iframe')
+    if (iframe) {
+      const message = {
+        giscus: {
+          setConfig: {
+            theme: getGiscusTheme(theme)
+          }
+        }
+      }
+      iframe.contentWindow.postMessage(message, 'https://giscus.app')
+    }
+  }
+
+  btf.addGlobalFn('themeChange', changeGiscusTheme, 'giscus')
+
+  if (isShuoshuo) {
+    'Giscus' === 'Giscus'
+      ? window.shuoshuoComment = { loadComment: loadGiscus }
+      : window.loadOtherComment = loadGiscus
+    return
+  }
+
+  if ('Giscus' === 'Giscus' || !false) {
+    if (false) btf.loadComment(document.getElementById('giscus-wrap'), loadGiscus)
+    else loadGiscus()
+  } else {
+    window.loadOtherComment = loadGiscus
+  }
+})()</script></div><div class="aplayer no-destroy" data-id="7495004841" data-server="netease" data-type="playlist" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="false" muted></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
