@@ -8,7 +8,7 @@
       <link href="/2025/03/11/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
       <url>/2025/03/11/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</url>
       
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>话说回来 这还是第一次碰碰js 一开始对js的最大印象就是那些高端网站的动效等等。代码审计比这个更难更难 就当是入坑的第一站了</p><h2 id="task2"><a href="#task2" class="headerlink" title="task2"></a>task2</h2><p>基本概念</p><h3 id="变量Variables"><a href="#变量Variables" class="headerlink" title="变量Variables"></a>变量Variables</h3><p>变量是允许您在其中存储数据值的容器。与任何其他语言一样，JS 中的变量类似于存储数据的容器。</p><p>在 JS 中，每个变量都有一个名称；当我们在变量中存储某个值时，我们会为其分配一个名称以便以后引用它。 var、let 和 const 类型的图像在 JS 中有三种声明变量的方式：var、let和const。</p><h3 id="数据类型Data-Types"><a href="#数据类型Data-Types" class="headerlink" title="数据类型Data Types"></a>数据类型Data Types</h3><p>在 JS 中，数据类型定义变量可以保存的值的类型。示例包括string(text)、、number( booleantrue&#x2F;false)、null、undefined 和 object（适用于数组或对象等更复杂的数据）。</p><h3 id="功能function"><a href="#功能function" class="headerlink" title="功能function"></a>功能function</h3><p>函数表示用于执行特定任务的代码块。在函数内部，您可以将需要执行类似任务的代码分组。</p><h3 id="循环loop"><a href="#循环loop" class="headerlink" title="循环loop"></a>循环loop</h3><p>只要条件为true，循环允许多次运行代码块。JS 中常见的循环是for、while,和do…while，它们用于重复任务</p><p><img src="/source/images/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/task2.png" alt="task"></p><p>loop就是循环 能多次运行代码块</p><h2 id="task3"><a href="#task3" class="headerlink" title="task3"></a>task3</h2><p>JavaScript 概述</p><p>JS 是一种解释型语言，这意味着代码无需事先编译即可在浏览器中直接执行。</p><p>根据文章 我们在浏览器写写代码 试试看</p><p><img src="/source/images/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/20.png" alt="task"></p><p><img src="/source/images/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/task3.png" alt="task3"></p><p>刚才的提升就给出答案了 </p><h2 id="task4"><a href="#task4" class="headerlink" title="task4"></a>task4</h2><h3 id="内部-JavaScript"><a href="#内部-JavaScript" class="headerlink" title="内部 JavaScript"></a>内部 JavaScript</h3><p>内部 JS 是指将 JS 代码直接嵌入 HTML 文档中。</p><p>脚本插入在script标签之间。这些标签可以放在head部分内，通常用于需要在呈现页面内容之前加载的脚本，也可以放在body部分内，其中脚本可用于在网页上加载元素时与元素进行交互。</p><p>根据文章 我们打开internal.html</p><p><img src="/source/images/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/15.png" alt="task4"></p><p><img src="/source/images/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/nei.png" alt="task4"></p><p>里面的格式是这样的</p><p>JS 通过选择一个元素（带有 id&#x3D;”result” 的 </p><p>）并使用 document.getElementById(“result”).innerHTML更新其内容来与 HTML 交互</p><h3 id="外部-JavaScript"><a href="#外部-JavaScript" class="headerlink" title="外部 JavaScript"></a>外部 JavaScript</h3><p>外部 JS 涉及在以文件扩展名结尾的单独文件中创建和存储 JS 代码 .js 。此方法可帮助开发人员保持 HTML 文档的整洁有序。外部 JS 文件可以存储或托管在与 HTML 文档相同的 Web 服务器上，也可以存储在外部 Web 服务器（例如云）上。</p><p>我们打开文件夹中的script.js和external.html</p><p><img src="/source/images/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/waibu.png" alt="task"></p><p>所做的不同之处在于使用 script标记中的 src 属性从外部文件加载 JS。当浏览器加载页面时，它会查找 script.js 文件并将其内容加载到 HTML 文档中。这种方法使我们能够将 JS 代码与 HTML 分开，使代码更有条理且更易于维护，尤其是在处理较大的项目时。</p><h3 id="验证内部或外部-JS"><a href="#验证内部或外部-JS" class="headerlink" title="验证内部或外部 JS"></a>验证内部或外部 JS</h3><p>在对 Web 应用程序进行渗透测试时，检查网站使用的是内部 JS 还是外部 JS 非常重要。通过查看页面的源代码可以轻松验证这一点。为此，请打开external_test.html 位于exercise文件夹中的页面Chrome，右键单击页面上的任意位置，然后选择View Page Source。</p><p>这将显示渲染页面的 HTML 代码。在源代码中，任何直接在页面上编写的 JS 都将出现在不带属性的script标记之间src。如果您看到带有src属性的script标记，则表示页面正在从单独的文件加载外部 JS。</p><p><img src="/source/images/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/task4.png" alt="task4"></p><p>内部js就是集成在html文档中</p><p>外部js适合跨多个文件重用js</p><p>打开这个文档查看源码 就能发现这个是用外部js调用thm_external.js</p><p><img src="/source/images/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/thmjs.png" alt="task4"></p><p>用src标签来链接外部js文件</p><h2 id="task5"><a href="#task5" class="headerlink" title="task5"></a>task5</h2><p>Abusing Dialogue Functions 滥用对话功能<br>JS 的主要目标之一是提供对话框以便与用户交互并动态更新网页内容。</p><p>Alert<br>alert 函数在带有“ ”按钮的对话框中显示一条消息OK，通常用于向用户传达信息或警告。例如，如果我们想Hello THM向用户显示“ ”，我们将使用 alert(“HelloTHM”);。要试用它，请打开 Chrome 控制台，输入alert(“Hello THM”)，然后按 Enter。屏幕上将出现一个带有消息的对话</p><p>Prompt<br>prompt 函数显示一个对话框，要求用户输入。当用户单击“ OK”时，它返回输入的值；如果用户单击“ Cancel”，则返回 null。例如，要询问用户的姓名，我们将使用prompt(“What is your name?”);。</p><p>Confirm<br>确认函数显示一个对话框，其中包含一条消息和两个按钮：“ OK”和“ Cancel”。如果用户点击“ OK”，则返回 true，如果用户点击“ Cancel”，则返回 false。例如，要要求用户确认，我们将使用confirm(“Are you sure?”);。要尝试此操作，请打开 Chrome 控制台，输入confirm(“Do you want to proceed?”)，然后按Enter。 </p><p><img src="/source/images/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/task5.png" alt="task5"></p><p>打开源码的话会发现</p><p><img src="/source/images/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/yuan.png" alt="task5"></p><p>超过五次就没有这个提示 那就是警报五次</p><p>prompt这个函数用来与用户交互</p><p>输入tesla的话 就是存储了tesla的值</p><h2 id="task6"><a href="#task6" class="headerlink" title="task6"></a>task6</h2><p>绕过控制流语句</p><p>JS 提供了多种控制流结构，例如if-else，switch语句用于做出决策，以及循环（例如for，，while和）do…while用于重复操作。</p><p>条件语句的实际应用</p><p>最常用的条件语句之一是if-else语句，它允许您根据条件的计算结果if-else 是否（true false）为来执行不同的代码块。</p><p><img src="/source/images/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/task6.png" alt="task6"></p><p>第一题打开age.html 输入一个比18小的数字就行 就能出提示</p><p><img src="/source/images/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/17.png" alt="task6"></p><p>第二题就是打开login.html 打开源码就能找到密码</p><p><img src="/source/images/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/admin.png" alt="task6"></p><h2 id="task7"><a href="#task7" class="headerlink" title="task7"></a>task7</h2><p>探索最小化文件</p><p>JS 中的压缩是通过删除所有不必要的字符（例如空格、换行符、注释，甚至缩短变量名）来压缩 JS 文件的过程。这有助于减小文件大小并缩短网页的加载时间，尤其是在生产环境中。压缩后的文件使代码更紧凑，更难被人类阅读，但它们的功能仍然完全相同。</p><p>混淆（Obfuscation）通常用于通过添加不需要的代码、将变量和函数重命名为无意义的名称，甚至插入虚拟代码来使 JS 更难理解。</p><p><img src="/source/images/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/hello1.png" alt="hello"></p><p>这个就是混淆</p><p>我们可以通过<a href="https://obf-io.deobfuscate.io/">网站</a>来进行混淆和反混淆（Deobfuscation）的操作</p><p><img src="/source/images/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/task7.png" alt="task7"></p><p>第一问 打开hello.html就能看到警报</p><p><img src="/source/images/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/welcome.png" alt="task7"></p><p>第二问 拿到网站就能反混淆</p><p><img src="/source/images/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/21.png" alt="task7"></p><h2 id="task8"><a href="#task8" class="headerlink" title="task8"></a>task8</h2><p>避免仅依赖客户端验证<br>JS 的主要功能之一是执行客户端验证。开发人员有时会使用它来验证表单并完全依赖它，这不是一个好的做法。由于用户可以在客户端禁用&#x2F;操纵JS，因此在服务器端执行验证也是必不可少的。</p><p>避免添加不受信任的库<br>如前面的任务中所述，JS 允许您使用src标签内的属性包含任何其他 JS 脚本script。但您是否考虑过我们包含的库是否来自可信来源？不良行为者已将一组名称与合法库相似的库上传到互联网上。因此，如果您盲目地包含恶意库，您的 Web 应用程序将面临威胁。</p><p>避免硬编码<br>切勿将API密钥、访问令牌或凭据等敏感数据硬编码到 JS 代码中，因为用户可以轻松检查源代码并获取密码。</p><p>压缩并混淆你的 JavaScript 代码<br>压缩和混淆 JS 代码可减少其大小、缩短加载时间，并使攻击者更难理解代码的逻辑。因此，在生产中使用代码时，请务必 压缩 和 混淆 代码。</p><p>简单介绍就到这里</p>]]></content>
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>话说回来 这还是第一次碰碰js 一开始对js的最大印象就是那些高端网站的动效等等。代码审计比这个更难更难 就当是入坑的第一站了</p><h2 id="task2"><a href="#task2" class="headerlink" title="task2"></a>task2</h2><p>基本概念</p><h3 id="变量Variables"><a href="#变量Variables" class="headerlink" title="变量Variables"></a>变量Variables</h3><p>变量是允许您在其中存储数据值的容器。与任何其他语言一样，JS 中的变量类似于存储数据的容器。</p><p>在 JS 中，每个变量都有一个名称；当我们在变量中存储某个值时，我们会为其分配一个名称以便以后引用它。 var、let 和 const 类型的图像在 JS 中有三种声明变量的方式：var、let和const。</p><h3 id="数据类型Data-Types"><a href="#数据类型Data-Types" class="headerlink" title="数据类型Data Types"></a>数据类型Data Types</h3><p>在 JS 中，数据类型定义变量可以保存的值的类型。示例包括string(text)、、number( booleantrue&#x2F;false)、null、undefined 和 object（适用于数组或对象等更复杂的数据）。</p><h3 id="功能function"><a href="#功能function" class="headerlink" title="功能function"></a>功能function</h3><p>函数表示用于执行特定任务的代码块。在函数内部，您可以将需要执行类似任务的代码分组。</p><h3 id="循环loop"><a href="#循环loop" class="headerlink" title="循环loop"></a>循环loop</h3><p>只要条件为true，循环允许多次运行代码块。JS 中常见的循环是for、while,和do…while，它们用于重复任务</p><p><img src="/images/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/task2.png" alt="task"></p><p>loop就是循环 能多次运行代码块</p><h2 id="task3"><a href="#task3" class="headerlink" title="task3"></a>task3</h2><p>JavaScript 概述</p><p>JS 是一种解释型语言，这意味着代码无需事先编译即可在浏览器中直接执行。</p><p>根据文章 我们在浏览器写写代码 试试看</p><p><img src="/images/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/20.png" alt="task"></p><p><img src="/images/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/task3.png" alt="task3"></p><p>刚才的提升就给出答案了 </p><h2 id="task4"><a href="#task4" class="headerlink" title="task4"></a>task4</h2><h3 id="内部-JavaScript"><a href="#内部-JavaScript" class="headerlink" title="内部 JavaScript"></a>内部 JavaScript</h3><p>内部 JS 是指将 JS 代码直接嵌入 HTML 文档中。</p><p>脚本插入在script标签之间。这些标签可以放在head部分内，通常用于需要在呈现页面内容之前加载的脚本，也可以放在body部分内，其中脚本可用于在网页上加载元素时与元素进行交互。</p><p>根据文章 我们打开internal.html</p><p><img src="/images/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/15.png" alt="task4"></p><p><img src="/images/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/nei.png" alt="task4"></p><p>里面的格式是这样的</p><p>JS 通过选择一个元素（带有 id&#x3D;”result” 的 </p><p>）并使用 document.getElementById(“result”).innerHTML更新其内容来与 HTML 交互</p><h3 id="外部-JavaScript"><a href="#外部-JavaScript" class="headerlink" title="外部 JavaScript"></a>外部 JavaScript</h3><p>外部 JS 涉及在以文件扩展名结尾的单独文件中创建和存储 JS 代码 .js 。此方法可帮助开发人员保持 HTML 文档的整洁有序。外部 JS 文件可以存储或托管在与 HTML 文档相同的 Web 服务器上，也可以存储在外部 Web 服务器（例如云）上。</p><p>我们打开文件夹中的script.js和external.html</p><p><img src="/images/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/waibu.png" alt="task"></p><p>所做的不同之处在于使用 script标记中的 src 属性从外部文件加载 JS。当浏览器加载页面时，它会查找 script.js 文件并将其内容加载到 HTML 文档中。这种方法使我们能够将 JS 代码与 HTML 分开，使代码更有条理且更易于维护，尤其是在处理较大的项目时。</p><h3 id="验证内部或外部-JS"><a href="#验证内部或外部-JS" class="headerlink" title="验证内部或外部 JS"></a>验证内部或外部 JS</h3><p>在对 Web 应用程序进行渗透测试时，检查网站使用的是内部 JS 还是外部 JS 非常重要。通过查看页面的源代码可以轻松验证这一点。为此，请打开external_test.html 位于exercise文件夹中的页面Chrome，右键单击页面上的任意位置，然后选择View Page Source。</p><p>这将显示渲染页面的 HTML 代码。在源代码中，任何直接在页面上编写的 JS 都将出现在不带属性的script标记之间src。如果您看到带有src属性的script标记，则表示页面正在从单独的文件加载外部 JS。</p><p><img src="/images/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/task4.png" alt="task4"></p><p>内部js就是集成在html文档中</p><p>外部js适合跨多个文件重用js</p><p>打开这个文档查看源码 就能发现这个是用外部js调用thm_external.js</p><p><img src="/images/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/thmjs.png" alt="task4"></p><p>用src标签来链接外部js文件</p><h2 id="task5"><a href="#task5" class="headerlink" title="task5"></a>task5</h2><p>Abusing Dialogue Functions 滥用对话功能<br>JS 的主要目标之一是提供对话框以便与用户交互并动态更新网页内容。</p><p>Alert<br>alert 函数在带有“ ”按钮的对话框中显示一条消息OK，通常用于向用户传达信息或警告。例如，如果我们想Hello THM向用户显示“ ”，我们将使用 alert(“HelloTHM”);。要试用它，请打开 Chrome 控制台，输入alert(“Hello THM”)，然后按 Enter。屏幕上将出现一个带有消息的对话</p><p>Prompt<br>prompt 函数显示一个对话框，要求用户输入。当用户单击“ OK”时，它返回输入的值；如果用户单击“ Cancel”，则返回 null。例如，要询问用户的姓名，我们将使用prompt(“What is your name?”);。</p><p>Confirm<br>确认函数显示一个对话框，其中包含一条消息和两个按钮：“ OK”和“ Cancel”。如果用户点击“ OK”，则返回 true，如果用户点击“ Cancel”，则返回 false。例如，要要求用户确认，我们将使用confirm(“Are you sure?”);。要尝试此操作，请打开 Chrome 控制台，输入confirm(“Do you want to proceed?”)，然后按Enter。 </p><p><img src="/images/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/task5.png" alt="task5"></p><p>打开源码的话会发现</p><p><img src="/images/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/yuan.png" alt="task5"></p><p>超过五次就没有这个提示 那就是警报五次</p><p>prompt这个函数用来与用户交互</p><p>输入tesla的话 就是存储了tesla的值</p><h2 id="task6"><a href="#task6" class="headerlink" title="task6"></a>task6</h2><p>绕过控制流语句</p><p>JS 提供了多种控制流结构，例如if-else，switch语句用于做出决策，以及循环（例如for，，while和）do…while用于重复操作。</p><p>条件语句的实际应用</p><p>最常用的条件语句之一是if-else语句，它允许您根据条件的计算结果if-else 是否（true false）为来执行不同的代码块。</p><p><img src="/images/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/task6.png" alt="task6"></p><p>第一题打开age.html 输入一个比18小的数字就行 就能出提示</p><p><img src="/images/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/17.png" alt="task6"></p><p>第二题就是打开login.html 打开源码就能找到密码</p><p><img src="/images/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/admin.png" alt="task6"></p><h2 id="task7"><a href="#task7" class="headerlink" title="task7"></a>task7</h2><p>探索最小化文件</p><p>JS 中的压缩是通过删除所有不必要的字符（例如空格、换行符、注释，甚至缩短变量名）来压缩 JS 文件的过程。这有助于减小文件大小并缩短网页的加载时间，尤其是在生产环境中。压缩后的文件使代码更紧凑，更难被人类阅读，但它们的功能仍然完全相同。</p><p>混淆（Obfuscation）通常用于通过添加不需要的代码、将变量和函数重命名为无意义的名称，甚至插入虚拟代码来使 JS 更难理解。</p><p><img src="/images/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/hello1.png" alt="hello"></p><p>这个就是混淆</p><p>我们可以通过<a href="https://obf-io.deobfuscate.io/">网站</a>来进行混淆和反混淆（Deobfuscation）的操作</p><p><img src="/images/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/task7.png" alt="task7"></p><p>第一问 打开hello.html就能看到警报</p><p><img src="/images/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/welcome.png" alt="task7"></p><p>第二问 拿到网站就能反混淆</p><p><img src="/images/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/21.png" alt="task7"></p><h2 id="task8"><a href="#task8" class="headerlink" title="task8"></a>task8</h2><p>避免仅依赖客户端验证<br>JS 的主要功能之一是执行客户端验证。开发人员有时会使用它来验证表单并完全依赖它，这不是一个好的做法。由于用户可以在客户端禁用&#x2F;操纵JS，因此在服务器端执行验证也是必不可少的。</p><p>避免添加不受信任的库<br>如前面的任务中所述，JS 允许您使用src标签内的属性包含任何其他 JS 脚本script。但您是否考虑过我们包含的库是否来自可信来源？不良行为者已将一组名称与合法库相似的库上传到互联网上。因此，如果您盲目地包含恶意库，您的 Web 应用程序将面临威胁。</p><p>避免硬编码<br>切勿将API密钥、访问令牌或凭据等敏感数据硬编码到 JS 代码中，因为用户可以轻松检查源代码并获取密码。</p><p>压缩并混淆你的 JavaScript 代码<br>压缩和混淆 JS 代码可减少其大小、缩短加载时间，并使攻击者更难理解代码的逻辑。因此，在生产中使用代码时，请务必 压缩 和 混淆 代码。</p><p>简单介绍就到这里</p>]]></content>
       
       
       
@@ -584,39 +584,6 @@
     
     
     <entry>
-      <title>Gallery</title>
-      <link href="/Gallery/index.html"/>
-      <url>/Gallery/index.html</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>books</title>
-      <link href="/books/index.html"/>
-      <url>/books/index.html</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>categories</title>
-      <link href="/categories/index-1.html"/>
-      <url>/categories/index-1.html</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>about</title>
       <link href="/about/index-1.html"/>
       <url>/about/index-1.html</url>
@@ -628,9 +595,20 @@
     
     
     <entry>
-      <title>categories</title>
-      <link href="/categories/index.html"/>
-      <url>/categories/index.html</url>
+      <title>about</title>
+      <link href="/about/index.html"/>
+      <url>/about/index.html</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Gallery</title>
+      <link href="/Gallery/index.html"/>
+      <url>/Gallery/index.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
@@ -650,9 +628,31 @@
     
     
     <entry>
-      <title>movies</title>
-      <link href="/movies/index.html"/>
-      <url>/movies/index.html</url>
+      <title>books</title>
+      <link href="/books/index.html"/>
+      <url>/books/index.html</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>categories</title>
+      <link href="/categories/index.html"/>
+      <url>/categories/index.html</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>categories</title>
+      <link href="/categories/index-1.html"/>
+      <url>/categories/index-1.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
@@ -672,22 +672,22 @@
     
     
     <entry>
-      <title>about</title>
-      <link href="/about/index.html"/>
-      <url>/about/index.html</url>
+      <title></title>
+      <link href="/css/touming.css"/>
+      <url>/css/touming.css</url>
       
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+        <content type="html"><![CDATA[/* 文章页背景 */.layout_post>#post {  /* 透明度为 0.7 */  background: rgba(255, 255, 255, 0.7);}/* 所有页面背景 */#aside_content .card-widget, #recent-posts>.recent-post-item, .layout_page>div:first-child:not(.recent-posts), .layout_post>#page, .layout_post>#post, .read-mode .layout_post>#post {  /* 透明度为 0.7 */  background: rgba(255, 255, 255, 0.7);}/* 侧边卡片的透明度 */:root {  --card-bg: rgba(255, 255, 255, 0.7);}/* 页脚透明 */#footer {  /* 透明度为 0.7 */  background: rgba(255, 255, 255, 0.7);}]]></content>
       
     </entry>
     
     
     
     <entry>
-      <title></title>
-      <link href="/css/touming.css"/>
-      <url>/css/touming.css</url>
+      <title>movies</title>
+      <link href="/movies/index.html"/>
+      <url>/movies/index.html</url>
       
-        <content type="html"><![CDATA[/* 文章页背景 */.layout_post>#post {  /* 透明度为 0.7 */  background: rgba(255, 255, 255, 0.7);}/* 所有页面背景 */#aside_content .card-widget, #recent-posts>.recent-post-item, .layout_page>div:first-child:not(.recent-posts), .layout_post>#page, .layout_post>#post, .read-mode .layout_post>#post {  /* 透明度为 0.7 */  background: rgba(255, 255, 255, 0.7);}/* 侧边卡片的透明度 */:root {  --card-bg: rgba(255, 255, 255, 0.7);}/* 页脚透明 */#footer {  /* 透明度为 0.7 */  background: rgba(255, 255, 255, 0.7);}]]></content>
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
     </entry>
     
@@ -717,8 +717,8 @@
     
     <entry>
       <title>tags</title>
-      <link href="/tags/index-1.html"/>
-      <url>/tags/index-1.html</url>
+      <link href="/tags/index-2.html"/>
+      <url>/tags/index-2.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
@@ -728,8 +728,8 @@
     
     <entry>
       <title>tags</title>
-      <link href="/tags/index-2.html"/>
-      <url>/tags/index-2.html</url>
+      <link href="/tags/index-1.html"/>
+      <url>/tags/index-1.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
