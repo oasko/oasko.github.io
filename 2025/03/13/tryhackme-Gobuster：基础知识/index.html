@@ -1,0 +1,507 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>tryhackme-Gobuster：基础知识 | Asuna</title><meta name="author" content="Asuna"><meta name="copyright" content="Asuna"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Gobuster是一款用 Golang 编写的开源攻击工具。它使用特定的单词列表并处理传入的响应，通过暴力枚举 Web 目录、DNS子域、虚拟主机、Amazon S3存储桶和 Google Cloud Storage。 学习目标了解枚举的基础知识如何使用Gobuster枚举 Web 目录和文件如何使用Gobuster枚举子域名如何使用Gobuster枚举虚拟主机如何使用单词表 首先先按照task">
+<meta property="og:type" content="article">
+<meta property="og:title" content="tryhackme-Gobuster：基础知识">
+<meta property="og:url" content="https://oasko.github.io/2025/03/13/tryhackme-Gobuster%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/index.html">
+<meta property="og:site_name" content="Asuna">
+<meta property="og:description" content="Gobuster是一款用 Golang 编写的开源攻击工具。它使用特定的单词列表并处理传入的响应，通过暴力枚举 Web 目录、DNS子域、虚拟主机、Amazon S3存储桶和 Google Cloud Storage。 学习目标了解枚举的基础知识如何使用Gobuster枚举 Web 目录和文件如何使用Gobuster枚举子域名如何使用Gobuster枚举虚拟主机如何使用单词表 首先先按照task">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2025/01/19/47KGSaY3sudRFjV.jpg">
+<meta property="article:published_time" content="2025-03-13T12:26:29.000Z">
+<meta property="article:modified_time" content="2025-03-14T09:13:56.559Z">
+<meta property="article:author" content="Asuna">
+<meta property="article:tag" content="linux tryhackme">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2025/01/19/47KGSaY3sudRFjV.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "tryhackme-Gobuster：基础知识",
+  "url": "https://oasko.github.io/2025/03/13/tryhackme-Gobuster%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/",
+  "image": "https://s2.loli.net/2025/01/19/47KGSaY3sudRFjV.jpg",
+  "datePublished": "2025-03-13T12:26:29.000Z",
+  "dateModified": "2025-03-14T09:13:56.559Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Asuna",
+      "url": "https://oasko.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://oasko.github.io/2025/03/13/tryhackme-Gobuster%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'tryhackme-Gobuster：基础知识',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/touming.css"><meta name="generator" content="Hexo 7.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load', preloader.endLoading)
+
+  if (false) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="web_bg" style="background-image: url(https://s2.loli.net/2024/12/28/fdpLbCNQwExoPan.jpg);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="https://s2.loli.net/2025/01/19/47KGSaY3sudRFjV.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">33</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">24</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> tag</span></a></li><li><a class="site-page child" href="/books/"><i class="fa-fw fa fa-book"></i><span> 图书</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></div><div class="menus_item"><a class="site-page" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 知识点</span></a></div><div class="menus_item"><a class="site-page" href="/chat/"><i class="fa-fw fa fa-lightbulb-o"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background: [object Object];"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Asuna</span></a><a class="nav-page-title" href="/"><span class="site-name">tryhackme-Gobuster：基础知识</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> tag</span></a></li><li><a class="site-page child" href="/books/"><i class="fa-fw fa fa-book"></i><span> 图书</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></div><div class="menus_item"><a class="site-page" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 知识点</span></a></div><div class="menus_item"><a class="site-page" href="/chat/"><i class="fa-fw fa fa-lightbulb-o"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">tryhackme-Gobuster：基础知识</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-03-13T12:26:29.000Z" title="发表于 2025-03-13 20:26:29">2025-03-13</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-03-14T09:13:56.559Z" title="更新于 2025-03-14 17:13:56">2025-03-14</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">2.7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>9分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p><img src="/images/tryhackme-Gobuster%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/title.png" alt="titile"></p>
+<p>Gobuster是一款用 Golang 编写的开源攻击工具。它使用特定的单词列表并处理传入的响应，通过暴力枚举 Web 目录、DNS子域、虚拟主机、Amazon S3存储桶和 Google Cloud Storage。</p>
+<p>学习目标<br>了解枚举的基础知识<br>如何使用Gobuster枚举 Web 目录和文件<br>如何使用Gobuster枚举子域名<br>如何使用Gobuster枚举虚拟主机<br>如何使用单词表</p>
+<p>首先先按照task2进行配置环境</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">需要更改/etc/resolv-dnsmasq文件：</span><br><span class="line">在 AttackBox 上打开一个终端并输入命令：sudo nano /etc/resolv-dnsmasq。</span><br><span class="line"></span><br><span class="line">插入nameserver 10.10.15.13为第一行。</span><br><span class="line"></span><br><span class="line">按 CTRL+O，然后按 ENTER 保存文件，然后按 CTRL+X 退出编辑器。</span><br><span class="line"></span><br><span class="line">输入命令/etc/init.d/dnsmasq restart重新启动Dnsmasq服务。</span><br></pre></td></tr></table></figure>
+
+<h2 id="task3"><a href="#task3" class="headerlink" title="task3"></a>task3</h2><p>重点介绍dir、dns和vhost命令。将在以下任务中介绍每个命令。</p>
+<p>flags：这些是我们可以配置以自定义命令的特定选项。让我们看看我们在这个房间中经常使用的标志：</p>
+<table>
+<thead>
+<tr>
+<th>short flags</th>
+<th>long flags</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-t</td>
+<td>–threads</td>
+<td>此标志配置用于扫描的线程数。每个线程都会发出请求，但会略有延迟。默认线程数为 10。使用大型单词表时，此数量可能会很慢。您可以根据可用的系统资源增加或减少线程数。</td>
+</tr>
+<tr>
+<td>-w</td>
+<td>–wordlist</td>
+<td>该标志配置了用于迭代的单词表。每个单词表条目都附加到您在命令中包含的 URL。</td>
+</tr>
+<tr>
+<td></td>
+<td>–delay</td>
+<td>此标志定义发送请求之间等待的时间。一些 Web 服务器包含通过查看在特定时间段内收到的请求数量来检测枚举的机制。我们可以增加后续请求之间的延迟，使其看起来像正常的 Web 流量。</td>
+</tr>
+<tr>
+<td></td>
+<td>–debug</td>
+<td>当我们的命令出现意外错误时，此标志可以帮助我们排除故障。</td>
+</tr>
+<tr>
+<td>-o</td>
+<td>–output</td>
+<td>该标志将枚举结果写入我们选择的文件中。</td>
+</tr>
+</tbody></table>
+<p>eg:<br>让我们看一个例子，了解如何使用这些命令和标志来枚举 Web 目录：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gobuster dir -u &quot;http://www.example.thm/&quot; -w /usr/share/wordlists/dirb/small.txt -t 64</span><br></pre></td></tr></table></figure>
+
+<p>gobuster dir表示我们将使用目录和文件枚举模式。<br>-u “<a target="_blank" rel="noopener" href="http://www.example.thm/%22%E5%91%8A%E8%AF%89Gobuster%E7%9B%AE%E6%A0%87">http://www.example.thm/&quot;告诉Gobuster目标</a> URL是http : &#x2F;&#x2F;example.thm&#x2F; 。</p>
+<p>-w &#x2F;usr&#x2F;share&#x2F;wordlists&#x2F;dirb&#x2F;small.txt指示Gobuster使用small.txt单词表对网络目录进行暴力破解。Gobuster将使用单词表中的每个条目形成一个新的 URL，并向该 URL 发送 GET 请求。如果单词表的第一个条目是图像，Gobuster将向<a target="_blank" rel="noopener" href="http://example/">http://example</a>. thm &#x2F;images&#x2F;发送 GET 请求。</p>
+<p>-t 64将Gobuster将使用的线程数设置为 64。这大大提高了性能。</p>
+<h2 id="task4"><a href="#task4" class="headerlink" title="task4"></a>task4</h2><p>目录和文件枚举</p>
+<p>gobuster dir命令。逐一介绍超出了范围，但在下表中，我们列出了涵盖大多数场景的标志：</p>
+<table>
+<thead>
+<tr>
+<th>short flags</th>
+<th>long flags</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-c</td>
+<td>–cookies</td>
+<td>此标志配置一个 cookie 来传递每个请求，例如会话 ID。</td>
+</tr>
+<tr>
+<td>-x</td>
+<td>–extensions</td>
+<td>此标志指定要扫描的文件扩展名。例如，.php、.js。</td>
+</tr>
+<tr>
+<td>-H</td>
+<td>–headers</td>
+<td>此标志配置与每个请求一起传递的整个标头。</td>
+</tr>
+<tr>
+<td>-k</td>
+<td>–no-tls-validation</td>
+<td>此标志在使用 https 时跳过检查证书的过程。在 CTF 活动或测试室（如 THM 上的测试室）中，通常会使用自签名证书。这会导致 TLS 检查期间出现错误。</td>
+</tr>
+<tr>
+<td>-n</td>
+<td>–no-status</td>
+<td>如果您不想看到收到的每个响应的状态代码，可以设置此标志。这有助于保持屏幕上的输出清晰。</td>
+</tr>
+<tr>
+<td>-P</td>
+<td>password</td>
+<td>您可以将此标志与 –username 标志一起设置以执行经过身份验证的请求。当您从用户那里获得凭据时，这很方便。</td>
+</tr>
+<tr>
+<td>-s</td>
+<td>–status-codes</td>
+<td>通过此标志，您可以配置想要显示的收到的响应的状态代码，例如 200，或者 300-400 这样的范围。</td>
+</tr>
+<tr>
+<td>-b</td>
+<td>–status-codes-blacklist</td>
+<td>此标志允许您配置您不想显示的收到的响应的状态代码。配置此标志将覆盖 -s 标志。</td>
+</tr>
+<tr>
+<td>-U</td>
+<td>–username</td>
+<td>您可以将此标志与 –password 执行经过身份验证的请求的标志一起设置。当您从用户那里获得凭据时，这很方便。</td>
+</tr>
+<tr>
+<td>-r</td>
+<td>–followredirect</td>
+<td>此标志将 Gobuster 配置为遵循其收到的作为对发送请求的响应的重定向。HTTP 重定向状态代码（例如 301 或 302）用于将客户端重定向到不同的 URL。</td>
+</tr>
+</tbody></table>
+<p>运行Gobuster dir，请使用以下命令格式</p>
+<p>该命令还包含标志-u和-w。这两个标志是 Gobuster 目录枚举工作所必需的。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gobuster dir -u &quot;http://www.example.thm&quot; -w /path/to/wordlist</span><br></pre></td></tr></table></figure>
+
+<p>此命令使用单词列表directory-list-2.3-medium.txt扫描位于<a href="http://www.example.thm的所有目录。让我们仔细看看命令的每个部分：">www.example.thm的所有目录。让我们仔细看看命令的每个部分：</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gobuster dir -u &quot;http://www.example.thm&quot; -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -r</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>gobuster dir：配置Gobuster使用目录和文件枚举模式。<br>-u <a href="http://www.example.thm：">http://www.example.thm：</a><br></li>
+<li>URL 将是 Gobuster 开始查找的基本路径。因此，上面的 URL 使用的是根 Web 目录。可以将其视为<a target="_blank" rel="noopener" href="http://www.example.thm/path/to/folder%E3%80%82">http://www.example.thm/path/to/folder。</a><br></li>
+<li>URL 必须包含使用的协议，在本例中为HTTP。这很重要且必需。如果传递了错误的协议，扫描将失败。<br></li>
+<li>在 URL 的主机部分，可以填写 IP 或 HOSTNAME。但是，需要注意的是，使用 IP 时，可能会指向与预期不同的网站。Web 服务器可以使用一个 IP 托管多个网站（此技术也称为虚拟托管）。如果想确保万无一失，请使用 HOSTNAME。<br></li>
+<li>Gobuster 不会递归枚举。因此，如果结果显示您感兴趣的目录路径，则必须枚举该特定目录。<br></li>
+<li>-w &#x2F;usr&#x2F;share&#x2F;wordlists&#x2F;dirbuster&#x2F;directory-list-2.3-medium.txt配置Gobuster使用directory-list-2.3-medium.txt单词表进行枚举。单词表的每个条目都附加到配置的 URL。<br></li>
+<li>-r 配置Gobuster遵循从发送的请求收到的重定向响应。如果收到状态代码 301，Gobuster将导航到响应中包含的重定向 URL。</li>
+</ul>
+<p>-x标志来指定我们要枚举的文件类型：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gobuster dir -u &quot;http://www.example.thm&quot; -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -x .php,.js</span><br></pre></td></tr></table></figure>
+<p>此命令将使用单词列表directory-list-2.3-medium.txt查找位于<a target="_blank" rel="noopener" href="http://example/">http://example</a>. thm 的目录。除了目录列表之外，此命令还列出所有具有 . php或 .js 扩展名的文件。</p>
+<p><img src="/images/tryhackme-Gobuster%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/task44.png" alt="task4"></p>
+<p>第一问就是用–no-tls-validation来跳过</p>
+<p>第二问 就是枚举这个网站的目录</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gobuster dir -u www.offensivetools.thm -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -r</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/tryhackme-Gobuster%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/task4.png" alt="task4"></p>
+<p>第三问也是一样 枚举js文件 用-x参数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gobuster dir -u http://www.offensivetools.thm/secret -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -x .js</span><br></pre></td></tr></table></figure>
+<p><img src="/images/tryhackme-Gobuster%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/flag.png" alt="task4"></p>
+<p><img src="/images/tryhackme-Gobuster%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/flag1.png" alt="task4"></p>
+<h2 id="task5"><a href="#task5" class="headerlink" title="task5"></a>task5</h2><p>dns模式。此模式允许Gobuster暴力破解子域名。在渗透测试期间，检查目标顶级域名的子域名至关重要。</p>
+<table>
+<thead>
+<tr>
+<th>short flags</th>
+<th>long flags</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-c</td>
+<td>–show-cname</td>
+<td>显示 CNAME 记录（不能与标志一起使用 -i）。</td>
+</tr>
+<tr>
+<td>-i</td>
+<td>–show-ips</td>
+<td>包括此标志显示域和子域解析到的 IP 地址。</td>
+</tr>
+<tr>
+<td>-r</td>
+<td>–resolver</td>
+<td>此标志配置用于解析的自定义 DNS 服务器。</td>
+</tr>
+<tr>
+<td>-d</td>
+<td>–domain</td>
+<td>此标志配置您想要枚举的域。</td>
+</tr>
+</tbody></table>
+<p>如何使用dns模式<br>要在dns模式下运行Gobuster，请使用以下命令语法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gobuster dns -d example.thm -w /path/to/wordlist</span><br></pre></td></tr></table></figure>
+<p>请注意，除了关键字之外，该命令还包含标志-d和-w。这两个标志是Gobuster 子域名枚举工作所必需的。</p>
+<p>看一个如何使用Gobuster dns模式枚举子域名的示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gobuster dns -d example.thm -w /usr/share/wordlists/SecLists/Discovery/DNS/subdomains-top1million-5000.txt</span><br></pre></td></tr></table></figure>
+<p>gobuster dns枚举配置域上的子域。</p>
+<p>-d example.thm将目标设置为example.thm域。</p>
+<p>-w &#x2F;usr&#x2F;share&#x2F;wordlists&#x2F;SecLists&#x2F;Discovery&#x2F;DNS&#x2F;subdomains-top1million-5000.txt将单词列表设置为 s ubdomains-top1million-5000.txt。Gobuster使用此列表的每个条目构建新的DNS查询。如果此列表的第一个条目是“all”，则查询将是all.example. thm。</p>
+<p>来练练手</p>
+<p><img src="/images/tryhackme-Gobuster%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/task5.png" alt="task5"></p>
+<p>第一问 还要加一个-d参数</p>
+<p>第二问</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gobuster dns -d offensivetools.thm -w /usr/share/wordlists/SecLists/Discovery/DNS/subdomains-top1million-5000.txt</span><br></pre></td></tr></table></figure>
+<p>其实在这里有一个重复的 一直没发现 总共四个子域</p>
+<p><img src="/images/tryhackme-Gobuster%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/dns.png" alt="task5"></p>
+<h2 id="task6"><a href="#task6" class="headerlink" title="task6"></a>task6</h2><p>最后是vhost模式。此模式允许 Gobuster 暴力破解虚拟主机。虚拟主机是同一台机器上的不同网站。有时，它们看起来像子域名，但不要被欺骗！虚拟主机基于 IP 并在同一台服务器上运行。子域名在 DNS 中设置。vhost和dns模式之间的区别在于 Gobuster 扫描的方式：</p>
+<ul>
+<li><p>vhost模式将导航到由配置的 HOSTNAME（-u 标志）与单词列表条目组合创建的 URL。</p>
+</li>
+<li><p>dns模式将对通过将配置的域名（-d 标志）与单词列表的条目相结合而创建的 FQDN进行DNS查找</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>short flags</th>
+<th>long flags</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-u</td>
+<td>–url</td>
+<td>指定强制虚拟主机名的基本 URL（目标域）。</td>
+</tr>
+<tr>
+<td></td>
+<td>–append-domain</td>
+<td>将基本域附加到单词表中的每个单词（例如，word.example.com）。</td>
+</tr>
+<tr>
+<td>-m</td>
+<td>–method</td>
+<td>指定用于请求的 HTTP 方法（例如 GET、POST）。</td>
+</tr>
+<tr>
+<td></td>
+<td>–domain</td>
+<td>将域名附加到每个单词列表条目以形成有效的主机名（如果没有明确提供则很有用）。</td>
+</tr>
+<tr>
+<td></td>
+<td>–exclude-length</td>
+<td>根据响应主体的长度排除结果（有助于过滤掉不需要的响应）。</td>
+</tr>
+<tr>
+<td>-r</td>
+<td>–follow-redirect</td>
+<td>遵循 HTTP 重定向（对于子域名可能重定向的情况很有用）。</td>
+</tr>
+</tbody></table>
+<p>如何使用vhost模式<br>要以模式运行Gobustervhost，请输入以下命令：</p>
+<p>gobuster vhost -u “<a target="_blank" rel="noopener" href="http://example.thm/">http://example.thm</a>“ -w &#x2F;path&#x2F;to&#x2F;wordlist</p>
+<p>请注意，除了关键字之外，该命令还包含标志-u和-w。这两个标志是 Gobuster vhost 枚举工作所必需的。让我们看一个如何使用 Gobuster模式枚举虚拟主机的实际示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gobuster vhost -u &quot;http://10.10.15.13&quot; --domain example.thm -w /usr/share/wordlists/SecLists/Discovery/DNS/subdomains-top1million-5000.txt --append-domain --exclude-length 250-320 </span><br></pre></td></tr></table></figure>
+
+<p>此命令比基本命令语法复杂得多。它包含更多配置标志。在实际测试中，情况通常如此，具体取决于要测试的域的基础设施是如何设置的。</p>
+<p>Gobuster将发送多个请求，每次都会更改Host:请求的一部分。Host:此示例中的值为<a target="_blank" rel="noopener" href="http://www.example.thm.我们可以将其分为三个部分/">www.example.thm。我们可以将其分为三个部分</a> ：</p>
+<p>www：这是子域名。这是 Gobuster 将用配置的单词表的每个条目填充的部分。<br>.example：这是二级域名，可以通过–domainflag来配置（需要和顶级域名一起配置）。<br>.thm：这个是顶级域名，可以通过–domainflag来配置（需要和二级域名一起配置）</p>
+<hr>
+<p>Gobuster如何发送请求，让我们分解命令并更仔细地检查每个标志：</p>
+<p>gobuster vhost指示Gobuster枚举虚拟主机。<br>-u “<a target="_blank" rel="noopener" href="http://10.10.15.13" 将要浏览的 ">http://10.10.15.13&quot;将要浏览的</a> URL 设置为 10.10.15.13。</p>
+<p>-w &#x2F;usr&#x2F;share&#x2F;wordlists&#x2F;SecLists&#x2F;Discovery&#x2F;DNS&#x2F;subdomains-top1million-5000.txt配置 Gobuster 使用subdomains-top1million-5000.txt单词表。Gobuster 将单词表中的每个条目附加到配置的域。如果没有使用标志明确配置域–domain，Gobuster将从 URL 中提取它。例如，test.example.thm、help.example.thm等。如果发现任何子域，Gobuster将在终端中向您报告它们。</p>
+<p>–domain example.thmHostname:将请求部分中的顶级域名和二级域名设置为example.thm。</p>
+<p>–append-domain将配置的域附加到单词表中的每个条目。如果未配置此标志，则设置的主机名将为www、blog等。这将导致命令无法正常工作并显示误报。</p>
+<p>–exclude-length过滤我们从发送的 Web 请求中获得的响应。使用此标志，我们可以过滤掉误报。如果您在不使用此标志的情况下运行命令，会注意到您会得到很多误报，例如“找到：Orion.example.thm状态：404 [大小：279]”或“找到：pm.example.thm状态：404 [大小：276]”。这些误报通常具有相似的响应大小，因此我们可以使用它来过滤掉大多数误报。</p>
+<p><img src="/images/tryhackme-Gobuster%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/task6.png" alt="task6"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gobuster vhost -u &quot;http://10.10.15.13&quot;--domain offensivetools.thm -w /usr/sharewordlists/SecLists/Discovery/DNSsubdomains-top1million-5000.txt--append-domain --exclude-length 250-320 </span><br></pre></td></tr></table></figure>
+<p>域名加ip防止gobuster找错地方 </p>
+<p><img src="/images/tryhackme-Gobuster%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/vhost.png" alt="task6"></p>
+<p>gobuster简单介绍到这</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://oasko.github.io">Asuna</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://oasko.github.io/2025/03/13/tryhackme-Gobuster%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">https://oasko.github.io/2025/03/13/tryhackme-Gobuster%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://oasko.github.io" target="_blank">Asuna</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/linux-tryhackme/">linux tryhackme</a></div><div class="post-share"><div class="social-share" data-image="https://s2.loli.net/2025/01/19/47KGSaY3sudRFjV.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2025/03/09/tryhackme-Burp-Suite%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="tryhackme-Burp Suite：基础知识"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-09</div><div class="info-item-2">tryhackme-Burp Suite：基础知识</div></div><div class="info-2"><div class="info-item-1">这次介绍如何使用 Burp Suite 进行 Web 应用程序渗透测试。 重点将围绕以下关键方面：  对Burp Suite的详细介绍。 全面概述框架内可用的各种工具。 有关在您的系统上安装Burp Suite的过程的详细指导。 导航和配置Burp Suite。  task2Burp Suite是一个基于 Java 的框架，旨在作为进行 Web 应用程序渗透测试的综合解决方案。它已成为对 Web 和移动应用程序（包括依赖应用程序编程接口( API)的应用程序）进行实际安全评估的行业标准工具。 Burp Suite可以捕获并允许操纵浏览器和 Web 服务器之间的所有HTTP &#x2F;HTTPS 流量。这一基本功能构成了框架的支柱。通过拦截请求，用户可以灵活地将它们路由到Burp Suite框架内的各个组件 Burp Suite Professional是Burp Suite...</div></div></div></a><a class="pagination-related" href="/2025/03/13/tryhackme-hydra-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="tryhackme-hydra 基础知识"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-13</div><div class="info-item-2">tryhackme-hydra 基础知识</div></div><div class="info-2"><div class="info-item-1"> Hydra是啥Hydra是一款暴力在线密码破解程序，一种快速系统登录密码“破解”工具。 SSHhydra -l  -P  10.10.228.178 -t 4 ssh    选项 描述    -l 指定登录的（SSH）用户名   -P 表示密码列表   -t 设置要生成的线程数   例如， hydra -l root -P passwords.txt 10.10.228.178 -t 4 ssh将使用以下参数运行： Hydra将root用作 ssh用户名passwords.txt 它将尝试文件中的密码将会有四个线程并行运行，如下所示 -t 4 发布 Web 表单我们也可以使用Hydra来暴力破解 Web 表单。必须知道它发出的是哪种类型的请求；通常使用 GET 或 POST 方法。您可以使用浏览器的网络选项卡（在开发人员工具中）查看请求类型或查看源代码。 1sudo hydra &lt;username&gt; &lt;wordlist&gt; 10.10.228.178 http-post-form...</div></div></div></a><a class="pagination-related" href="/2025/03/08/tryhackme-blue/" title="tryhackme-blue"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-08</div><div class="info-item-2">tryhackme-blue</div></div><div class="info-2"><div class="info-item-1">这个是个蛮简单的虚拟机的测试 就当随便玩玩 task1 下载完虚拟机之后 我是用nmap扫描有啥端口 在后面的时候了解到了个新的参数 –scrip&#x3D;vuln 在nmap中扫描漏洞   1000以下的开放端口有三个 本来是有四个的 其中有一个状态并不是开放的 我们加上参数–scrip&#x3D;vuln扫描之后会发现 扫出来了一个ms17-010漏洞 task2来看看任务2  task2的话 问题就是基础的问题  第二问 我们到msfconsole中搜索ms17-010 第一个就是我们需要的漏洞 exploit&#x2F;windows&#x2F;smb&#x2F;ms17_010_eternalblue 第三问的话 肯定要去配置rhost的 就是你的攻击目标的ip 我有时候会不成功 最好加set payload windows&#x2F;x64&#x2F;shell&#x2F;reverse_tcp进去...</div></div></div></a><a class="pagination-related" href="/2025/03/09/tryhackme-ice/" title="tryhackme-ice"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-09</div><div class="info-item-2">tryhackme-ice</div></div><div class="info-2"><div class="info-item-1">今天来试试blue的下一个挑战 ice。 这个问题也蛮简单的 就是练练手了解一下流程 task2 第三问远程桌面是用3389端口 第四问在8000端口的服务是什么  我们搜一下这个服务的简写是Icecast 在nmap的报告中 能看到主机名  task3 我们进网站去查看一下漏洞  会发现这个漏洞的影响评分是6.4  cve编号为CVE-2004-1561 在msf中搜索 search icecast 就能找到我们要利用的模块  show options 需要配置一个rhost task4  我们刚打进去的时候是用的是meterpreter的shell 我们用whoami来查看正在使用icecast进程的用户  查看版本信息用sysinfo  就能看到Windows的版本和进程的构架 在msf中search eventvwr(这个看了一下提示) 第一个就是我们要的漏洞  会话错误需要配置lhost 监听的ip 输入getprivs就可以找到权限 问题说的是拥有文件的所有权 SeTakeOwnershipPrivilege...</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="https://s2.loli.net/2025/01/19/47KGSaY3sudRFjV.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Asuna</div><div class="author-info-description">Do not go gentle into that good night</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">33</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">24</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">祝你青葱加鱼块 烧油又紫菜</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#task3"><span class="toc-number">1.</span> <span class="toc-text">task3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#task4"><span class="toc-number">2.</span> <span class="toc-text">task4</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#task5"><span class="toc-number">3.</span> <span class="toc-text">task5</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#task6"><span class="toc-number">4.</span> <span class="toc-text">task6</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/13/tryhackme-Gobuster%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="tryhackme-Gobuster：基础知识">tryhackme-Gobuster：基础知识</a><time datetime="2025-03-13T12:26:29.000Z" title="发表于 2025-03-13 20:26:29">2025-03-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/13/tryhackme-hydra-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="tryhackme-hydra 基础知识">tryhackme-hydra 基础知识</a><time datetime="2025-03-13T11:24:47.000Z" title="发表于 2025-03-13 19:24:47">2025-03-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/11/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="tryhackme-JavaScript 基础知识">tryhackme-JavaScript 基础知识</a><time datetime="2025-03-11T12:58:32.000Z" title="发表于 2025-03-11 20:58:32">2025-03-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/11/tryhackme-SQL-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="tryhackme-SQL 基础知识">tryhackme-SQL 基础知识</a><time datetime="2025-03-11T07:47:29.000Z" title="发表于 2025-03-11 15:47:29">2025-03-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/10/tryhackme-Web%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%9F%BA%E7%A1%80/" title="tryhackme-Web应用程序基础">tryhackme-Web应用程序基础</a><time datetime="2025-03-10T01:27:48.000Z" title="发表于 2025-03-10 09:27:48">2025-03-10</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent;"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By Asuna</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const getGiscusTheme = theme => theme === 'dark' ? 'dark' : 'light'
+
+  const createScriptElement = config => {
+    const ele = document.createElement('script')
+    Object.entries(config).forEach(([key, value]) => {
+      ele.setAttribute(key, value)
+    })
+    return ele
+  }
+
+  const loadGiscus = (el = document, key) => {
+    const mappingConfig = isShuoshuo
+      ? { 'data-mapping': 'specific', 'data-term': key }
+      : { 'data-mapping': (option && option['data-mapping']) || 'pathname' }
+
+    const giscusConfig = {
+      src: 'https://giscus.app/client.js',
+      'data-repo': 'oasko/Giscus-demo',
+      'data-repo-id': 'R_kgDONt6VLw',
+      'data-category-id': 'DIC_kwDONt6VL84CmPGu',
+      'data-theme': getGiscusTheme(document.documentElement.getAttribute('data-theme')),
+      'data-reactions-enabled': '1',
+      crossorigin: 'anonymous',
+      async: true,
+      ...option,
+      ...mappingConfig
+    }
+
+    const scriptElement = createScriptElement(giscusConfig)
+
+    el.querySelector('#giscus-wrap').appendChild(scriptElement)
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyGiscus = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const changeGiscusTheme = theme => {
+    const iframe = document.querySelector('#giscus-wrap iframe')
+    if (iframe) {
+      const message = {
+        giscus: {
+          setConfig: {
+            theme: getGiscusTheme(theme)
+          }
+        }
+      }
+      iframe.contentWindow.postMessage(message, 'https://giscus.app')
+    }
+  }
+
+  btf.addGlobalFn('themeChange', changeGiscusTheme, 'giscus')
+
+  if (isShuoshuo) {
+    'Giscus' === 'Giscus'
+      ? window.shuoshuoComment = { loadComment: loadGiscus }
+      : window.loadOtherComment = loadGiscus
+    return
+  }
+
+  if ('Giscus' === 'Giscus' || !false) {
+    if (false) btf.loadComment(document.getElementById('giscus-wrap'), loadGiscus)
+    else loadGiscus()
+  } else {
+    window.loadOtherComment = loadGiscus
+  }
+})()</script></div><div class="aplayer no-destroy" data-id="7495004841" data-server="netease" data-type="playlist" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="false" muted></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

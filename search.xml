@@ -4,6 +4,44 @@
   
     
     <entry>
+      <title>tryhackme-Gobuster：基础知识</title>
+      <link href="/2025/03/13/tryhackme-Gobuster%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
+      <url>/2025/03/13/tryhackme-Gobuster%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img src="/images/tryhackme-Gobuster%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/title.png" alt="titile"></p><p>Gobuster是一款用 Golang 编写的开源攻击工具。它使用特定的单词列表并处理传入的响应，通过暴力枚举 Web 目录、DNS子域、虚拟主机、Amazon S3存储桶和 Google Cloud Storage。</p><p>学习目标<br>了解枚举的基础知识<br>如何使用Gobuster枚举 Web 目录和文件<br>如何使用Gobuster枚举子域名<br>如何使用Gobuster枚举虚拟主机<br>如何使用单词表</p><p>首先先按照task2进行配置环境</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">需要更改/etc/resolv-dnsmasq文件：</span><br><span class="line">在 AttackBox 上打开一个终端并输入命令：sudo nano /etc/resolv-dnsmasq。</span><br><span class="line"></span><br><span class="line">插入nameserver 10.10.15.13为第一行。</span><br><span class="line"></span><br><span class="line">按 CTRL+O，然后按 ENTER 保存文件，然后按 CTRL+X 退出编辑器。</span><br><span class="line"></span><br><span class="line">输入命令/etc/init.d/dnsmasq restart重新启动Dnsmasq服务。</span><br></pre></td></tr></table></figure><h2 id="task3"><a href="#task3" class="headerlink" title="task3"></a>task3</h2><p>重点介绍dir、dns和vhost命令。将在以下任务中介绍每个命令。</p><p>flags：这些是我们可以配置以自定义命令的特定选项。让我们看看我们在这个房间中经常使用的标志：</p><table><thead><tr><th>short flags</th><th>long flags</th><th>描述</th></tr></thead><tbody><tr><td>-t</td><td>–threads</td><td>此标志配置用于扫描的线程数。每个线程都会发出请求，但会略有延迟。默认线程数为 10。使用大型单词表时，此数量可能会很慢。您可以根据可用的系统资源增加或减少线程数。</td></tr><tr><td>-w</td><td>–wordlist</td><td>该标志配置了用于迭代的单词表。每个单词表条目都附加到您在命令中包含的 URL。</td></tr><tr><td></td><td>–delay</td><td>此标志定义发送请求之间等待的时间。一些 Web 服务器包含通过查看在特定时间段内收到的请求数量来检测枚举的机制。我们可以增加后续请求之间的延迟，使其看起来像正常的 Web 流量。</td></tr><tr><td></td><td>–debug</td><td>当我们的命令出现意外错误时，此标志可以帮助我们排除故障。</td></tr><tr><td>-o</td><td>–output</td><td>该标志将枚举结果写入我们选择的文件中。</td></tr></tbody></table><p>eg:<br>让我们看一个例子，了解如何使用这些命令和标志来枚举 Web 目录：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gobuster dir -u &quot;http://www.example.thm/&quot; -w /usr/share/wordlists/dirb/small.txt -t 64</span><br></pre></td></tr></table></figure><p>gobuster dir表示我们将使用目录和文件枚举模式。<br>-u “<a href="http://www.example.thm/%22%E5%91%8A%E8%AF%89Gobuster%E7%9B%AE%E6%A0%87">http://www.example.thm/&quot;告诉Gobuster目标</a> URL是http : &#x2F;&#x2F;example.thm&#x2F; 。</p><p>-w &#x2F;usr&#x2F;share&#x2F;wordlists&#x2F;dirb&#x2F;small.txt指示Gobuster使用small.txt单词表对网络目录进行暴力破解。Gobuster将使用单词表中的每个条目形成一个新的 URL，并向该 URL 发送 GET 请求。如果单词表的第一个条目是图像，Gobuster将向<a href="http://example/">http://example</a>. thm &#x2F;images&#x2F;发送 GET 请求。</p><p>-t 64将Gobuster将使用的线程数设置为 64。这大大提高了性能。</p><h2 id="task4"><a href="#task4" class="headerlink" title="task4"></a>task4</h2><p>目录和文件枚举</p><p>gobuster dir命令。逐一介绍超出了范围，但在下表中，我们列出了涵盖大多数场景的标志：</p><table><thead><tr><th>short flags</th><th>long flags</th><th>描述</th></tr></thead><tbody><tr><td>-c</td><td>–cookies</td><td>此标志配置一个 cookie 来传递每个请求，例如会话 ID。</td></tr><tr><td>-x</td><td>–extensions</td><td>此标志指定要扫描的文件扩展名。例如，.php、.js。</td></tr><tr><td>-H</td><td>–headers</td><td>此标志配置与每个请求一起传递的整个标头。</td></tr><tr><td>-k</td><td>–no-tls-validation</td><td>此标志在使用 https 时跳过检查证书的过程。在 CTF 活动或测试室（如 THM 上的测试室）中，通常会使用自签名证书。这会导致 TLS 检查期间出现错误。</td></tr><tr><td>-n</td><td>–no-status</td><td>如果您不想看到收到的每个响应的状态代码，可以设置此标志。这有助于保持屏幕上的输出清晰。</td></tr><tr><td>-P</td><td>password</td><td>您可以将此标志与 –username 标志一起设置以执行经过身份验证的请求。当您从用户那里获得凭据时，这很方便。</td></tr><tr><td>-s</td><td>–status-codes</td><td>通过此标志，您可以配置想要显示的收到的响应的状态代码，例如 200，或者 300-400 这样的范围。</td></tr><tr><td>-b</td><td>–status-codes-blacklist</td><td>此标志允许您配置您不想显示的收到的响应的状态代码。配置此标志将覆盖 -s 标志。</td></tr><tr><td>-U</td><td>–username</td><td>您可以将此标志与 –password 执行经过身份验证的请求的标志一起设置。当您从用户那里获得凭据时，这很方便。</td></tr><tr><td>-r</td><td>–followredirect</td><td>此标志将 Gobuster 配置为遵循其收到的作为对发送请求的响应的重定向。HTTP 重定向状态代码（例如 301 或 302）用于将客户端重定向到不同的 URL。</td></tr></tbody></table><p>运行Gobuster dir，请使用以下命令格式</p><p>该命令还包含标志-u和-w。这两个标志是 Gobuster 目录枚举工作所必需的。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gobuster dir -u &quot;http://www.example.thm&quot; -w /path/to/wordlist</span><br></pre></td></tr></table></figure><p>此命令使用单词列表directory-list-2.3-medium.txt扫描位于<a href="http://www.example.thm的所有目录。让我们仔细看看命令的每个部分：">www.example.thm的所有目录。让我们仔细看看命令的每个部分：</a></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gobuster dir -u &quot;http://www.example.thm&quot; -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -r</span><br></pre></td></tr></table></figure><ul><li>gobuster dir：配置Gobuster使用目录和文件枚举模式。<br>-u <a href="http://www.example.thm：">http://www.example.thm：</a><br></li><li>URL 将是 Gobuster 开始查找的基本路径。因此，上面的 URL 使用的是根 Web 目录。可以将其视为<a href="http://www.example.thm/path/to/folder%E3%80%82">http://www.example.thm/path/to/folder。</a><br></li><li>URL 必须包含使用的协议，在本例中为HTTP。这很重要且必需。如果传递了错误的协议，扫描将失败。<br></li><li>在 URL 的主机部分，可以填写 IP 或 HOSTNAME。但是，需要注意的是，使用 IP 时，可能会指向与预期不同的网站。Web 服务器可以使用一个 IP 托管多个网站（此技术也称为虚拟托管）。如果想确保万无一失，请使用 HOSTNAME。<br></li><li>Gobuster 不会递归枚举。因此，如果结果显示您感兴趣的目录路径，则必须枚举该特定目录。<br></li><li>-w &#x2F;usr&#x2F;share&#x2F;wordlists&#x2F;dirbuster&#x2F;directory-list-2.3-medium.txt配置Gobuster使用directory-list-2.3-medium.txt单词表进行枚举。单词表的每个条目都附加到配置的 URL。<br></li><li>-r 配置Gobuster遵循从发送的请求收到的重定向响应。如果收到状态代码 301，Gobuster将导航到响应中包含的重定向 URL。</li></ul><p>-x标志来指定我们要枚举的文件类型：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gobuster dir -u &quot;http://www.example.thm&quot; -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -x .php,.js</span><br></pre></td></tr></table></figure><p>此命令将使用单词列表directory-list-2.3-medium.txt查找位于<a href="http://example/">http://example</a>. thm 的目录。除了目录列表之外，此命令还列出所有具有 . php或 .js 扩展名的文件。</p><p><img src="/images/tryhackme-Gobuster%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/task44.png" alt="task4"></p><p>第一问就是用–no-tls-validation来跳过</p><p>第二问 就是枚举这个网站的目录</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gobuster dir -u www.offensivetools.thm -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -r</span><br></pre></td></tr></table></figure><p><img src="/images/tryhackme-Gobuster%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/task4.png" alt="task4"></p><p>第三问也是一样 枚举js文件 用-x参数</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gobuster dir -u http://www.offensivetools.thm/secret -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -x .js</span><br></pre></td></tr></table></figure><p><img src="/images/tryhackme-Gobuster%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/flag.png" alt="task4"></p><p><img src="/images/tryhackme-Gobuster%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/flag1.png" alt="task4"></p><h2 id="task5"><a href="#task5" class="headerlink" title="task5"></a>task5</h2><p>dns模式。此模式允许Gobuster暴力破解子域名。在渗透测试期间，检查目标顶级域名的子域名至关重要。</p><table><thead><tr><th>short flags</th><th>long flags</th><th>描述</th></tr></thead><tbody><tr><td>-c</td><td>–show-cname</td><td>显示 CNAME 记录（不能与标志一起使用 -i）。</td></tr><tr><td>-i</td><td>–show-ips</td><td>包括此标志显示域和子域解析到的 IP 地址。</td></tr><tr><td>-r</td><td>–resolver</td><td>此标志配置用于解析的自定义 DNS 服务器。</td></tr><tr><td>-d</td><td>–domain</td><td>此标志配置您想要枚举的域。</td></tr></tbody></table><p>如何使用dns模式<br>要在dns模式下运行Gobuster，请使用以下命令语法：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gobuster dns -d example.thm -w /path/to/wordlist</span><br></pre></td></tr></table></figure><p>请注意，除了关键字之外，该命令还包含标志-d和-w。这两个标志是Gobuster 子域名枚举工作所必需的。</p><p>看一个如何使用Gobuster dns模式枚举子域名的示例：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gobuster dns -d example.thm -w /usr/share/wordlists/SecLists/Discovery/DNS/subdomains-top1million-5000.txt</span><br></pre></td></tr></table></figure><p>gobuster dns枚举配置域上的子域。</p><p>-d example.thm将目标设置为example.thm域。</p><p>-w &#x2F;usr&#x2F;share&#x2F;wordlists&#x2F;SecLists&#x2F;Discovery&#x2F;DNS&#x2F;subdomains-top1million-5000.txt将单词列表设置为 s ubdomains-top1million-5000.txt。Gobuster使用此列表的每个条目构建新的DNS查询。如果此列表的第一个条目是“all”，则查询将是all.example. thm。</p><p>来练练手</p><p><img src="/images/tryhackme-Gobuster%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/task5.png" alt="task5"></p><p>第一问 还要加一个-d参数</p><p>第二问</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gobuster dns -d offensivetools.thm -w /usr/share/wordlists/SecLists/Discovery/DNS/subdomains-top1million-5000.txt</span><br></pre></td></tr></table></figure><p>其实在这里有一个重复的 一直没发现 总共四个子域</p><p><img src="/images/tryhackme-Gobuster%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/dns.png" alt="task5"></p><h2 id="task6"><a href="#task6" class="headerlink" title="task6"></a>task6</h2><p>最后是vhost模式。此模式允许 Gobuster 暴力破解虚拟主机。虚拟主机是同一台机器上的不同网站。有时，它们看起来像子域名，但不要被欺骗！虚拟主机基于 IP 并在同一台服务器上运行。子域名在 DNS 中设置。vhost和dns模式之间的区别在于 Gobuster 扫描的方式：</p><ul><li><p>vhost模式将导航到由配置的 HOSTNAME（-u 标志）与单词列表条目组合创建的 URL。</p></li><li><p>dns模式将对通过将配置的域名（-d 标志）与单词列表的条目相结合而创建的 FQDN进行DNS查找</p></li></ul><table><thead><tr><th>short flags</th><th>long flags</th><th>描述</th></tr></thead><tbody><tr><td>-u</td><td>–url</td><td>指定强制虚拟主机名的基本 URL（目标域）。</td></tr><tr><td></td><td>–append-domain</td><td>将基本域附加到单词表中的每个单词（例如，word.example.com）。</td></tr><tr><td>-m</td><td>–method</td><td>指定用于请求的 HTTP 方法（例如 GET、POST）。</td></tr><tr><td></td><td>–domain</td><td>将域名附加到每个单词列表条目以形成有效的主机名（如果没有明确提供则很有用）。</td></tr><tr><td></td><td>–exclude-length</td><td>根据响应主体的长度排除结果（有助于过滤掉不需要的响应）。</td></tr><tr><td>-r</td><td>–follow-redirect</td><td>遵循 HTTP 重定向（对于子域名可能重定向的情况很有用）。</td></tr></tbody></table><p>如何使用vhost模式<br>要以模式运行Gobustervhost，请输入以下命令：</p><p>gobuster vhost -u “<a href="http://example.thm/">http://example.thm</a>“ -w &#x2F;path&#x2F;to&#x2F;wordlist</p><p>请注意，除了关键字之外，该命令还包含标志-u和-w。这两个标志是 Gobuster vhost 枚举工作所必需的。让我们看一个如何使用 Gobuster模式枚举虚拟主机的实际示例：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gobuster vhost -u &quot;http://10.10.15.13&quot; --domain example.thm -w /usr/share/wordlists/SecLists/Discovery/DNS/subdomains-top1million-5000.txt --append-domain --exclude-length 250-320 </span><br></pre></td></tr></table></figure><p>此命令比基本命令语法复杂得多。它包含更多配置标志。在实际测试中，情况通常如此，具体取决于要测试的域的基础设施是如何设置的。</p><p>Gobuster将发送多个请求，每次都会更改Host:请求的一部分。Host:此示例中的值为<a href="http://www.example.thm.我们可以将其分为三个部分/">www.example.thm。我们可以将其分为三个部分</a> ：</p><p>www：这是子域名。这是 Gobuster 将用配置的单词表的每个条目填充的部分。<br>.example：这是二级域名，可以通过–domainflag来配置（需要和顶级域名一起配置）。<br>.thm：这个是顶级域名，可以通过–domainflag来配置（需要和二级域名一起配置）</p><hr><p>Gobuster如何发送请求，让我们分解命令并更仔细地检查每个标志：</p><p>gobuster vhost指示Gobuster枚举虚拟主机。<br>-u “<a href="http://10.10.15.13" 将要浏览的 ">http://10.10.15.13&quot;将要浏览的</a> URL 设置为 10.10.15.13。</p><p>-w &#x2F;usr&#x2F;share&#x2F;wordlists&#x2F;SecLists&#x2F;Discovery&#x2F;DNS&#x2F;subdomains-top1million-5000.txt配置 Gobuster 使用subdomains-top1million-5000.txt单词表。Gobuster 将单词表中的每个条目附加到配置的域。如果没有使用标志明确配置域–domain，Gobuster将从 URL 中提取它。例如，test.example.thm、help.example.thm等。如果发现任何子域，Gobuster将在终端中向您报告它们。</p><p>–domain example.thmHostname:将请求部分中的顶级域名和二级域名设置为example.thm。</p><p>–append-domain将配置的域附加到单词表中的每个条目。如果未配置此标志，则设置的主机名将为www、blog等。这将导致命令无法正常工作并显示误报。</p><p>–exclude-length过滤我们从发送的 Web 请求中获得的响应。使用此标志，我们可以过滤掉误报。如果您在不使用此标志的情况下运行命令，会注意到您会得到很多误报，例如“找到：Orion.example.thm状态：404 [大小：279]”或“找到：pm.example.thm状态：404 [大小：276]”。这些误报通常具有相似的响应大小，因此我们可以使用它来过滤掉大多数误报。</p><p><img src="/images/tryhackme-Gobuster%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/task6.png" alt="task6"></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gobuster vhost -u &quot;http://10.10.15.13&quot;--domain offensivetools.thm -w /usr/sharewordlists/SecLists/Discovery/DNSsubdomains-top1million-5000.txt--append-domain --exclude-length 250-320 </span><br></pre></td></tr></table></figure><p>域名加ip防止gobuster找错地方 </p><p><img src="/images/tryhackme-Gobuster%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/vhost.png" alt="task6"></p><p>gobuster简单介绍到这</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> linux tryhackme </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>tryhackme-hydra 基础知识</title>
+      <link href="/2025/03/13/tryhackme-hydra-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
+      <url>/2025/03/13/tryhackme-hydra-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img src="/images/tryhackme-hydra-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/title.png" alt="t"></p><p>Hydra是啥<br>Hydra是一款暴力在线密码破解程序，一种快速系统登录密码“破解”工具。</p><p>SSH<br>hydra -l <username> -P <full path to pass> 10.10.228.178 -t 4 ssh</full></username></p><table><thead><tr><th>选项</th><th>描述</th></tr></thead><tbody><tr><td>-l</td><td>指定登录的（SSH）用户名</td></tr><tr><td>-P</td><td>表示密码列表</td></tr><tr><td>-t</td><td>设置要生成的线程数</td></tr></tbody></table><p>例如， hydra -l root -P passwords.txt 10.10.228.178 -t 4 ssh将使用以下参数运行：</p><p>Hydra将root用作 ssh用户名<br>passwords.txt 它将尝试文件中的密码<br>将会有四个线程并行运行，如下所示 -t 4</p><p>发布 Web 表单<br>我们也可以使用Hydra来暴力破解 Web 表单。必须知道它发出的是哪种类型的请求；通常使用 GET 或 POST 方法。您可以使用浏览器的网络选项卡（在开发人员工具中）查看请求类型或查看源代码。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo hydra &lt;username&gt; &lt;wordlist&gt; 10.10.228.178 http-post-form &quot;&lt;path&gt;:&lt;login_credentials&gt;:&lt;invalid_response&gt;&quot;</span><br></pre></td></tr></table></figure><table><thead><tr><th>选项</th><th>描述</th></tr></thead><tbody><tr><td>-l</td><td>（Web 表单）登录的用户名</td></tr><tr><td>-P</td><td>要使用的密码列表</td></tr><tr><td>http-post-form</td><td>表单类型为 POST</td></tr><tr><td><path></path></td><td>登录页面 URL，例如 login.php</td></tr><tr><td><login_credentials></login_credentials></td><td>用于登录的用户名和密码，例如 <code>username=^USER^&amp;password=^PASS^</code></td></tr><tr><td><invalid_response></invalid_response></td><td>登录失败时的部分响应</td></tr><tr><td>-V</td><td>每次尝试的详细输出</td></tr></tbody></table><p>下面是一个更具体的Hydra命令示例，用于强制执行 POST 登录表单：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hydra -l &lt;username&gt; -P &lt;wordlist&gt; 10.10.228.178 http-post-form &quot;/:username=^USER^&amp;password=^PASS^:F=incorrect&quot; -V</span><br></pre></td></tr></table></figure><p>登录页面只有&#x2F;，即主IP地址。<br>这username是输入用户名的表单字段<br>指定的用户名将替换^USER^<br>这password是输入密码的表单字段<br>提供的密码将取代^PASS^<br>最后，F&#x3D;incorrect是登录失败时服务器回复中出现的字符串</p><p><img src="/images/tryhackme-hydra-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/task1.png" alt="task1"></p><p>第一问</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hydra -l molly -P /usr/share/wordlists/rockyou.txt 10.10.228.178 http-post-form &quot;/login:username=^USER^&amp;password=^PASS^:F=incorrect&quot; -V</span><br></pre></td></tr></table></figure><p>在破解的时候要注意路径 是&#x2F;login </p><p><img src="/images/tryhackme-hydra-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/pass.png" alt="task1"></p><p><img src="/images/tryhackme-hydra-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/flag.png" alt="task1"></p><p>第二问</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hydra -l molly -P /usr/share/wordlists/rockyou.txt 10.10.228.178 ssh</span><br></pre></td></tr></table></figure><p><img src="/images/tryhackme-hydra-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/butterfly.png" alt="task1"></p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> linux tryhackme </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>tryhackme-JavaScript 基础知识</title>
       <link href="/2025/03/11/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
       <url>/2025/03/11/tryhackme-JavaScript-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</url>
@@ -584,9 +622,9 @@
     
     
     <entry>
-      <title>about</title>
-      <link href="/about/index-1.html"/>
-      <url>/about/index-1.html</url>
+      <title>Gallery</title>
+      <link href="/Gallery/index.html"/>
+      <url>/Gallery/index.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
@@ -606,9 +644,9 @@
     
     
     <entry>
-      <title>Gallery</title>
-      <link href="/Gallery/index.html"/>
-      <url>/Gallery/index.html</url>
+      <title>about</title>
+      <link href="/about/index-1.html"/>
+      <url>/about/index-1.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
@@ -622,39 +660,6 @@
       <url>/about/network-%E7%BD%91%E7%BB%9C%E6%A6%82%E5%BF%B5.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="网络知识的介绍"><a href="#网络知识的介绍" class="headerlink" title="网络知识的介绍"></a>网络知识的介绍</h1><h2 id="osi七层模型"><a href="#osi七层模型" class="headerlink" title="osi七层模型"></a>osi七层模型</h2><p>OSI 模型是一个描述网络功能的概念框架。简单来说，OSI 模型标对计算机系统彼此之间发送信息的方式进行了标准化。</p><p>分为：</p><ul><li>物理层</li><li>数据链路层</li><li>网络层</li><li>传输层</li><li>会话层</li><li>表示层</li><li>应用层</li></ul><h3 id="物理层"><a href="#物理层" class="headerlink" title="物理层"></a>物理层</h3><p><strong>物理层</strong>（Physical Layer）是计算机网络OSI模型中<strong>最低</strong>的一层，也是<strong>最基本</strong>的一层。简单的说，网络的物理层面确保<strong>原始的数据</strong>可在各种<strong>物理媒体</strong>上<strong>传输</strong>。</p><p>物理层规定：为传输数据，需要<strong>物理链路</strong>与<strong>设备</strong>的建立、维持、拆除，并具有<strong>机械的</strong>、<strong>电子的</strong>、<strong>功能的</strong>、<strong>规范</strong>的特性。</p><p>第一层的数据单元是<strong>比特</strong>（bit）。</p><h4 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h4><ol><li><p>为数据段设备提供传输数据的通路</p></li><li><p>传输数据</p></li></ol><h4 id="常见物理层设备"><a href="#常见物理层设备" class="headerlink" title="常见物理层设备"></a>常见物理层设备</h4><ul><li>光纤</li><li>CAT-5线</li><li>CAT-6线</li><li>CAT-7线</li><li>RJ-45接头</li><li>集线器</li><li>串口</li><li>并口</li></ul><h4 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h4><ul><li>曼彻斯特编码 </li><li>差分曼彻斯特编码</li></ul><h3 id="数据链路层"><a href="#数据链路层" class="headerlink" title="数据链路层"></a>数据链路层</h3><p>数据链路层（Data Link Layer）是OSI参考模型<strong>第二层</strong>，位于物理层与网络层之间。可以细分成<strong>介质访问控制（MAC）子层</strong>和<strong>逻辑链路控制（LLC）子层</strong>。</p><h4 id="主要功能"><a href="#主要功能" class="headerlink" title="主要功能"></a>主要功能</h4><p>数据链路层用于跨物理层在<strong>网段节点</strong>之间传输数据，通常指以太网、无线局域网等通信手段。数据链路层提供了在网络的两个实体之间传输数据的功能，并且提供了<strong>差错检测</strong>用于<strong>纠正</strong>物理层中发生的错误。</p><p>只提供导线的一端到另一端（本质是点到点）的<strong>数据传输</strong>。</p><p>数据链路层的以太网协议规定了一组二进制电信号为<strong>数据帧</strong>，数据帧的报头 head 就包含<strong>目标 MAC 地址</strong>和<strong>源 MAC 地址</strong></p><p>第二层的数据单元是 <strong>帧</strong>（frame）。</p><p>帧都包括一个帧头 主题和一个帧尾</p><ul><li>帧头：源节点和目的节点的mac地址</li><li>主体：要传输的比特</li><li>帧尾：包括错误检测信息</li></ul><h4 id="常见数据链路层的设备"><a href="#常见数据链路层的设备" class="headerlink" title="常见数据链路层的设备"></a>常见数据链路层的设备</h4><ul><li>网卡（物理层和数据链路层的MAC子层）</li><li>交换机 是数据链路层设备。</li><li>桥接器（又称网桥）</li></ul><h4 id="协议"><a href="#协议" class="headerlink" title="协议"></a>协议</h4><p>异步传输模式</p><ul><li><p>VLAN（IEEE 802.1Q）</p></li><li><p>以太网（IEEE 802.3）</p></li><li><p>Wi-Fi（IEEE 802.11）</p></li><li><p>PPP协议<br>点对点协议 一种数据链路层封装协议 有PAP和CHAP两种方式</p></li><li><p>PPPoE协议<br>，以太网上的点对点协议，是将点对点协议（PPP）封装在以太网（Ethernet）框架中的一种网络隧道协议。</p></li></ul><h3 id="网络层"><a href="#网络层" class="headerlink" title="网络层"></a>网络层</h3><p>网络层是<strong>互联网通信过程</strong>的一部分，这是连接发生的地方，在不同网络之间来回<strong>发送数据包</strong>来进行通信，处理不同网络之间的数据路由和发送。</p><p>用于将接收到的数据段从一台计算机传输到位于不同网络中的另一台计算机。</p><p>第三层的数据单元为<strong>数据包</strong></p><h4 id="功能-1"><a href="#功能-1" class="headerlink" title="功能"></a>功能</h4><ol><li>寻址<br>对网络层而言使用IP地址来<strong>唯一标识</strong>互联网上的各个寻址，网络层依靠IP地址进行<strong>相互通信</strong>（类似于MAC地址），详细的编址方案参见IPv4和IPv6。<br></li><li>路由<br>在同一个网络中的内部通信并不需要网络层设备，仅仅靠数据链路层就可以完成相互通信，对于不同的网络之间相互通信则必须借助路由器等三层设备。</li></ol><h4 id="网络层协议"><a href="#网络层协议" class="headerlink" title="网络层协议"></a>网络层协议</h4><ul><li>IP （V4、V6）</li><li>ICMP（V4、V6）</li><li>IPsec</li><li>RIP</li><li>OSPF</li></ul><h4 id="具有网络层功能的设备"><a href="#具有网络层功能的设备" class="headerlink" title="具有网络层功能的设备"></a>具有网络层功能的设备</h4><ul><li>路由</li><li>三层交换机</li></ul><h3 id="传输层"><a href="#传输层" class="headerlink" title="传输层"></a>传输层</h3><p>传输层通过分段、流量控制和差错控制来控制通信的可靠性。支持不同主机上运行的应用程序之间的端到端通信。</p><p>第四次的数据单元可以说<strong>报文段</strong>或<strong>数据段</strong>(<strong>tcp</strong>)和<strong>数据报</strong>(<strong>udp</strong>)</p><h4 id="协议-1"><a href="#协议-1" class="headerlink" title="协议"></a>协议</h4><ul><li>tcp</li><li>udp</li></ul><h3 id="会话层"><a href="#会话层" class="headerlink" title="会话层"></a>会话层</h3><p>主要利用传输层提供的端到端数据传输服务，为两个会话层实体进行<strong>会话</strong>（Session），而进行的对话连接的管理服务。</p><h4 id="会话层服务"><a href="#会话层服务" class="headerlink" title="会话层服务"></a>会话层服务</h4><ul><li>认证</li><li>权限</li><li>会话恢复</li></ul><h4 id="会话层协议"><a href="#会话层协议" class="headerlink" title="会话层协议"></a>会话层协议</h4><ul><li>PAP, 密码认证协议</li><li>PPTP, 点对点隧道协议</li><li>L2TP, 第二层隧道协议</li><li>RPC, 远程过程调用</li><li>SDP, 套接字直接协议</li></ul><h3 id="表示层"><a href="#表示层" class="headerlink" title="表示层"></a>表示层</h3><p>表示层向上对应用层服务，向下接受来自会话层的服务。表示层为在应用过程之间传送的信息提供表示方法的服务，它只关心信息发出的语法和语义</p><p>表示层从应用层接收数据。这些数据是以字符和数字的形式出现的，表示层将这些字符和数字转换成机器可理解的二进制格式。</p><p>为不同终端的上层用户提供数据和信息正确的语法表示变换方法。表示层确保数据以应用层可以理解的形式传递。处理数据编码、压缩和加密。</p><h4 id="表示层的主要功能"><a href="#表示层的主要功能" class="headerlink" title="表示层的主要功能"></a>表示层的主要功能</h4><ul><li>数据语法转换</li><li>语法表示</li><li>连接管理</li><li>数据处理</li><li>数据加密和解密</li><li>数据压缩和解压</li><li>数据编码和解码</li></ul><h4 id="表示层协议"><a href="#表示层协议" class="headerlink" title="表示层协议"></a>表示层协议</h4><ul><li>HTTP&#x2F;HTTPS</li><li>FTP&#x2F;FTPS</li><li>SSH</li><li>Telnet</li><li>ASN.1</li></ul><h3 id="应用层"><a href="#应用层" class="headerlink" title="应用层"></a>应用层</h3><p>用层直接和应用程序接口结合，并提供常见的网络应用服务。应用层也向第六层表示层发出请求。</p><p>应用层直接向最终用户应用程序提供网络服务。</p><h4 id="协议-2"><a href="#协议-2" class="headerlink" title="协议"></a>协议</h4><ul><li>DHCP</li><li>DNS</li><li>FTP</li><li>POP3</li></ul><p>简单来说 假如你在给你的异地女朋友发微信信息 微信这个app就是属于<strong>应用层</strong> 将你发的这个信息转化为机器<strong>能够懂的适合传输</strong>的形式 这个就是<strong>表示层</strong>的作用 这个信息要发给你的女朋友 你和女朋友的微信会创建一个<strong>会话连接</strong> 会话层会在信息发过去的时候<strong>保证传输</strong>顺利进行 传输层会把数据<strong>分成</strong>适合传输的<strong>数据包</strong>进行传输 网络层会规划一条<strong>合适的路径</strong>传输信息 数据链路层会通过物理网络将<strong>数据包传给</strong>物理层 物理层就能把数据包发送到接收方手机 就能接收到发送方的信息</p><h2 id="tcp-ip模型"><a href="#tcp-ip模型" class="headerlink" title="tcp&#x2F;ip模型"></a>tcp&#x2F;ip模型</h2><ul><li>应用层</li><li>传输层</li><li>网络接口层</li><li>链路层</li></ul><h2 id="ip地址"><a href="#ip地址" class="headerlink" title="ip地址"></a>ip地址</h2><p>由网络号和主机号组成</p><p>A类地址以0开头，第一个字节作为网络号，地址范围为：0.0.0.0~127.255.255.255</p><p>B类地址以10开头，前两个字节作为网络号，地址范围是：128.0.0.0~191.255.255.255</p><p>C类地址以110开头，前三个字节作为网络号，地址范围是：192.0.0.0~223.255.255.255</p><p>D类地址以1110开头，地址范围是224.0.0.0~239.255.255.255，D类地址作为组播地址（一对多的通信）</p><p>E类地址以1111开头，地址范围是240.0.0.0~255.255.255.255，E类地址为保留地址，供以后使用。</p><p>0.0.0.0用来寻找自己的ip</p><h3 id="私有地址"><a href="#私有地址" class="headerlink" title="私有地址"></a>私有地址</h3><ul><li>A类 10.0.0.0 - 10.255.255.255 (10&#x2F;8)</li><li>B类 172.16.0.0 - 172.31.255.255 (172.16&#x2F;12)</li><li>C类 192.168.0.0 - 192.168.255.255 (192.168&#x2F;16)</li></ul><h2 id="dhcp协议"><a href="#dhcp协议" class="headerlink" title="dhcp协议"></a>dhcp协议</h2><p>动态主机配置协议 用于集中对用户IP地址进行动态管理和配置。</p><h3 id="DHCP遵循四个步骤：发现、提供、请求和确认-DORA-："><a href="#DHCP遵循四个步骤：发现、提供、请求和确认-DORA-：" class="headerlink" title="DHCP遵循四个步骤：发现、提供、请求和确认 (DORA)："></a>DHCP遵循四个步骤：发现、提供、请求和确认 (DORA)：</h3><ul><li>DHCP发现：客户端将广播 DHCPDISCOVER 消息，寻找本地DHCP服务器（如果存在）。</li><li>DHCP提供：服务器以 DHCPOFFER 消息进行响应，其中包含可供客户端接受的 IP 地址。</li><li>DHCP请求：客户端以 DHCPREQUEST 消息进行响应，表明它已接受提供的 IP。</li><li>DHCP确认：服务器以 DHCPACK 消息进行响应，以确认提供的 IP 地址现已分配给该客户端。</li></ul><h2 id="arp协议"><a href="#arp协议" class="headerlink" title="arp协议"></a>arp协议</h2><p>arp协议(地址解析协议) IP地址对mac地址的映射 询问IP地址对应的mac地址</p><p>目标 MAC 地址<br>源 MAC 地址</p>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>books</title>
-      <link href="/books/index.html"/>
-      <url>/books/index.html</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>categories</title>
-      <link href="/categories/index.html"/>
-      <url>/categories/index.html</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>categories</title>
-      <link href="/categories/index-1.html"/>
-      <url>/categories/index-1.html</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
     </entry>
     
@@ -683,9 +688,9 @@
     
     
     <entry>
-      <title>movies</title>
-      <link href="/movies/index.html"/>
-      <url>/movies/index.html</url>
+      <title>books</title>
+      <link href="/books/index.html"/>
+      <url>/books/index.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
@@ -694,9 +699,31 @@
     
     
     <entry>
-      <title>search</title>
-      <link href="/search/index.html"/>
-      <url>/search/index.html</url>
+      <title>categories</title>
+      <link href="/categories/index-1.html"/>
+      <url>/categories/index-1.html</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>categories</title>
+      <link href="/categories/index.html"/>
+      <url>/categories/index.html</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>movies</title>
+      <link href="/movies/index.html"/>
+      <url>/movies/index.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
@@ -717,8 +744,19 @@
     
     <entry>
       <title>tags</title>
-      <link href="/tags/index-2.html"/>
-      <url>/tags/index-2.html</url>
+      <link href="/tags/index-1.html"/>
+      <url>/tags/index-1.html</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>search</title>
+      <link href="/search/index.html"/>
+      <url>/search/index.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
@@ -728,8 +766,8 @@
     
     <entry>
       <title>tags</title>
-      <link href="/tags/index-1.html"/>
-      <url>/tags/index-1.html</url>
+      <link href="/tags/index-2.html"/>
+      <url>/tags/index-2.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
