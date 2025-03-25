@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>DC-2-vulnhub-解法</title>
+      <link href="/2025/03/24/DC-2-vulnhub-%E8%A7%A3%E6%B3%95/"/>
+      <url>/2025/03/24/DC-2-vulnhub-%E8%A7%A3%E6%B3%95/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>现在来打打dc2的靶场</p><p>加载完虚拟机之后就可以开始nmap扫描看看有什么端口</p><p><img src="/images/dc2/nmap.png" alt="nmap"></p><p>但我们在报告中发现有个重定向(报告我忘记截图了) 需要我们把靶机ip和dc-2的域名绑定在一下 在&#x2F;etc&#x2F;hosts中</p><p>绑定完之后就可以访问网站</p><p>能访问网站 我们就开始扫描一下网站路径 看有什么重要的突破口 </p><p><img src="/images/dc2/fero1.png" alt="scan"></p><p>有个登录界面 还找到第一个flag</p><p><img src="/images/dc2/freo.png" alt="scan"></p><p>登进去网站之后 我们发现这个网站是wordpress来搭建的 用wpscan扫描一下 看看能扫到什么</p><p><img src="/images/dc2/wpscan.png" alt="wp"></p><p><img src="/images/dc2/wpscan1.png" alt="wp"></p><p>发现有三个用户  这个划重点 后面要考 </p><p>在网站中就能找到第一个flag</p><p><img src="/images/dc2/flag1.png" alt="flag1"></p><p>根据提示说 有了一个叫cewl的工具 就是自定义词表生成器,是一个 ruby​​ 程序，可将特定 URL 爬取到定义的深度并返回关键字列表</p><p>用cewl生成的密码本来当做我们破解的密码本 刚好发现了三个用户 我们把那三个用户做成一个密码本 一起来破解</p><p>刚好wpscan就有破解用户和密码的功能 我们直接开搞</p><p><img src="/images/dc2/wpscanpo1.png" alt="wp"></p><p>成功破解出两个用户的账户密码 登进去看看</p><p><img src="/images/dc2/wpscan%20po.png" alt="wp"></p><p><img src="/images/dc2/flag2.png" alt="wp"></p><p>在网站一顿搜索中 总算找到flag2 这两个用户一个是没有权限访问不了flag2</p><p>大意就是没法破解wordpress 就另外寻找捷径</p><p>刚在nmap中还扫描到了一个7744端口 我们可以试试看用ssh登录进去</p><p>会发现jerry账户登不进去 tom可以 </p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">compgen -c</span><br><span class="line"># 查看这里面可以使用的命令</span><br></pre></td></tr></table></figure><p><img src="/images/dc2/compgen.png" alt="wp"></p><p><img src="/images/dc2/compgen.png" alt="wp"></p><p>ls一下 看看有线索吗</p><p><img src="/images/dc2/ls.png" alt="wp"></p><p>有个flag3 我们进去看看 一下子是习惯用cat了 发现我们这事被限制的bash rbash<br>用 vi 进去看看flag</p><p><img src="/images/dc2/flag3.png" alt="wp"></p><p>估计是要提权了</p><p>这里得用rbash绕过的其中一中 用vi命令</p><p>我们进文件之后 随便vi一个文件 在里面输入</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">BASH——CMDS[A]=/bin/sh;a</span><br><span class="line"></span><br><span class="line">set shell=/bin/bash</span><br><span class="line">:shell</span><br><span class="line"></span><br><span class="line">export PATH=$PATH:/bin/</span><br><span class="line">export PATH=$PATH:/usr/bin/</span><br></pre></td></tr></table></figure><p>就会神奇的发现现在使用tom的bash </p><p><img src="/images/dc2/peizhi.png" alt="wp"></p><p>然后 我们切换至jerry用户</p><p><img src="/images/dc2/jerry.png" alt="wp"></p><p><img src="/images/dc2/flag4.png" alt="wp"></p><p>找到flag4 根据flag4的意思 就是需要用到git的提权</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo git help config</span><br><span class="line"></span><br><span class="line">!/bin.bash</span><br></pre></td></tr></table></figure><p>你就会意外的发现提权成功</p><p><img src="/images/dc2/root.png" alt="wp"></p><p>到&#x2F;root目录就能找到final flag</p><p><img src="/images/dc2/final%20flag.png" alt="wp"></p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> vulnhub linux </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>tryhackme-Pickle Rick wp</title>
       <link href="/2025/03/21/tryhackme-Pickle-Rick-wp/"/>
       <url>/2025/03/21/tryhackme-Pickle-Rick-wp/</url>
@@ -774,9 +793,9 @@
     
     
     <entry>
-      <title>Gallery</title>
-      <link href="/Gallery/index.html"/>
-      <url>/Gallery/index.html</url>
+      <title>about</title>
+      <link href="/about/index.html"/>
+      <url>/about/index.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
@@ -807,17 +826,6 @@
     
     
     <entry>
-      <title>about</title>
-      <link href="/about/index.html"/>
-      <url>/about/index.html</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>books</title>
       <link href="/books/index.html"/>
       <url>/books/index.html</url>
@@ -829,20 +837,20 @@
     
     
     <entry>
-      <title></title>
-      <link href="/css/music.css"/>
-      <url>/css/music.css</url>
+      <title>categories</title>
+      <link href="/categories/index.html"/>
+      <url>/categories/index.html</url>
       
-        <content type="html"><![CDATA[.aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {    left: -66px !important;    /* 默认情况下缩进左侧66px，只留一点箭头部分 */  }    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {    left: 0 !important;    /* 鼠标悬停是左侧缩进归零，完全显示按钮 */  }]]></content>
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
     </entry>
     
     
     
     <entry>
-      <title>categories</title>
-      <link href="/categories/index.html"/>
-      <url>/categories/index.html</url>
+      <title>Gallery</title>
+      <link href="/Gallery/index.html"/>
+      <url>/Gallery/index.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
@@ -863,10 +871,10 @@
     
     <entry>
       <title></title>
-      <link href="/css/touming.css"/>
-      <url>/css/touming.css</url>
+      <link href="/css/music.css"/>
+      <url>/css/music.css</url>
       
-        <content type="html"><![CDATA[/* 文章页背景 */.layout_post>#post {  /* 透明度为 0.7 */  background: rgba(255, 255, 255, 0.7);}/* 所有页面背景 */#aside_content .card-widget, #recent-posts>.recent-post-item, .layout_page>div:first-child:not(.recent-posts), .layout_post>#page, .layout_post>#post, .read-mode .layout_post>#post {  /* 透明度为 0.7 */  background: rgba(255, 255, 255, 0.7);}/* 侧边卡片的透明度 */:root {  --card-bg: rgba(255, 255, 255, 0.7);}/* 页脚透明 */#footer {  /* 透明度为 0.7 */  background: rgba(255, 255, 255, 0.7);}]]></content>
+        <content type="html"><![CDATA[.aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {    left: -66px !important;    /* 默认情况下缩进左侧66px，只留一点箭头部分 */  }    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {    left: 0 !important;    /* 鼠标悬停是左侧缩进归零，完全显示按钮 */  }]]></content>
       
     </entry>
     
@@ -895,11 +903,11 @@
     
     
     <entry>
-      <title>search</title>
-      <link href="/search/index.html"/>
-      <url>/search/index.html</url>
+      <title></title>
+      <link href="/css/touming.css"/>
+      <url>/css/touming.css</url>
       
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+        <content type="html"><![CDATA[/* 文章页背景 */.layout_post>#post {  /* 透明度为 0.7 */  background: rgba(255, 255, 255, 0.7);}/* 所有页面背景 */#aside_content .card-widget, #recent-posts>.recent-post-item, .layout_page>div:first-child:not(.recent-posts), .layout_post>#page, .layout_post>#post, .read-mode .layout_post>#post {  /* 透明度为 0.7 */  background: rgba(255, 255, 255, 0.7);}/* 侧边卡片的透明度 */:root {  --card-bg: rgba(255, 255, 255, 0.7);}/* 页脚透明 */#footer {  /* 透明度为 0.7 */  background: rgba(255, 255, 255, 0.7);}]]></content>
       
     </entry>
     
@@ -909,6 +917,17 @@
       <title>tags</title>
       <link href="/tags/index-1.html"/>
       <url>/tags/index-1.html</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>search</title>
+      <link href="/search/index.html"/>
+      <url>/search/index.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
