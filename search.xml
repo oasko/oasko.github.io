@@ -4,6 +4,149 @@
   
     
     <entry>
+      <title></title>
+      <link href="/2025/04/28/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E9%9D%B6%E5%9C%BA-web4%EF%BC%88%E7%9F%A5%E6%94%BB%E5%96%84%E9%98%B2%E5%AE%9E%E9%AA%8C%E5%AE%A4%EF%BC%89/"/>
+      <url>/2025/04/28/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E9%9D%B6%E5%9C%BA-web4%EF%BC%88%E7%9F%A5%E6%94%BB%E5%96%84%E9%98%B2%E5%AE%9E%E9%AA%8C%E5%AE%A4%EF%BC%89/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title></title>
+      <link href="/2025/04/28/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E9%9D%B6%E5%9C%BA-web3%EF%BC%88%E7%9F%A5%E6%94%BB%E5%96%84%E9%98%B2%E5%AE%9E%E9%AA%8C%E5%AE%A4%EF%BC%89/"/>
+      <url>/2025/04/28/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E9%9D%B6%E5%9C%BA-web3%EF%BC%88%E7%9F%A5%E6%94%BB%E5%96%84%E9%98%B2%E5%AE%9E%E9%AA%8C%E5%AE%A4%EF%BC%89/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94web3/title.png" alt="ip1"></p><p>本次目的是两个ip地址，隐藏的用户名。三个flag</p><p>还是先查看web服务的日志文件 可以发现有两个ip在搞事情</p><p><img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94web3/ip.png" alt="ip1"></p><p>用户在lusrmgr.msc中进行查看</p><p><img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94web3/user.png" alt="ip1"></p><p>flag一开始是没有思路的 但看了很多大佬的wp之后 原来是自己忘记去检查计划任务那一栏了</p><p>在计划任务中能找到flag1</p><p><img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94web3/flagg1.png" alt="ip1"></p><p>定时任务中有个可疑路径 指向一个脚本文件 进去查看一下</p><p><img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94web3/flag2.png" alt="ip1"></p><p><img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94web3/flag33.png" alt="ip1"></p><p>第二个flag到手</p><p>第三个flag想着登录网站 可能就有的 结果登录失败 去数据库逛逛 您猜怎么着 还真在里面 看了大佬wp发现 其实网站登录进后台也能找到flag3</p><p><img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94web3/flag3.png" alt="ip1"></p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title></title>
+      <link href="/2025/04/28/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E9%9D%B6%E5%9C%BA-web2%EF%BC%88%E7%9F%A5%E6%94%BB%E5%96%84%E9%98%B2%E5%AE%9E%E9%AA%8C%E5%AE%A4%EF%BC%89/"/>
+      <url>/2025/04/28/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E9%9D%B6%E5%9C%BA-web2%EF%BC%88%E7%9F%A5%E6%94%BB%E5%96%84%E9%98%B2%E5%AE%9E%E9%AA%8C%E5%AE%A4%EF%BC%89/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94web2/title.png" alt="ip1"></p><p>打开靶场发现桌面有个phpstudy 点击进去 发现是apache的web服务 找到日志文件翻一下 能找到第一个ip</p><p><img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94web2/ip1.png" alt="ip1"></p><p>发现一个ip 再往后会发现这个ip上传了一个system.php进去 现在要找第二个ip</p><p>跑了ds 直接用powershell来提取事件的具体消息</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">提取所有网络登录（类型3）和远程桌面登录（类型10）的记录：</span><br><span class="line"></span><br><span class="line">Get-WinEvent -FilterHashtable @&#123;LogName=&#x27;Security&#x27;;ID=4624&#125; |  </span><br><span class="line">Where-Object &#123;$_.Properties[8].Value -in @(3,10)&#125;  </span><br></pre></td></tr></table></figure><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Get-WinEvent -FilterHashtable @&#123;LogName=&#x27;Security&#x27;;ID=4624&#125; |  </span><br><span class="line">Where-Object &#123;$_.Properties[8].Value -in @(3,10)&#125; |  </span><br><span class="line">Select-Object TimeCreated,  </span><br><span class="line">    @&#123;Name=&#x27;UserName&#x27;; Expression=&#123;$_.Properties[5].Value&#125;&#125;,  </span><br><span class="line">    @&#123;Name=&#x27;Domain&#x27;; Expression=&#123;$_.Properties[6].Value&#125;&#125;,  </span><br><span class="line">    @&#123;Name=&#x27;SourceIP&#x27;; Expression=&#123;$_.Properties[18].Value&#125;&#125;,  </span><br><span class="line">    @&#123;Name=&#x27;LogonType&#x27;; Expression=&#123;$_.Properties[8].Value&#125;&#125;,  </span><br><span class="line">    @&#123;Name=&#x27;ProcessName&#x27;; Expression=&#123;$_.Properties[9].Value&#125;&#125;,  </span><br><span class="line">    @&#123;Name=&#x27;AuthenticationPackage&#x27;; Expression=&#123;$_.Properties[10].Value&#125;&#125;,  </span><br><span class="line">    @&#123;Name=&#x27;LogonGUID&#x27;; Expression=&#123;$_.Properties[11].Value&#125;&#125; |  </span><br><span class="line">Format-Table -AutoSize</span><br></pre></td></tr></table></figure><p>找这两个命令能找到疑似第二个ip 看日志会发现这两个ip之间有点吻合 一个上传webshell 一个负责连接</p><p><img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94web2/powershell.png" alt="ip2"></p><p><img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94web2/ip2.png" alt="ip2"></p><p>伪qq号 在c盘能翻到腾讯的文件夹 里面有一串数字</p><p><img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94web2/qq.png" alt="ip2"></p><p>ok 破案了 应该是攻击者搞了个frp用来内网穿透的 进去寻找配置文件 可以找到服务器地址和端口</p><p>最后是问如何攻击方式 首先排除web攻击 因为上传了个文件之后就没继续了 看日志也没看出什么攻击</p><p>数据库攻击也不是 最后看到了ftp的日志文件 发现是暴力破解 是ftp攻击</p><p><img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94web2/ftp.png" alt="ip2"></p><p>用户 我们可以在lusrmgr.msc 来查看用户和组</p><p><img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94web2/user.png" alt="ip1"></p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title></title>
+      <link href="/2025/04/28/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E9%9D%B6%E5%9C%BA-web1%EF%BC%88%E7%9F%A5%E6%94%BB%E5%96%84%E9%98%B2%E5%AE%9E%E9%AA%8C%E5%AE%A4%EF%BC%89/"/>
+      <url>/2025/04/28/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E9%9D%B6%E5%9C%BA-web1%EF%BC%88%E7%9F%A5%E6%94%BB%E5%96%84%E9%98%B2%E5%AE%9E%E9%AA%8C%E5%AE%A4%EF%BC%89/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>来看看web1的靶场<br><img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94web1/title.png" alt="ip1"><br>这次要找的东西还是不太多</p><p>第一步是打开小皮的web服务日志 检查一下有什么可疑ip和攻击吗 </p><p><img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94web1/shell.png" alt="ip1"></p><p>果然 发现了一个192.168.126.1的ip传了一个webshell 刚好有显示路径 顺着路径去找找看 shell.php里面也许就有密码</p><p><img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94web1/mima.png" alt="ip1"></p><p>发现密码是rebeyond</p><p>隐藏的用户名就在lusrmgr.msc里面能找到</p><p><img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94web1/user.png" alt="ip1"></p><p>攻击者挖矿程序的矿池域名 就有点知识盲区了</p><p>看了很多师傅的wp 通过图标可以判断发现是用<code>pyinstaller</code>打包的<code>exe</code>文件 </p><p>利用 (pyinstxtractor)[<a href="https://github.com/extremecoders-re/pyinstxtractor]">https://github.com/extremecoders-re/pyinstxtractor]</a> 进行反编译</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python .\pyinstxtractor.py .\Kuang.exe</span><br></pre></td></tr></table></figure><p><img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94web1/fan.png" alt="ip1"></p><p>在里面有个kuang.pyc 用在线pyc转pc搞一下</p><p><img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94web1/yuming.png" alt="ip1"></p><p>能得出域名 wakuang.zhigongshanfang.top</p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title></title>
+      <link href="/2025/04/28/%E7%8E%84%E6%9C%BA%20%E7%AC%AC%E4%B8%80%E7%AB%A0%20%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94-webshell%E6%9F%A5%E6%9D%80/"/>
+      <url>/2025/04/28/%E7%8E%84%E6%9C%BA%20%E7%AC%AC%E4%B8%80%E7%AB%A0%20%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94-webshell%E6%9F%A5%E6%9D%80/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>这个靶场的思路还是蛮清楚的</p><p>来看看问题</p><p><img src="/images/%E7%8E%84%E6%9C%BA1webshell/title.png" alt="log"></p><p>既然是webshell 就想想攻击者有在系统中应该是上传了文件 可能php 就用命令搜搜看 </p><p><img src="/images/%E7%8E%84%E6%9C%BA1webshell/find.png" alt="log"></p><p><img src="/images/%E7%8E%84%E6%9C%BA1webshell/find1.png" alt="log"></p><p>发现了一个php 虽说方法正确 但不太高效 看了别的师傅的方法 确实厉害啊</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">find / type f -name &quot;*.php&quot; | xargs grep &quot;eval(&quot;</span><br><span class="line"></span><br><span class="line"># 后面是将`find`输出的文件路径列表传递给`grep`，在文件中搜索包含`eval(`字符串的行。</span><br></pre></td></tr></table></figure><p><img src="/images/%E7%8E%84%E6%9C%BA1webshell/findp.png" alt="log"><br>可以找到三个webshell 我们进去看看</p><p><img src="/images/%E7%8E%84%E6%9C%BA1webshell/gz.png" alt="log"></p><p>中间有段数字 疑似就是我们需要的flag </p><p>科普一个小知识</p><p>哥斯拉 -webshell工具</p><p> 哥斯拉特征</p><ul><li>@session_start(); - 开启一个会话。</li><li>@set_time_limit(0); - 设置脚本执行时间为无限。</li><li>@error_reporting(0); - 关闭所有错误报告。</li></ul><p>破案了 把github的哥斯拉项目的网站转成md5就能解第二个flag</p><p>第一问找出的第二个.开头的文件就是隐藏的webshell 把路径转成md5就能解决第三问</p><p>第四问有个不死马</p><p><img src="/images/%E7%8E%84%E6%9C%BA1webshell/log.png" alt="log"></p><p>第一个方框的php文件 感觉有点可疑 进去看看</p><p><img src="/images/%E7%8E%84%E6%9C%BA1webshell/top.png" alt="log"></p><p>​还真是<strong>​PHP免杀WebShell​</strong>​，其核心功能是通过多重加密和动态拼接绕过安全检测，最终执行任意恶意代码。 路径转成md5就能找到最后一个flag</p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title></title>
+      <link href="/2025/04/28/%E7%8E%84%E6%9C%BA%20%E7%AC%AC%E4%B8%80%E7%AB%A0%20%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94-Linux%E5%85%A5%E4%BE%B5%E6%8E%92%E6%9F%A5/"/>
+      <url>/2025/04/28/%E7%8E%84%E6%9C%BA%20%E7%AC%AC%E4%B8%80%E7%AB%A0%20%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94-Linux%E5%85%A5%E4%BE%B5%E6%8E%92%E6%9F%A5/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>看看题目</p><p><img src="https://s2.loli.net/2025/04/10/fum4prgtyo2hsxA.png" alt="image.png"></p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title></title>
+      <link href="/2025/04/28/%E7%8E%84%E6%9C%BA%20%E7%AC%AC%E4%B8%80%E7%AB%A0%20%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94-Linux%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90/"/>
+      <url>/2025/04/28/%E7%8E%84%E6%9C%BA%20%E7%AC%AC%E4%B8%80%E7%AB%A0%20%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94-Linux%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>这个主要是看看你的日志分析的能力 但比较复杂的日志分析的命令只能依靠ai来写</p><p>来看看问题</p><p><img src="/images/%E7%8E%84%E6%9C%BA1/title.png" alt="log"></p><p>第一问我是 过滤出failed和root的条件 然后就能找出爆破ssh的ip 一开始是在查看auth.log的ip 但发现一直没用 就转到auth.log.1去了</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat auth.log.1 | grep  &quot;Failed password&quot; -a</span><br></pre></td></tr></table></figure><p><img src="/images/%E7%8E%84%E6%9C%BA1/fail.png" alt="log"></p><p>在这里面能找到三个ip 192.168.200.2,192.168.200.31,192.168.200.32 这三个ip 看了大佬给出的命令 也可以参照一下</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat auth.log.1 | grep -a &quot;Failed password for root&quot; | awk &#x27;&#123;print $11&#125;&#x27; | sort | uniq -c | sort -nr | more</span><br><span class="line"></span><br></pre></td></tr></table></figure><p><img src="/images/%E7%8E%84%E6%9C%BA1/fail.png" alt="log"></p><p>第二问 </p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat auth.log.1 | grep -a &quot;Accepted &quot;</span><br></pre></td></tr></table></figure><p>直接过滤成功的登录 就能找到目标ip</p><p><img src="/images/%E7%8E%84%E6%9C%BA1/accept.png" alt="log"></p><p>第三问</p><p>前面我是用过滤出failed和用户 但按照这个顺序但发现是错误</p><p>看了有的师傅的wp 之后</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat auth.log.1 | grep -a &quot;Failed password&quot; |perl -e &#x27;while($_=&lt;&gt;)&#123; /for(.*?) from/; print &quot;$1\n&quot;;&#125;&#x27;|uniq -c|sort -nr</span><br></pre></td></tr></table></figure><p><img src="/images/%E7%8E%84%E6%9C%BA1/3rd.png" alt="log"></p><p>可以降序排列出用户</p><p>第四问 过滤出第二问的ip的爆破的日志 之前我有点弱智了 显示了19条 就直接写19条 发现是错误的 后来发现只爆破了4个用户 四个用户共19次 </p><p><img src="/images/%E7%8E%84%E6%9C%BA1/guolv.png" alt="log"></p><p>最后一问 是问后门账户 反手就是一个&#x2F;etc&#x2F;passwd 发现一个test2</p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title></title>
+      <link href="/2025/04/28/%E7%8E%84%E6%9C%BA%20%E7%AC%AC%E5%9B%9B%E7%AB%A0-windows%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90/"/>
+      <url>/2025/04/28/%E7%8E%84%E6%9C%BA%20%E7%AC%AC%E5%9B%9B%E7%AB%A0-windows%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>看看简介 共八个题目<br><img src="https://s2.loli.net/2025/04/11/a9BlTFsu6PVRwSv.png" alt="image.png"></p><p>大致看了一下八个题目 主要都是偏向Windows的事件</p><p>第一题</p><p><img src="https://s2.loli.net/2025/04/11/bwI1Di4ZSYhcjeX.png" alt="image.png"></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cut access.log  -d - -f 1 |uniq -c |sort -rn |head -100</span><br></pre></td></tr></table></figure><p><img src="https://s2.loli.net/2025/04/12/mGfrwJ9HeQCs5RO.png" alt="image.png"></p><p>扫描是有67和33这两个ip 但很遗憾 我是看了wp才知道的 花了五百积分 我是按照访问量的多少来决定 犯错误了 以为是67和1这两个 没怎么认真看日志</p><p><img src="https://s2.loli.net/2025/04/12/6vVKHarjcNIJhU7.png" alt="image.png"></p><p>第二问 在事件中筛选4625 登录失败的事件 就能找到事件数</p><p><img src="https://s2.loli.net/2025/04/11/QcRtzLfdjyXJIDe.png" alt="image.png"></p><p>找到事件数为2594</p><p>在lusrmgr.msc就能找到隐藏用户和隐藏的影子用户</p><p><img src="https://s2.loli.net/2025/04/11/Ry8gdzhBHpZkTLW.png" alt="image.png"></p><p>hacker$ hackers$</p><p>由于用不了powershell 只能在事件查看器中 用xml语法来过滤出远程登录成功且登录类型为10的事件 一个一个查看 发现了有这些ip</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;QueryList&gt;</span><br><span class="line">  &lt;Query Id=&quot;0&quot; Path=&quot;Security&quot;&gt;</span><br><span class="line">    &lt;Select Path=&quot;Security&quot;&gt;</span><br><span class="line">      *[System[(EventID=4624)]] </span><br><span class="line">      and </span><br><span class="line">      *[EventData[Data[@Name=&#x27;LogonType&#x27;]=&#x27;10&#x27;]]</span><br><span class="line">    &lt;/Select&gt;</span><br><span class="line">  &lt;/Query&gt;</span><br><span class="line">&lt;/QueryList&gt;</span><br></pre></td></tr></table></figure><p>192.168.150.1&amp;192.168.150.128&amp;192.168.150.178</p><p>在计划任务能找到一个可疑的计划 任务是下载xiaowei.exe 所以说 这个有概率是个shell</p><p><img src="https://s2.loli.net/2025/04/11/O7bgMi9KDyYmsXW.png" alt="image.png"></p><p><img src="https://s2.loli.net/2025/04/11/LvpZsFGxm5RN4IP.png" alt="image.png"></p><p>在检查这个定时任务的时候 发现一个脚本 顺着路径 去查看一下这个脚本具体内容 </p><p><img src="https://s2.loli.net/2025/04/11/rbSqdzZG3FnV6lc.png" alt="image.png"></p><p>真找到了个服务器和端口</p><p>好家伙 理解错意思了 在思考一番之后 突然另计 启动远程shell 然后netstat和tasklist里面查找</p><p><img src="https://s2.loli.net/2025/04/11/GbDKdlqctQaOrv3.png" alt="image.png"></p><p>这个就是远程shell的连接ip和端口</p><p>185.117.118.21:4444</p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title></title>
+      <link href="/2025/04/28/%E7%8E%84%E6%9C%BA%20%E7%AC%AC%E5%85%AD%E7%AB%A0%20%E6%B5%81%E9%87%8F%E7%89%B9%E5%BE%81%E5%88%86%E6%9E%90-%E8%9A%81%E5%89%91%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/"/>
+      <url>/2025/04/28/%E7%8E%84%E6%9C%BA%20%E7%AC%AC%E5%85%AD%E7%AB%A0%20%E6%B5%81%E9%87%8F%E7%89%B9%E5%BE%81%E5%88%86%E6%9E%90-%E8%9A%81%E5%89%91%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>发现上传了一个php文件 查看发现是uri的加密 拉到cyberchef中解密一下  有疑问的是这一段</p><p><img src="https://s2.loli.net/2025/04/27/WGbdxqC3KMETehz.png" alt="image.png"></p><p>在这个报告中 开头的1就是密码 在&#x3D;%40ini前面的</p><p>在这个包的底部还有一串解码之后还是编码的代码</p><p><img src="https://s2.loli.net/2025/04/27/b3JL8yforiRSTdI.png" alt="image.png"></p><p>我们用wireshark的显示分组字节 </p><p>蚁剑会在编码前加两位随机生成的字符，所以需要调整开始位置 从第二位开始 进行base64解码</p><p><img src="https://s2.loli.net/2025/04/27/i7nTkAcQOjXDvwZ.png" alt="image.png"></p><p>解码之后是这样的</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd &quot;/var/www/html&quot;;id;echo e124bc;pwd;echo 43523</span><br></pre></td></tr></table></figure><p>这个是所有的命令 第一个命令是id</p><p>第三问也是这样的思路 找到了访问的文件了</p><p><img src="https://s2.loli.net/2025/04/27/SzegvAiofc2Pqp7.png" alt="image.png"></p><p>第四问 也是这样</p><p><img src="https://s2.loli.net/2025/04/27/PFelIqa9O8NkJCM.png" alt="image.png"></p><p>第五问 </p><p>在第四个post包中 把蚁剑的码拉到cyberchef中进行解码</p><p><img src="https://s2.loli.net/2025/04/27/2R8Bdg5hpXIuNOW.png" alt="image.png"></p><p>解完码发现还有剩下的码 </p><p>注意点：蚁剑上传的文件会对内容进行16进制加密</p><p>把这个用hex解码 能得到攻击者上传的文件</p><p><img src="https://s2.loli.net/2025/04/27/BC5d4VgUTHMIv9k.png" alt="image.png"></p><p>第六问<br><img src="https://s2.loli.net/2025/04/27/nVUXsNkRazE2lAL.png" alt="image.png"></p><p>#注意点  蚁剑中的特征码 第一个往往是密码  </p><p>上传文件会有16进制加密 </p><p>wireshark的转码一开始不会用  </p><p>正文内容用URL加密  </p><p>正文解密后流量最中明显的特征为ini_set(“display_errors”,”0”);</p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title></title>
+      <link href="/2025/04/28/%E7%8E%84%E6%9C%BA%20%E7%AC%AC%E5%85%AD%E7%AB%A0%20%E6%B5%81%E9%87%8F%E7%89%B9%E5%BE%81%E5%88%86%E6%9E%90-%E5%B0%8F%E7%8E%8B%E5%85%AC%E5%8F%B8%E6%94%B6%E5%88%B0%E7%9A%84%E9%92%93%E9%B1%BC%E9%82%AE%E4%BB%B6/"/>
+      <url>/2025/04/28/%E7%8E%84%E6%9C%BA%20%E7%AC%AC%E5%85%AD%E7%AB%A0%20%E6%B5%81%E9%87%8F%E7%89%B9%E5%BE%81%E5%88%86%E6%9E%90-%E5%B0%8F%E7%8E%8B%E5%85%AC%E5%8F%B8%E6%94%B6%E5%88%B0%E7%9A%84%E9%92%93%E9%B1%BC%E9%82%AE%E4%BB%B6/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title></title>
+      <link href="/2025/04/28/%E7%8E%84%E6%9C%BA%20%E7%AC%AC%E4%BA%8C%E7%AB%A0%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90-apache%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90/"/>
+      <url>/2025/04/28/%E7%8E%84%E6%9C%BA%20%E7%AC%AC%E4%BA%8C%E7%AB%A0%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90-apache%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>来看看apache日志分析</p><p><img src="https://s2.loli.net/2025/04/11/enU42oFMYhsC8Z1.png" alt="image.png"></p><p>这个是题目</p><p>来看第一问 </p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk &#x27;&#123;print $1&#125;&#x27; access.log.1 | sort | uniq -c | sort -nr</span><br></pre></td></tr></table></figure><p><img src="https://s2.loli.net/2025/04/11/56U3b2BMjlQhkEq.png" alt="image.png"></p><p>第二问是看浏览器指纹 其实下面那个指纹占绝大部分 我们就试试 结果成了</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep &quot;192.168.200.2&quot; access.log.1 | cut -d &#x27;&quot;&#x27; -f6</span><br></pre></td></tr></table></figure><p><img src="https://s2.loli.net/2025/04/11/toEXdHcCz5IwevN.png" alt="image.png"></p><p>第三问是问&#x2F;index.php被访问的次数</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat access.log.1 | grep &#x27;/index.php&#x27;</span><br></pre></td></tr></table></figure><p>能找出是27次 看了wp也是27次 我就是交不成功</p><p>第四问 一开始我是一直在6556这里 看了大佬的wp才发现 我们需要去过滤一下 因为有些可能是撞名了或者啥的假数据 得加个空格或者正则表达式来过滤</p><p><img src="https://s2.loli.net/2025/04/11/SGjHzI48LOgmEMl.png" alt="image.png"></p><p>第五问 需要正则表达式过滤出</p><p><img src="https://s2.loli.net/2025/04/11/VHDLaKUJ2osi7Bf.png" alt="image.png"></p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>DC-2-vulnhub-解法</title>
       <link href="/2025/03/24/DC-2-vulnhub-%E8%A7%A3%E6%B3%95/"/>
       <url>/2025/03/24/DC-2-vulnhub-%E8%A7%A3%E6%B3%95/</url>
@@ -774,6 +917,17 @@
     
     
     <entry>
+      <title>books</title>
+      <link href="/books/index.html"/>
+      <url>/books/index.html</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Gallery</title>
       <link href="/Gallery/index.html"/>
       <url>/Gallery/index.html</url>
@@ -790,6 +944,17 @@
       <url>/about/index-1.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title></title>
+      <link href="/css/music.css"/>
+      <url>/css/music.css</url>
+      
+        <content type="html"><![CDATA[.aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {    left: -66px !important;    /* 默认情况下缩进左侧66px，只留一点箭头部分 */  }    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {    left: 0 !important;    /* 鼠标悬停是左侧缩进归零，完全显示按钮 */  }]]></content>
       
     </entry>
     
@@ -819,17 +984,6 @@
     
     <entry>
       <title>categories</title>
-      <link href="/categories/index.html"/>
-      <url>/categories/index.html</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>categories</title>
       <link href="/categories/index-1.html"/>
       <url>/categories/index-1.html</url>
       
@@ -840,31 +994,9 @@
     
     
     <entry>
-      <title></title>
-      <link href="/css/music.css"/>
-      <url>/css/music.css</url>
-      
-        <content type="html"><![CDATA[.aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {    left: -66px !important;    /* 默认情况下缩进左侧66px，只留一点箭头部分 */  }    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {    left: 0 !important;    /* 鼠标悬停是左侧缩进归零，完全显示按钮 */  }]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>music</title>
-      <link href="/music/index.html"/>
-      <url>/music/index.html</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>tags</title>
-      <link href="/tags/index-1.html"/>
-      <url>/tags/index-1.html</url>
+      <title>categories</title>
+      <link href="/categories/index.html"/>
+      <url>/categories/index.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
@@ -895,9 +1027,9 @@
     
     
     <entry>
-      <title>tags</title>
-      <link href="/tags/index-2.html"/>
-      <url>/tags/index-2.html</url>
+      <title>music</title>
+      <link href="/music/index.html"/>
+      <url>/music/index.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
@@ -907,8 +1039,8 @@
     
     <entry>
       <title>tags</title>
-      <link href="/tags/index.html"/>
-      <url>/tags/index.html</url>
+      <link href="/tags/index-1.html"/>
+      <url>/tags/index-1.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
@@ -928,9 +1060,20 @@
     
     
     <entry>
-      <title>books</title>
-      <link href="/books/index.html"/>
-      <url>/books/index.html</url>
+      <title>tags</title>
+      <link href="/tags/index-2.html"/>
+      <url>/tags/index-2.html</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>tags</title>
+      <link href="/tags/index.html"/>
+      <url>/tags/index.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
