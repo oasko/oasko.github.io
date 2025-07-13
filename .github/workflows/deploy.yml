@@ -1,51 +1,34 @@
-name: Deploy Quartz to GitHub Pages
-
-on:
-  push:
-    branches: [v4]  # 仅在v4分支推送时触发
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: true  # ✅ 优化：新提交自动取消进行中的旧构建
-
-jobs:
-  build:
-    runs-on: windows-latest  # ✅ 关键修改：切换为Windows环境
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0  # 获取完整Git历史记录
-
-      - name: Setup Node.js 22.12.0
-        uses: actions/setup-node@v4
-        with:
-          node-version: "22.12.0"  # ✅ 精确指定版本
-          cache: "npm"  # 启用npm缓存加速
-
-      - name: Install Dependencies
-        run: npm ci --ignore-scripts  # ✅ 安全加固：跳过潜在不安全脚本
-
-      - name: Build Quartz
-        run: npx quartz build  # 生成静态文件到public目录
-
-      - name: Upload Artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: public  # 上传构建产物
-
-  deploy:
-    needs: build  # 依赖build阶段
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest  # 部署阶段仍用Linux（无兼容问题）
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4  # 官方推荐部署工具
+stages:
+  - build
+  - deploy
+ 
+image: node:22
+cache: # Cache modules in between jobs
+  key: $CI_COMMIT_REF_SLUG
+  paths:
+    - .npm/
+ 
+build:
+  stage: build
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "v4"'
+  before_script:
+    - hash -r
+    - npm ci --cache .npm --prefer-offline
+  script:
+    - npx quartz build
+  artifacts:
+    paths:
+      - public
+  tags:
+    - gitlab-org-docker
+ 
+pages:
+  stage: deploy
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "v4"'
+  script:
+    - echo "Deploying to GitLab Pages..."
+  artifacts:
+    paths:
+      - public
